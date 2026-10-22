@@ -1,0 +1,45 @@
+E501 Line too long (103 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/close_post_quality_guards.py:179:101
+    |
+177 |             updatedAt=utc_now(),
+178 |             resolution=(
+179 |                 "Post-quality local prevention is restored only after actual current positive/adverse "
+    |                                                                                                     ^^^
+180 |                 "controls, original historical declarations, full lint, authored read-only quality "
+181 |                 "and quiescent checkpoint validation. Original failures, counters and severity remain. "
+    |
+
+E501 Line too long (104 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/close_post_quality_guards.py:181:101
+    |
+179 |                 "Post-quality local prevention is restored only after actual current positive/adverse "
+180 |                 "controls, original historical declarations, full lint, authored read-only quality "
+181 |                 "and quiescent checkpoint validation. Original failures, counters and severity remain. "
+    |                                                                                                     ^^^^
+182 |                 "Fresh source-epoch whole quality/functional/internal assurance and independent M2 "
+183 |                 "validation remain mandatory."
+    |
+
+E501 Line too long (115 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/close_post_quality_guards.py:192:101
+    |
+190 |                         "kind": "test",
+191 |                         "reference": reference,
+192 |                         "description": "Actual current boundary/null/refusal control; not independent acceptance.",
+    |                                                                                                     ^^^^^^^^^^^^^^^
+193 |                     }
+194 |                 )
+    |
+
+E501 Line too long (105 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/close_post_quality_guards.py:206:101
+    |
+204 |             implementationStatus="PARTIAL",
+205 |             finalStatus="PARTIAL",
+206 |             justification="Local prevention demonstrated; complete current immutable assurance pending.",
+    |                                                                                                     ^^^^^
+207 |         )
+208 |         for field in ("testEvidence", "validationEvidence"):
+    |
+
+Found 4 errors.

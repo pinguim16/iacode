@@ -8,8 +8,8 @@
   "currentCommit": "HEAD",
   "dirty": false,
   "startedAt": "2026-10-21T18:56:47Z",
-  "updatedAt": "2026-10-22T05:56:31Z",
-  "nextAllowedAction": "Publish an exact current immutable IN_PROGRESS runtime subject; execute all16 canonical quality gates, full non-fast verifier, DCV, fresh internal Red Team/mirror and exact phase-0002 disposal; seal READY_FOR_REVIEW before a fresh independent M2 auditor. No Gate8, Engine/application restart or global/other-chat changes.",
+  "updatedAt": "2026-10-22T10:40:51Z",
+  "nextAllowedAction": "Local prevention restoration cmd0431 and new source8db34905 proofs actually pass: M2 run0008, full lint run0014, authored run0031 and publication run0007. Finish truthful current declaration/synchronization and quiescent validation run0010, bind the actually valid draft, then publish new immutable runtime-v4 and execute all16 gates, full49 verifier, DCV, fresh internal Red Team/mirror and exact phase0002 disposal before sealing READY_FOR_REVIEW and fresh independent M2 audit. Never rerun the one-shot restoration. No Gate8, restarts or global/other-chat changes.",
   "blockedBy": [],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
@@ -31,13 +31,15 @@
     "coveragePercent": 0.0
   },
   "greenKeeper": {
-    "status": "NOT_EXECUTED",
-    "cycles": 0,
-    "remainingFailures": 0,
-    "unresolvedReworkItems": 9,
+    "status": "FAIL",
+    "cycles": 1,
+    "remainingFailures": 1,
+    "unresolvedReworkItems": 11,
     "log": "REWORK-LOG.jsonl",
     "externalBlockers": [],
-    "evidence": []
+    "evidence": [
+      "file:docs/checkpoints/GATE-7-CP-0003/published-green-keeper/run-0003/RECEIPT.json"
+    ]
   },
   "deliveryCompleteness": {
     "status": "FAIL",
@@ -49,7 +51,7 @@
       "file:docs/checkpoints/GATE-7-CP-0003/COMPLETENESS-REPORT.json"
     ]
   },
-  "reworkCycles": 0,
+  "reworkCycles": 1,
   "independentReview": {
     "status": "PENDING",
     "tool": null,

@@ -1,0 +1,160 @@
+[tests] RED exit=1 ledger=cmd-0367
+........................................................................................................................................................................................................................................................................................................................................................................................................................................................................F.....................................................FFF.....................................................................................................................................................................................................................................[MIR-TEST] NOT_APPLICABLE fixture: 0 applicable items
+[MIR-TEST] FAIL fixture: NOT_APPLICABLE was recorded with 3 applicable item(s)
+[MIR-TEST] FAIL fixture: NOT_APPLICABLE was recorded without a reason and a derivation source
+[iacode] --- fixture: environment boundary
+[iacode] --- fixture: PASS in 0s
+..[iacode] --- fixture: diagnostic evidence
+line-15
+line-16
+line-17
+line-18
+line-19
+line-20
+line-21
+line-22
+line-23
+line-24
+line-25
+line-26
+line-27
+line-28
+line-29
+line-30
+line-31
+line-32
+line-33
+line-34
+line-35
+line-36
+line-37
+line-38
+line-39
+[iacode] --- fixture: FAIL in 0s
+...............................................................BOOKKEEPING_PHASE_COMPLETED index=1 exit=0
+BOOKKEEPING_PHASE_COMPLETED index=2 exit=0
+.BOOKKEEPING_PHASE_COMPLETED index=1 exit=7
+......BOOKKEEPING_PHASE_COMPLETED index=1 exit=0
+BOOKKEEPING_PHASE_COMPLETED index=2 exit=0
+.BOOKKEEPING_PHASE_COMPLETED index=1 exit=7
+...........................{
+  "kind": "NATIVE_INSTALLATION_AND_TRUST_NOT_LIVE_PROVIDER_ACCEPTANCE",
+  "result": "FAIL",
+  "runs": [
+    {
+      "installation": {
+        "result": "PASS",
+        "kind": "UNIT_FIXTURE_NOT_NATIVE_PROOF"
+      },
+      "result": "PASS",
+      "kind": "UNIT_FIXTURE_NOT_NATIVE_PROOF"
+    },
+    {
+      "installation": {
+        "result": "PASS",
+        "kind": "UNIT_FIXTURE_NOT_NATIVE_PROOF"
+      },
+      "result": "PASS",
+      "kind": "UNIT_FIXTURE_NOT_NATIVE_PROOF"
+    }
+  ],
+  "failure": "deliberate native report cleanup failure",
+  "ownedTemporaryDirectoryRemoved": false,
+  "directoryCleanupRetries": 3,
+  "directoryCleanup": {
+    "removed": false,
+    "cleanupRetries": 3,
+    "cleanupAttempts": 4,
+    "cleanupElapsedSeconds": 10.01,
+    "firstSharingLockAfterSeconds": 9.7,
+    "cleanupFailure": {
+      "type": "PermissionError",
+      "winerror": 32
+    }
+  }
+}
+[iacode] EXPERIENCE PASS valid-null-control
+......................................................intermediate durable result: success
+............................................................................................................................................................................
+======================================================================
+FAIL: test_no_capture_relies_on_the_platform_codepage (test_gate0_foundation.SubprocessDecodingTests.test_no_capture_relies_on_the_platform_codepage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-m2cp3-public-quality-sxbeg45o\repository\tests\test_gate0_foundation.py", line 436, in test_no_capture_relies_on_the_platform_codepage
+    self.assertEqual(offenders, [], "captures without an explicit encoding")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['tests/test_m2_progress_publication.py:149'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'tests/test_m2_progress_publication.py:149'
+
+- ['tests/test_m2_progress_publication.py:149']
++ [] : captures without an explicit encoding
+
+======================================================================
+FAIL: test_every_sealed_checkpoint_validates_from_its_own_tag (test_gate1_model_gateway.RecordedInputTests.test_every_sealed_checkpoint_validates_from_its_own_tag) (checkpoint='GATE-5-CP-0001')
+The property `MIR-016` audits, asserted here so a change to the tooling reports it.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-m2cp3-public-quality-sxbeg45o\repository\tests\test_gate1_model_gateway.py", line 899, in test_every_sealed_checkpoint_validates_from_its_own_tag
+    self.assertEqual(result.returncode, 0,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+                     f"{identifier}: {(result.stdout or result.stderr)[:400]}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : GATE-5-CP-0001: CHECKPOINT_INVALID
+- REVIEW-BUNDLE-VALIDATION.json: declaration reconstruction was not deterministic and valid
+
+
+======================================================================
+FAIL: test_every_sealed_checkpoint_validates_from_its_own_tag (test_gate1_model_gateway.RecordedInputTests.test_every_sealed_checkpoint_validates_from_its_own_tag) (checkpoint='GATE-6-CP-0001')
+The property `MIR-016` audits, asserted here so a change to the tooling reports it.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-m2cp3-public-quality-sxbeg45o\repository\tests\test_gate1_model_gateway.py", line 899, in test_every_sealed_checkpoint_validates_from_its_own_tag
+    self.assertEqual(result.returncode, 0,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+                     f"{identifier}: {(result.stdout or result.stderr)[:400]}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : GATE-6-CP-0001: CHECKPOINT_INVALID
+- REVIEW-BUNDLE-VALIDATION.json: declaration reconstruction was not deterministic and valid
+
+
+======================================================================
+FAIL: test_every_sealed_checkpoint_validates_from_its_own_tag (test_gate1_model_gateway.RecordedInputTests.test_every_sealed_checkpoint_validates_from_its_own_tag) (checkpoint='GATE-7-CP-0001')
+The property `MIR-016` audits, asserted here so a change to the tooling reports it.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-m2cp3-public-quality-sxbeg45o\repository\tests\test_gate1_model_gateway.py", line 899, in test_every_sealed_checkpoint_validates_from_its_own_tag
+    self.assertEqual(result.returncode, 0,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+                     f"{identifier}: {(result.stdout or result.stderr)[:400]}")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : GATE-7-CP-0001: CHECKPOINT_INVALID
+- REVIEW-BUNDLE-VALIDATION.json: declaration reconstruction was not deterministic and valid
+
+
+----------------------------------------------------------------------
+Ran 1066 tests in 7970.793s
+
+FAILED (failures=4)
+{"result": "FAIL", "removedImages": 0, "sharedResourcesPreserved": 0, "unrelatedApplicationsUnchanged": true}
+{"result": "FAIL", "removedImages": 0, "sharedResourcesPreserved": 0, "unrelatedApplicationsUnchanged": true}
+{"result": "FAIL", "removedImages": 0, "sharedResourcesPreserved": 0, "unrelatedApplicationsUnchanged": true}
+{"result": "PASS", "removedImages": 0, "sharedResourcesPreserved": 0, "unrelatedApplicationsUnchanged": true}
+[staticAnalysis] GREEN exit=0 ledger=cmd-0368
+[lessons] GREEN exit=0 ledger=cmd-0369
+[integrity] GREEN exit=0 ledger=cmd-0370
+[checkpointValidation] GREEN exit=0 ledger=cmd-0371
+[apiTests] GREEN exit=0 ledger=cmd-0372
+[gatewayTests] GREEN exit=0 ledger=cmd-0373
+[agentRuntimeTests] GREEN exit=0 ledger=cmd-0374
+[sandboxTests] GREEN exit=0 ledger=cmd-0375
+[evaluatorTests] GREEN exit=0 ledger=cmd-0376
+[webTests] GREEN exit=0 ledger=cmd-0377
+[lint] GREEN exit=0 ledger=cmd-0378
+[clientTests] GREEN exit=0 ledger=cmd-0379
+[experienceTests] GREEN exit=0 ledger=cmd-0380
+[knowledgeTests] GREEN exit=0 ledger=cmd-0381
+[infraDefinition] GREEN exit=0 ledger=cmd-0382
+GREEN_KEEPER_GATE=FAIL cycle=1 result=STILL_RED required=tests,staticAnalysis,lessons,integrity,checkpointValidation,apiTests,gatewayTests,agentRuntimeTests,sandboxTests,evaluatorTests,webTests,lint,clientTests,experienceTests,knowledgeTests,infraDefinition remainingFailures=1 evidence=cmd-0367,cmd-0368,cmd-0369,cmd-0370,cmd-0371,cmd-0372,cmd-0373,cmd-0374,cmd-0375,cmd-0376,cmd-0377,cmd-0378,cmd-0379,cmd-0380,cmd-0381,cmd-0382

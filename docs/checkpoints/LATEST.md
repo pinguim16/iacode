@@ -20,7 +20,17 @@ memory and quiescent canonical validation controls passed at source974656a0.
 Run0011 and canonical validation run0007 passed before local continuation-guard restoration.
 Final source783fac50 then freshly passed82 M2 cases,91-path read-only quality, whole canonical
 lint run0012 and the current local controls. No local validation producer remains active.
-Quiescent draft validation and immutable runtime-v3 publication are next, followed by complete
-16-gate/full49-stage assurance, completeness, fresh internal Red Team/mirror and exact phase0002
-disposal before sealing. No complete current quality, seal or independent M2 verdict exists.
+Immutable runtime-v3 was published at9aef31990db2d224bd036c2cb2d72664f04dc9aa. Its complete
+public16-gate cycle ended FAIL:15 pass and Root reports four failure events. Original output and
+canonical ledger were imported with actual native cleanup/public-clone removal PASS.
+ROOT-CODEPAGE-001 and HISTORY-TRANSPORT-001 reopened LSN-0035/LSN-0151 before correction.
+Current source3efcb431 passes88 M2 cases,94-path read-only authored quality and full canonical
+lint run0013. Actual original Gate5/Gate6/Gate7 producers reproduce their original declarations
+in history runs0006/0007/0008 at the failing temporary depth. All these producers ended.
+Quiescent run0009 passed before local prevention restoration at cmd0431. New source8db34905
+freshly passes M2 run0008,94-path read-only quality run0031, whole lint run0014 and publication
+controls run0007. No producer remains active. Fresh declaration/synchronization and quiescent
+validation precede immutable runtime-v4 and complete16-gate/full49-stage assurance, completeness,
+fresh internal Red Team/mirror and exact phase0002 disposal remain due before sealing.
+No complete current green cycle, seal or independent M2 verdict exists.
 See ACTIVE-VALIDATION.json and NEXT.md. Never reuse historical PIDs/controllers.

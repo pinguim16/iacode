@@ -2,42 +2,54 @@
 
 ## Required next action
 
-The owner explicitly resumed after restart; see RESUME-0001.json.
+Continue the explicitly resumed authorized Gate7 correction. No Gate8, application restart,
+global-setting change or other-chat mutation is authorized. CP0001 is still the last immutable seal.
 
-Runtime-v2 remains published at477ec86f09c5e03ad328cf40a3725855b3526bad, but its incomplete
-quality cycle was deliberately canceled for PRE-PUSH-LINT-001. Actual owned native cleanup and
-clone removal passed; this is not whole quality acceptance. Canonical lint run0009 subsequently
-completed with actual exit0. Additional authored-source quality exposed AUTHORED-STYLE-001;
-the failed observations remain and all active helpers/tests were corrected under unchanged rules.
-Run0010 completed with actual exit0, and LSN-0105 local prevention was restored only after current
-full lint and read-only authored/causal controls. CONTINUATION-001 then confirmed a separate
-LSN-0140 guarded recurrence: the actual retrospective had an extra section and the old guard
-named only CP0001. Original run0001 and causal all-M2 run0003 remain red. Current corrected
-source974656a0 passes82 M2 cases,91-path read-only quality, inherited denominator, phase/native/
-cleanup/transport/memory/static controls and quiescent canonical validation run0006.
+Runtime-v3 remains immutable at9aef31990db2d224bd036c2cb2d72664f04dc9aa. Its complete public
+quality cycle finished FAIL:15 gates pass; Root reports1066 cases and four failure events.
+Original producer/cleanup/output and canonical append-only ledger are preserved under
+published-green-keeper/run-0003. Native cleanup and actual public-clone removal pass. Session80486
+has ended; do not reuse its historical PIDs or treat the original failed cycle as accepted.
 
-Run0011 and quiescent canonical validation run0007 completed with actual exit0. Local continuation
-prevention was then restored at cmd0339, including proactive owned-history scope with no new
-runtime timeout or counter reset. Final source783fac50 freshly passes82 M2 cases,91-path read-only
-quality, inherited denominator, phase/native/history/cleanup/transport/static/memory controls and
-whole canonical lint run0012. None of those local producers is still active.
+ROOT-CODEPAGE-001 escalated LSN-0035 to recurrence5/CONFIRMED. The actual missing decoder is
+corrected; the unchanged whole-tree guard and real Unicode Git capture pass. HISTORY-TRANSPORT-001
+escalated LSN-0151 to recurrence1/CONFIRMED. Real same-depth diagnostics exposed clone materialization
+and original Gate5/Gate6 object-read boundaries. ADR-0063 supplies only child-command/runtime Git
+path handling. No historical producer, declaration, tag or global config was rewritten.
 
-Declare every current path and run quiescent canonical validation, bind only a genuinely valid
-IN_PROGRESS draft, then publish new immutable runtime-v3 through publish_progress.py. Its current
-lint and whole authored preconditions must pass before effects. Run all16 canonical Green Keeper
-gates from that exact public subject; never append parent COMMANDS/REWORK while its serialized
-ledger is active. Preserve its actual primary/cleanup/original outputs, then one whole49-stage
-non-fast public verifier. Only actual complete outcomes may support requirement/functional closure,
-audit-only completeness, fresh internal Red Team and closure mirror. Dispose exact phase0002
-resources after the last validation and seal READY_FOR_REVIEW before the fresh independent M2
-auditor. Never reuse historical PIDs or treat earlier source epochs as current acceptance.
+Source3efcb431 has actual passing88-case M2,94-path read-only authored quality, complete canonical
+lint run0013, unchanged stream run0003 and actual history-transport run0006. Historical runs0006,
+0007 and0008 execute original Gate5/Gate6/Gate7 producers, each rebuilding both exact original
+archives and declarations; native/owner cleanup is recorded separately. All those producers ended.
+The additional unchanged current owning-review regression completed as cmd0425 with all five cases
+passing and native cleanup PASS; its receipt is causal-attempts/review-reconstruction/run-0001.json.
+Session58604 has ended. Unchanged inherited Git controls also pass. Final authored read-only proof
+run0029 passes all94 current paths; quiescent validation precedes local restoration.
+No complete current green cycle exists.
 
-Read OWNER-SCOPE-AND-PAUSE-0001.json: Docker work concerns only verified task-owned E:/iacode
-resources. Do not investigate or modify another project's application lifecycle. Preserve the
-original failed comparison as history, not a passing control or proof of attribution.
+Quiescent validation run0009 passed before cmd0431 restored only the two exact local guards.
+POST-QUALITY-LOCAL-RESTORATION.json preserves proof source3efcb431 and new source8db34905.
+Do not rerun that one-shot assembler. Canonical derivation stays202 requirements/201 mandatory;
+both actual audit findings and whole assurance remain open.
 
-Intake, validation, clean Git comparison and separate phase-0002 creation succeeded. Use the
-ACTIVE-DOCKER-PHASE.json pointer through current_resources.py; never reuse the disposed receipt. Complete
-all16 canonical gates, full immutable non-fast verifier, DCV, fresh internal Red Team/mirror, then
-seal READY_FOR_REVIEW before a fresh independent M2 auditor. No Gate8, global changes or
-application restarts. The original cleaned ownership receipt must never be reused or overwritten.
+New source8db34905 actually passes M2 run0008, full canonical lint run0014, whole authored
+read-only run0031 and publication controls run0007. A routine explicit UTF-8 branch decoder in
+the publisher was rechecked; no branch decoder malfunction is claimed. No producer remains active.
+Finish truthful progress bookkeeping, declare every new original, and run quiescent validation
+run0010 before prepare_runtime_subject.py may bind the valid draft. Then publish a new immutable
+runtime-v4 through publish_progress.py with its actual lint/authored preconditions before effects.
+
+Run every16 mandatory Green Keeper gate from that exact public subject. While its serialized
+canonical ledger is active, never append parent COMMANDS/REWORK. After actual complete green,
+execute one whole non-fast49-stage immutable verifier, direct functional/requirement closure,
+audit-only completeness, fresh internal Red Team and closure mirror. Preserve every failed attempt.
+
+Use ACTIVE-DOCKER-PHASE.json through current_resources.py. The separately receipted phase0002 is
+active and needs exact final disposal after the last validation. Never reuse the disposed original
+scope, run global prune, remove ambiguous/preexisting resources or investigate another project's
+lifecycle. The owner's project-only clarification does not turn old failed comparisons into PASS.
+
+Declare final evidence and observe all owned disposable cleanup before canonical sealing at
+READY_FOR_REVIEW. Only a later fresh isolated CLI auditor may judge M2 through its own report and
+checkpoint. No independent auditor has started. Previous epoch histories remain in the immutable
+subjects, original receipts and INTERNAL-ENVIRONMENT-REWORK.json; they are not current acceptance.

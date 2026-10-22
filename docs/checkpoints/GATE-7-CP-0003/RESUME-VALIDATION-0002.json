@@ -1,0 +1,16 @@
+{
+  "kind": "NATIVE_TOOL_OBSERVATION_NOT_COMMAND_LEDGER_OR_ACCEPTANCE",
+  "observedBy": "continuing implementing session",
+  "observedNoLaterThan": "2026-10-22T08:16:12Z",
+  "workingDirectory": "E:/iacode",
+  "command": "python scripts/development-ledger/validate_checkpoint.py",
+  "nativeSessionId": 68530,
+  "exitCode": 1,
+  "stdoutAsReturnedByTool": "CHECKPOINT_INVALID\r\n- FILES.json: hash mismatch for docs/checkpoints/GATE-7-CP-0003/ACTIVE-VALIDATION.json\r\n- FILES.json: hash mismatch for docs/checkpoints/GATE-7-CP-0003/NEXT.md\r\n- FILES.json: hash mismatch for docs/checkpoints/LATEST.md\r\n- dirty-state mismatch: expected False, observed True\r\n- FILES.json omits a changed path: docs/checkpoints/GATE-7-CP-0003/RUNTIME-V3-PUBLICATION.json (added)\r\n- FILES.json hashAfter does not match the repository content of docs/checkpoints/GATE-7-CP-0003/ACTIVE-VALIDATION.json\r\n- FILES.json hashAfter does not match the repository content of docs/checkpoints/GATE-7-CP-0003/NEXT.md\r\n- FILES.json hashAfter does not match the repository content of docs/checkpoints/LATEST.md\r\n",
+  "interpretation": "The observed four-path delta is exactly the already-recorded live publication/validation-marker update after the published precommit finalization. It is not a passing current checkpoint validation. No unexpected Git/source divergence was observed. Inventory and canonical IN_PROGRESS synchronization are pending, not silently waived.",
+  "protectedLedger": "Do not append parent COMMANDS.jsonl or REWORK-LOG.jsonl until active public-quality session 80486 imports its serialized canonical bytes.",
+  "requiredFollowup": "After public quality completion, declare every current path, synchronize with the unchanged canonical functions and execute recorded current checkpoint validation. Retain this failed original tool observation.",
+  "subjectCommit": "9aef31990db2d224bd036c2cb2d72664f04dc9aa",
+  "independentVerdictGranted": false,
+  "gate8Started": false
+}

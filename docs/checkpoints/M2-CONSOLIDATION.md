@@ -23,6 +23,11 @@ The correction covers literal checkpoint producer/replay and separately preserve
 and cleanup observations through client/native wrappers. [ADR-0061](../adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md)
 defines that separation; [ADR-0062](../adr/ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md)
 defines the explicitly approved narrow frozen-job Docker bridge, not a general sandbox bypass.
+The corrective continuation also records
+[ADR-0063](../adr/ADR-0063-historical-review-producers-inherit-only-process-scoped-git-path-handling.md):
+real transported clone/checkout and unchanged legacy producers receive only exact child-scoped
+Git path handling. Failed runtime-v3 quality, actual same-depth historical failures and subsequent
+original declaration reconstructions remain in CP0003; none rewrites the historical subjects.
 Actual failures, guarded recurrences, local repairs and source epochs remain in the
 [current ledger](GATE-7-CP-0003/COMMANDS.jsonl). Same-session controls are not independent review.
 

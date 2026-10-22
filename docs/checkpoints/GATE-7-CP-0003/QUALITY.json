@@ -22,18 +22,18 @@
       "justification": null
     },
     "lint": {
-      "status": "PASS",
+      "status": "NOT_EXECUTED",
       "evidence": [
         "file:quality-attempts/lint/run-0012.json"
       ],
-      "justification": "Actual complete current canonical lint and publication binding."
+      "justification": "This referenced older source proof is historical. Current actual lint run0013 passed; bind the new proof through the current publication verifier before accepting a new source epoch."
     },
     "staticAnalysis": {
-      "status": "PASS",
+      "status": "NOT_EXECUTED",
       "evidence": [
         "file:quality-attempts/staticAnalysis/run-0010.json"
       ],
-      "justification": "Actual current canonical static-analysis component, not complete quality acceptance."
+      "justification": "Historical source epoch only; current complete assurance remains due."
     },
     "security": {
       "status": "NOT_EXECUTED",
@@ -48,7 +48,7 @@
     "checkpointValidation": {
       "status": "PASS",
       "evidence": [
-        "file:quality-attempts/checkpointValidation/run-0008.json"
+        "file:quality-attempts/checkpointValidation/run-0010.json"
       ],
       "justification": "Actual quiescent valid IN_PROGRESS draft; not terminal readiness or independent validation."
     },
@@ -58,9 +58,11 @@
       "justification": null
     },
     "greenKeeper": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "FAIL",
+      "evidence": [
+        "file:published-green-keeper/run-0003/RECEIPT.json"
+      ],
+      "justification": "Actual complete runtime-v3 cycle is red. Later local proofs do not replace a fresh complete green cycle."
     },
     "deliveryCompleteness": {
       "status": "FAIL",

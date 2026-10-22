@@ -204,5 +204,5 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-7-CH
 | `LESSON-REQ-0147` | `lesson:LSN-0148` | yes | `NOT_STARTED` | Verify minimal protocol fixtures inherit control contracts, never deployment-owned source data | LESSON-PREFLIGHT.json LESSON-REQ-0147 |
 | `LESSON-REQ-0148` | `lesson:LSN-0149` | yes | `NOT_STARTED` | Verify a shell exit zero is not a produced digest or verified original evidence | LESSON-PREFLIGHT.json LESSON-REQ-0148 |
 | `LESSON-REQ-0149` | `lesson:LSN-0150` | yes | `NOT_STARTED` | Verify build and verification root inputs need subject-versioned assurance binding | LESSON-PREFLIGHT.json LESSON-REQ-0149 |
-| `LESSON-REQ-0150` | `lesson:LSN-0151` | yes | `NOT_STARTED` | Verify immutable Git object reads must handle Windows long paths only in the owning child | LESSON-PREFLIGHT.json LESSON-REQ-0150 |
+| `LESSON-REQ-0150` | `lesson:LSN-0151` | yes | `PARTIAL` | Verify immutable Git object reads must handle Windows long paths only in the owning child | LESSON-PREFLIGHT.json LESSON-REQ-0150 |
 | `LESSON-REQ-0151` | `lesson:LSN-0152` | yes | `PARTIAL` | Verify private runner inputs require physical containment, not lexical ancestry | LESSON-PREFLIGHT.json LESSON-REQ-0151 |

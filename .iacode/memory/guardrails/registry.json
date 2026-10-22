@@ -547,7 +547,9 @@
         "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
         "test_the_rule_detects_a_capture_that_would_fail",
         "test_cold_diagnostic_entrypoints_use_utf8_before_any_work",
-        "M2CurrentStreamBootstrapTests.test_actual_capture_entry_blocks_reject_cold_bootstrap_removal"
+        "M2CurrentStreamBootstrapTests.test_actual_capture_entry_blocks_reject_cold_bootstrap_removal",
+        "PublicationCallerTests.test_unchanged_whole_tree_codepage_guard_covers_current_m2_sources",
+        "PublicationProofDecisionTests.test_actual_git_capture_states_decoder_and_preserves_unicode"
       ],
       "lessons": [
         "LSN-0035"
@@ -2352,7 +2354,11 @@
         "Gate7GitTransportTests.test_git_override_is_child_scoped_and_leaves_local_and_global_settings_unchanged",
         "Gate7GitTransportTests.test_genuine_git_failure_stays_failed_without_rewriting_configuration_or_input",
         "ReviewBundleTests.test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar",
-        "ReviewBundleTests.test_declared_digest_and_size_are_rebuilt_not_trusted"
+        "ReviewBundleTests.test_declared_digest_and_size_are_rebuilt_not_trusted",
+        "M2HistoryTransportTests.test_real_short_null_and_long_materialization_preserve_config_and_refusal",
+        "M2HistoryTransportTests.test_genuine_bad_subject_remains_refused_without_configuration_effects",
+        "M2HistoryTransportTests.test_legacy_git_read_gets_exact_bytes_only_with_child_runtime_override",
+        "M2HistoryTransportTests.test_child_runtime_configuration_preserves_existing_pairs_and_refuses_malformed_input"
       ],
       "lessons": [
         "LSN-0151"

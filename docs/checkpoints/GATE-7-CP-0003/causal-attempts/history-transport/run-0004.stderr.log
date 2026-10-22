@@ -1,0 +1,27 @@
+test_child_runtime_configuration_preserves_existing_pairs_and_refuses_malformed_input (test_m2_history_transport.M2HistoryTransportTests.test_child_runtime_configuration_preserves_existing_pairs_and_refuses_malformed_input) ... ERROR
+test_genuine_bad_subject_remains_refused_without_configuration_effects (test_m2_history_transport.M2HistoryTransportTests.test_genuine_bad_subject_remains_refused_without_configuration_effects) ... ok
+test_legacy_git_read_gets_exact_bytes_only_with_child_runtime_override (test_m2_history_transport.M2HistoryTransportTests.test_legacy_git_read_gets_exact_bytes_only_with_child_runtime_override) ... ERROR
+test_real_short_null_and_long_materialization_preserve_config_and_refusal (test_m2_history_transport.M2HistoryTransportTests.test_real_short_null_and_long_materialization_preserve_config_and_refusal) ... ok
+
+======================================================================
+ERROR: test_child_runtime_configuration_preserves_existing_pairs_and_refuses_malformed_input (test_m2_history_transport.M2HistoryTransportTests.test_child_runtime_configuration_preserves_existing_pairs_and_refuses_malformed_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_history_transport.py", line 170, in test_child_runtime_configuration_preserves_existing_pairs_and_refuses_malformed_input
+    environment = reader._transport_producer_environment()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'm2_real_transport_reader' has no attribute '_transport_producer_environment'
+
+======================================================================
+ERROR: test_legacy_git_read_gets_exact_bytes_only_with_child_runtime_override (test_m2_history_transport.M2HistoryTransportTests.test_legacy_git_read_gets_exact_bytes_only_with_child_runtime_override)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_history_transport.py", line 145, in test_legacy_git_read_gets_exact_bytes_only_with_child_runtime_override
+    environment = reader._transport_producer_environment()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'm2_real_transport_reader' has no attribute '_transport_producer_environment'
+
+----------------------------------------------------------------------
+Ran 4 tests in 4.541s
+
+FAILED (errors=2)

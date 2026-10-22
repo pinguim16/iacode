@@ -3,17 +3,27 @@
 Current Gate: GATE-7
 Current Status: IN_PROGRESS
 
-Live continuation update: final locally restored source783fac50 has actual passing82-case M2,
-91-path read-only authored quality, full canonical lint run0012, inherited denominator, phase,
-native/history, cleanup-order, byte transport, static and memory controls. LSN-0105 and LSN-0140
-were restored only after their required actual proofs; every original failure remains. No producer
-from those local checks remains active. Finish quiescent draft validation and publish an immutable
-IN_PROGRESS runtime-v3, then run all16 canonical gates and one full49-stage non-fast verifier.
-Do not append working COMMANDS/REWORK while the public Green Keeper imports its serialized ledger.
-Requirements/completeness, fresh internal Red Team/mirror, exact phase0002 disposal and sealing
-remain due before a fresh independent M2 audit. No complete quality, seal or independent verdict
-exists. Older detailed epoch observations below remain historical until the final handoff assembly.
-Never reuse historical PIDs/controllers or rewrite failed observations.
+Live continuation update: immutable runtime-v3 completed every mandatory quality gate and remains
+FAIL. Its Root suite reports1066 cases and four failure events: one missing capture decoder and
+three historical declaration reconstructions. Exact native cleanup and public-clone removal pass;
+original canonical ledger/output were imported before later records. Do not rerun session80486.
+
+ROOT-CODEPAGE-001 and HISTORY-TRANSPORT-001 reopened LSN-0035/LSN-0151 before their corrections.
+Current source3efcb431 passes88 M2 cases,94-path read-only authored quality, whole canonical lint
+run0013 and unchanged stream/actual transport boundary controls. Historical runs0006/0007/0008
+use the original Gate5/Gate6/Gate7 producers and reproduce both archives/declarations at the
+failing temporary depth. No historical seal, source or global setting was rewritten.
+
+All these producers actually exited. Quiescent run0009 passed and cmd0431 restored only local
+prevention, retaining every original/counter and the source transition in
+POST-QUALITY-LOCAL-RESTORATION.json. New source8db34905 freshly passes M2 run0008, whole canonical
+lint run0014,94-path read-only quality run0031 and publication controls run0007. No producer remains
+active. Complete current declaration/synchronization and quiescent validation run0010, bind only
+the actually valid IN_PROGRESS draft, then publish runtime-v4 and execute a fresh complete16-gate
+cycle and whole49-stage verifier. Completeness, fresh internal
+Red Team/mirror, exact phase0002 disposal and sealing remain due before independent M2 audit.
+No complete green current cycle, seal or independent verdict exists. Detailed older epoch sections
+below are historical until final handoff assembly. Never reuse historical controllers or overwrite failures.
 
 RESUME-0001.json records the owner's explicit continuation after restart. Docker concerns only
 verified E:/iacode resources, without attribution of another project's update. The original

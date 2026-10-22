@@ -1,6 +1,10 @@
 # Risks
 
-The initial37-container comparison fails for two esteira-videos containers recreated with another image at2026-10-22T00:09:57Z and00:10:15Z. Their engine labels name E:/esteira_videos, outside this repository. Original IDs/snapshots and the failed comparison remain. Their replacements and every other unrelated application present before our disposal stayed unchanged during it. Attribution/authority confirmation was requested from the owner and is still pending.
+The initial37-container comparison fails for two replacements outside this repository. Original
+IDs/snapshots and the failed comparison remain. Their replacements and every unrelated application
+present before the historical disposal stayed unchanged during it. The owner explicitly narrowed
+Docker concerns to this project's verified resources; attribution of another project's update is
+not a blocker and no external activity is represented as approved by this task.
 
 Both finding closures, the complete current16-gate cycle, one complete immutable49-stage non-fast verifier, DCV, fresh internal Red Team/mirror, canonical seal/reconstruction and a later fresh independent M2 report remain pending. The original findings remain IN_PROGRESS, not CLOSED.
 

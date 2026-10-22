@@ -70,6 +70,11 @@ class PublicationCallerTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             self.assert_precondition_first(source.read_text(encoding="utf-8"))
 
+    def test_unchanged_whole_tree_codepage_guard_covers_current_m2_sources(self):
+        inherited = module("m2_inherited_decoder_guard", ROOT / "tests/test_gate0_foundation.py")
+        case = inherited.SubprocessDecodingTests("test_no_capture_relies_on_the_platform_codepage")
+        case.test_no_capture_relies_on_the_platform_codepage()
+
 
 class PublicationProofDecisionTests(unittest.TestCase):
     """Modeled lint facts for a verifier decision, never live lint or a real push."""
@@ -147,7 +152,12 @@ class PublicationProofDecisionTests(unittest.TestCase):
 
     def git(self, *arguments):
         return subprocess.run(
-            ["git", *arguments], cwd=self.root, capture_output=True, check=True, text=True
+            ["git", *arguments],
+            cwd=self.root,
+            capture_output=True,
+            check=True,
+            text=True,
+            encoding="utf-8",
         ).stdout
 
     def write(self):
@@ -162,6 +172,29 @@ class PublicationProofDecisionTests(unittest.TestCase):
         self.assertEqual(self.head, result["subjectCommit"])
         self.assertEqual("cmd-unit-modeled", result["commandId"])
         self.assertEqual(before, self.git("status", "--porcelain"))
+
+    def test_actual_git_capture_states_decoder_and_preserves_unicode(self):
+        tree = ast.parse(Path(__file__).read_text(encoding="utf-8"))
+        owner = next(
+            node
+            for node in tree.body
+            if isinstance(node, ast.ClassDef) and node.name == type(self).__name__
+        )
+        caller = next(
+            node for node in owner.body if isinstance(node, ast.FunctionDef) and node.name == "git"
+        )
+        capture = next(
+            node
+            for node in ast.walk(caller)
+            if isinstance(node, ast.Call) and ast.unparse(node.func) == "subprocess.run"
+        )
+        decoder = next((item.value for item in capture.keywords if item.arg == "encoding"), None)
+        self.assertIsInstance(decoder, ast.Constant)
+        self.assertEqual(decoder.value, "utf-8")
+        message = "Actual Git Unicode capture: ação — 東京"
+        self.git("-c", "i18n.commitEncoding=utf-8", "commit", "--allow-empty", "-m", message)
+        observed = self.git("-c", "i18n.logOutputEncoding=utf-8", "log", "-1", "--format=%B")
+        self.assertIn(message, observed)
 
     def test_missing_stale_failed_and_bool_exit_proofs_are_refused(self):
         original = self.proof.read_bytes()

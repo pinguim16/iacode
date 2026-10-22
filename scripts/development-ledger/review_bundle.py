@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -431,6 +432,27 @@ def reconstruct_twice(
         }
 
 
+def _transport_producer_environment() -> dict[str, str]:
+    """Scope legacy producers' Git reads to their process, never a config-file write."""
+    environment = dict(os.environ)
+    raw_count = environment.get("GIT_CONFIG_COUNT", "")
+    if type(raw_count) is not str or len(raw_count) > 8 or (
+        raw_count and (not raw_count.isascii() or not raw_count.isdigit())
+    ):
+        raise LedgerError("invalid inherited runtime Git configuration count")
+    count = int(raw_count or "0")
+    if count > 1024 or any(
+        f"GIT_CONFIG_KEY_{index}" not in environment
+        or f"GIT_CONFIG_VALUE_{index}" not in environment
+        for index in range(count)
+    ):
+        raise LedgerError("incomplete or excessive inherited runtime Git configuration")
+    environment[f"GIT_CONFIG_KEY_{count}"] = "core.longpaths"
+    environment[f"GIT_CONFIG_VALUE_{count}"] = "true"
+    environment["GIT_CONFIG_COUNT"] = str(count + 1)
+    return environment
+
+
 def reconstruct_twice_from_transport(
     root: Path,
     checkpoint: Path,
@@ -441,11 +463,13 @@ def reconstruct_twice_from_transport(
 
     commit = resolve_subject(root, subject)
     checkpoint_relative = checkpoint.relative_to(root)
+    producer_environment = _transport_producer_environment()
     with tempfile.TemporaryDirectory(prefix="iacode-review-transport-") as temporary:
         parent = Path(temporary)
         clone = parent / "repository"
         cloned = subprocess.run(
-            ["git", "clone", "--quiet", "--no-local", str(root), str(clone)],
+            ["git", "-c", "core.longpaths=true", "clone", "--quiet", "--no-local",
+             str(root), str(clone)],
             cwd=parent,
             text=True,
             encoding="utf-8",
@@ -455,7 +479,7 @@ def reconstruct_twice_from_transport(
             check=False,
         )
         checked = subprocess.run(
-            ["git", "checkout", "--quiet", "--detach", commit],
+            ["git", "-c", "core.longpaths=true", "checkout", "--quiet", "--detach", commit],
             cwd=clone,
             text=True,
             encoding="utf-8",
@@ -479,6 +503,7 @@ def reconstruct_twice_from_transport(
                     "--bundle", str(bundle),
                 ],
                 cwd=clone,
+                env=producer_environment,
                 text=True,
                 encoding="utf-8",
                 errors="replace",

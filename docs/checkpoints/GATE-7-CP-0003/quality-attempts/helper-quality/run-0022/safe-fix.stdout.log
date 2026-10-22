@@ -1,0 +1,23 @@
+E501 Line too long (103 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:22:101
+   |
+20 |         "no archive membership, sealed source or global config change."
+21 |     ),
+22 |     "docs/adr/ADR-0063-historical-review-producers-inherit-only-process-scoped-git-path-handling.md": (
+   |                                                                                                     ^^^
+23 |         "Record the measured immutable legacy producer process-environment boundary; "
+24 |         "no historical subject rewrite or independent approval."
+   |
+
+B023 Function definition does not bind loop variable `observations`
+   --> tests/test_m2_history_transport.py:98:29
+    |
+ 96 | …                     clone = Path(arguments[-1])
+ 97 | …                     path = clone / leaf
+ 98 | …                     observations.append(
+    |                       ^^^^^^^^^^^^
+ 99 | …                         {
+100 | …                             "clone": clone,
+    |
+
+Found 2 errors.

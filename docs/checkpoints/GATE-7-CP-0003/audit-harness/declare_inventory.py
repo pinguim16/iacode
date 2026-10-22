@@ -14,6 +14,22 @@ CHECKPOINT = Path(__file__).resolve().parents[1]
 ROOT = CHECKPOINT.parents[2]
 
 AUTHORED = {
+    "scripts/development-ledger/review_bundle.py": (
+        "HISTORY-TRANSPORT-001 extends ADR-0058 per-command long-path handling to actual "
+        "transport clone/checkout and ADR-0063 legacy child runtime configuration; "
+        "no archive membership, sealed source or global config change."
+    ),
+    (
+        "docs/adr/ADR-0063-historical-review-producers-inherit-only-"
+        "process-scoped-git-path-handling.md"
+    ): (
+        "Record the measured immutable legacy producer process-environment boundary; "
+        "no historical subject rewrite or independent approval."
+    ),
+    "tests/test_m2_history_transport.py": (
+        "Actual short-HEAD null, long-path Git materialization and genuine-refusal controls; "
+        "missing review producers stay FAIL and are never live reconstruction proof."
+    ),
     "tests/test_m2_continuation.py": (
         "LSN-0140 actual corrective/current canonical sections, recorded lesson/guard membership "
         "and original/adverse controls without weakening inherited assertions."

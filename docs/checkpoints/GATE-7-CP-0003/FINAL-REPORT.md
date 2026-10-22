@@ -1,13 +1,20 @@
 # Scoped disposal and resumed corrective report
 
-Latest live update: final locally restored source783fac50 passes82 M2 cases,91-path read-only
-authored quality, full canonical lint run0012, inherited denominator, phase/native/history,
-cleanup-order, byte transport, static and memory controls. Original AUTHORED-STYLE-001 and
-CONTINUATION-001 failures remain intact. The publisher requires both actual current full lint and
-whole authored quality. Quiescent draft validation and immutable runtime-v3 publication are next,
-not whole quality acceptance. Runtime-v2's canceled incomplete cycle remains historical.
-All16-gate/full49-stage assurance, completeness, fresh internal Red Team/mirror, final phase0002
-disposal, seal and a later fresh independent M2 report remain pending. No Gate8 is authorized.
+Latest live update: runtime-v3's actual complete quality cycle is FAIL with15 green gates and a red
+Root suite. Its original1066-case/four-failure output, canonical ledger, successful native cleanup
+and observed clone removal remain intact. ROOT-CODEPAGE-001 and HISTORY-TRANSPORT-001 were escalated
+before repair. Current source3efcb431 passes88 M2 cases,94-path read-only authored quality, full
+canonical lint run0013 and unchanged stream/real transport boundary controls. Original producers
+rebuild the exact Gate5/Gate6/Gate7 archive declarations in history runs0006/0007/0008, without
+historical source, tag or global configuration changes. ADR-0063 records the exact child-only scope.
+
+Quiescent run0009 passed; cmd0431 restored local prevention only. New source8db34905 actually passes
+M2 run0008, full canonical lint run0014,94-path read-only quality run0031 and publication controls
+run0007. New quiescent validation and immutable runtime-v4 precede fresh complete16-gate/full49-stage
+assurance. Completeness,
+fresh internal Red Team/mirror, final phase0002 disposal, seal and the later independent M2 report
+remain pending. Older detailed source observations below are historical until final assembly.
+No Gate8 is authorized and no independent verdict has been granted.
 
 RESUME-0001.json records explicit owner continuation after restart. The earlier scope clarification
 supersedes attribution of another project's update as a blocker, without rewriting the failed

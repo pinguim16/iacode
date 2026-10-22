@@ -1,0 +1,72 @@
+{
+  "startedAt": "2026-10-22T09:48:51Z",
+  "finishedAt": "2026-10-22T09:48:53Z",
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "arguments": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_gate7_git_transport.py",
+        "-v"
+      ],
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 733,
+        "sha256": "54d41363483c07bb487828241d606fcb40a142e553be7b9c484f7e4f65d507b8",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 1,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 1,
+        "signaledProcessCount": 1,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "sourceFingerprint": "3efcb43178c85a74a74bd2428aad8350673bbce96d40b14b3ca3b1615b203874",
+  "sourceUnchanged": true,
+  "arguments": [
+    "C:\\Program Files\\Python313\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_git_transport.py",
+    "-v"
+  ],
+  "exitCode": 0,
+  "durationMs": 2915,
+  "streams": {
+    "stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-git/run-0001.stdout.log"
+    },
+    "stderr": {
+      "bytes": 733,
+      "sha256": "54d41363483c07bb487828241d606fcb40a142e553be7b9c484f7e4f65d507b8",
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-git/run-0001.stderr.log"
+    }
+  }
+}

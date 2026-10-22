@@ -1659,9 +1659,9 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0034",
       "description": "Verify captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work",
       "mandatory": true,
-      "implementationStatus": "COMPLETE",
+      "implementationStatus": "PARTIAL",
       "finalStatus": "PARTIAL",
-      "justification": "Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.",
+      "justification": "Local prevention demonstrated; complete current immutable assurance pending.",
       "notes": "",
       "implementationEvidence": [
         "file:scripts/development-ledger/new_checkpoint.py",
@@ -1678,7 +1678,21 @@
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
         "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0013.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/helper-quality/run-0029/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/all-m2/run-0007.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0003.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/history-transport/run-0006.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-git/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/review-reconstruction/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0009.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/stdout.log",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/stdout.log",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/stdout.log"
       ],
       "negativeTestEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
@@ -1690,10 +1704,29 @@
       "documentationEvidence": [
         "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
         "file:docs/adr/ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md",
-        "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"
+        "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md",
+        "file:.iacode/memory/retrospectives/GATE-7-CP-0003.md"
       ],
-      "validationEvidence": [],
-      "guardrailEvidence": []
+      "validationEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0013.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/helper-quality/run-0029/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/all-m2/run-0007.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0003.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/history-transport/run-0006.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-git/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/review-reconstruction/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0009.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/stdout.log",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/stdout.log",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/stdout.log"
+      ],
+      "guardrailEvidence": [
+        "test:PublicationCallerTests.test_unchanged_whole_tree_codepage_guard_covers_current_m2_sources",
+        "test:PublicationProofDecisionTests.test_actual_git_capture_states_decoder_and_preserves_unicode"
+      ]
     },
     {
       "id": "LESSON-REQ-0035",
@@ -3932,16 +3965,53 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0150",
       "description": "Verify immutable Git object reads must handle Windows long paths only in the owning child",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
-      "justification": null,
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
+      "justification": "Local prevention demonstrated; complete current immutable assurance pending.",
       "notes": "",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0013.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/helper-quality/run-0029/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/all-m2/run-0007.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0003.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/history-transport/run-0006.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-git/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/review-reconstruction/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0009.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/stdout.log",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/stdout.log",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/stdout.log"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
-      "validationEvidence": [],
-      "guardrailEvidence": []
+      "documentationEvidence": [
+        "file:.iacode/memory/retrospectives/GATE-7-CP-0003.md"
+      ],
+      "validationEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0013.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/helper-quality/run-0029/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/all-m2/run-0007.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0003.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/history-transport/run-0006.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-git/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/review-reconstruction/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0009.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/stdout.log",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/stdout.log",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/RECEIPT.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/stdout.log"
+      ],
+      "guardrailEvidence": [
+        "test:M2HistoryTransportTests.test_real_short_null_and_long_materialization_preserve_config_and_refusal",
+        "test:M2HistoryTransportTests.test_genuine_bad_subject_remains_refused_without_configuration_effects",
+        "test:M2HistoryTransportTests.test_legacy_git_read_gets_exact_bytes_only_with_child_runtime_override",
+        "test:M2HistoryTransportTests.test_child_runtime_configuration_preserves_existing_pairs_and_refuses_malformed_input"
+      ]
     },
     {
       "id": "LESSON-REQ-0151",

@@ -42,6 +42,7 @@ def main() -> int:
     mode.add_argument("--resource-phase-controls", action="store_true")
     mode.add_argument("--bootstrap-ownership-controls", action="store_true")
     mode.add_argument("--publication-controls", action="store_true")
+    mode.add_argument("--history-transport-controls", action="store_true")
     mode.add_argument("--all-m2-controls", action="store_true")
     mode.add_argument("--lint-denominator-controls", action="store_true")
     mode.add_argument("--native-controls", action="store_true")
@@ -60,7 +61,20 @@ def main() -> int:
         environment = child_environment()
         owned = read_env_file(current_owner_file(), {})
         environment.update(owned)
-    if options.lint_denominator_controls:
+    if options.history_transport_controls:
+        command = [
+            "python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tests",
+            "-p",
+            "test_m2_history_transport.py",
+            "-v",
+        ]
+        folder = "causal-attempts/history-transport"
+    elif options.lint_denominator_controls:
         command = [
             "python",
             "-m",

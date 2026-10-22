@@ -14,6 +14,14 @@ CHECKPOINT = Path(__file__).resolve().parents[1]
 ROOT = CHECKPOINT.parents[2]
 
 ASSETS = (
+    "scripts/development-ledger/review_bundle.py",
+    "tests/test_m2_history_transport.py",
+    (
+        "docs/adr/ADR-0063-historical-review-producers-inherit-only-"
+        "process-scoped-git-path-handling.md"
+    ),
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/post_quality_diagnostics.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/close_post_quality_guards.py",
     "tests/test_m2_continuation.py",
     "docs/checkpoints/M2-CONSOLIDATION.md",
     ".gitattributes",

@@ -72,3 +72,4 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0060](ADR-0060-native-drain-allows-natural-exit-within-the-existing-deadline.md) | Native drain allows natural exit within the existing deadline | Accepted |
 | [ADR-0061](ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md) | Client verification preserves producer and cleanup outcomes | Accepted |
 | [ADR-0062](ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md) | Isolated audit uses closed host validation jobs | Accepted |
+| [ADR-0063](ADR-0063-historical-review-producers-inherit-only-process-scoped-git-path-handling.md) | Historical review producers inherit only process-scoped Git path handling | Accepted |

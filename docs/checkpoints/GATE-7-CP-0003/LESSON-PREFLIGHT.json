@@ -16,9 +16,9 @@
     "scripts/iacode",
     "scripts/development-ledger"
   ],
-  "generatedAt": "2026-10-22T05:33:33Z",
+  "generatedAt": "2026-10-22T10:20:06Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "ba1778e7e04443c74c43bab34014ffc7e49b974f25f32ffa075e772cb844bd96",
+  "inputsFingerprint": "04faaf28b69403b540b4fc40a4644be347bc7dbf7d84821a336105a03d5a420c",
   "lessonsConsidered": 152,
   "lessonsApplicable": 151,
   "applicable": [
@@ -1516,8 +1516,8 @@
       "lessonId": "LSN-0151",
       "title": "Immutable Git object reads must handle Windows long paths only in the owning child",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics.",
       "requiredEvidence": "Actual bare-reader long-path failure beside a real scoped-child binary-byte success with unchanged configuration and observed owner cleanup; current owning reconstruction/declaration controls and complete immutable verification.",
       "derivedRequirementId": "LESSON-REQ-0150"

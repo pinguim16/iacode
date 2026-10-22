@@ -277,7 +277,12 @@ def main() -> int:
             "only a new explicitly named current immutable runtime subject tag is allowed"
         )
     branch = subprocess.run(
-        ["git", "branch", "--show-current"], cwd=ROOT, capture_output=True, check=True, text=True
+        ["git", "branch", "--show-current"],
+        cwd=ROOT,
+        capture_output=True,
+        check=True,
+        text=True,
+        encoding="utf-8",
     ).stdout.strip()
     if not branch or branch != state["branch"]:
         raise ValueError("an attached matching implementing branch is required")

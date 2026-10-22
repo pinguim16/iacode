@@ -1,0 +1,30 @@
+{
+  "kind": "IMPLEMENTER_OPERATIONAL_ATTEMPTS_NOT_ACCEPTANCE_OR_INDEPENDENT_FINDINGS",
+  "originalsRewritten": false,
+  "items": [
+    {
+      "commands": ["cmd-0384", "cmd-0385", "cmd-0386"],
+      "observation": "The first direct focused invocation was rejected before execution because the recorder interpreted a discover pattern ending in .py as a repository script path. A literal wildcard pattern was then actually executed and returned the expected codepage failure. record_command.py does not materialize stdout/stderr files named by its optional artifact fields; cmd-0385's planned stream paths were not produced.",
+      "evidenceLimit": "Do not invent missing streams or use those declared paths as original-byte proof. The accepted actual causal capture is cmd-0386, causal-attempts/inherited-streams/run-0002.json and its separately hashed original streams. The complete earlier failure also remains in published-green-keeper/run-0003/stdout.log."
+    },
+    {
+      "commands": ["cmd-0396", "cmd-0397", "cmd-0398"],
+      "observation": "The first long-transport fixture left source HEAD long in its intended short null, so both premises failed. That attempt is not causal evidence. The next attempt selects the actual short source HEAD for its null and fails only the long materialization before repair; the unchanged boundary/refusal assertions pass after the child-command correction.",
+      "evidence": ["causal-attempts/history-transport/run-0001.json", "causal-attempts/history-transport/run-0002.json", "causal-attempts/history-transport/run-0003.json"]
+    },
+    {
+      "observation": "Normal unpublished-source safe formatting attempts exposed two then four unchanged-rule findings. Original failed format receipts remain; successful formatting is not read-only acceptance. Later whole read-only checks cover every derived current authored path with unchanged rules.",
+      "evidence": ["quality-attempts/helper-quality/run-0022/RECEIPT.json", "quality-attempts/helper-quality/run-0024/RECEIPT.json", "quality-attempts/helper-quality/run-0027/RECEIPT.json"]
+    },
+    {
+      "command": "cmd-0421",
+      "observation": "The actual byte-control producer completed successfully and preserved run-0010 originals, but the caller guessed stdoutArtifact=byte-transport-attempts/controls/run-0007.json. That older reference does not bind this execution and is rejected as a current evidence candidate. The original command row is retained unchanged.",
+      "actualOutput": "byte-transport-attempts/controls/run-0010.json",
+      "requiredFollowup": "Inspect the actual current counter and rerun the unchanged complete control after current declaration, binding the actual next run-0011 receipt. Never rewrite cmd-0421 or reinterpret an older source proof as current.",
+      "completedFollowup": {"command": "cmd-0423", "actualReceipt": "byte-transport-attempts/controls/run-0011.json", "observedExitCode": 0, "sourceUnchanged": true}
+    }
+  ],
+  "lessonApplication": "Use actual producer metadata, observed exit and matching original artifact bytes before accepting evidence. A rejected bookkeeping reference or deliberate negative fixture is not a passing current proof.",
+  "independentVerdictGranted": false,
+  "gate8Started": false
+}

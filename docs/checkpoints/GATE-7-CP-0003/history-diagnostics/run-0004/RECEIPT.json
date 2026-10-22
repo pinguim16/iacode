@@ -1,0 +1,50 @@
+{
+  "startedAt": "2026-10-22T09:07:15Z",
+  "kind": "HISTORICAL_RECONSTRUCTION_DIAGNOSTIC_NOT_ACCEPTANCE",
+  "checkpoint": "GATE-6-CP-0001",
+  "sourceFingerprint": "e5d860ea970f0c906d76e986d4a435882af1968da87b79f7e19ace776496a062",
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "arguments": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "E:\\iacode\\docs\\checkpoints\\GATE-7-CP-0003\\audit-harness\\post_quality_diagnostics.py",
+        "history-child",
+        "--checkpoint",
+        "GATE-6-CP-0001",
+        "--destination",
+        "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2cp3-public-quality-ga8c43ak\\diagnostic.zip"
+      ],
+      "stdout": {
+        "bytes": 3338,
+        "sha256": "4e2ee89343f6c3d3f9b5bc2a65e2e98f9feadd0838486a9131916ef665115ae4",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 1,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 1,
+        "signaledProcessCount": 1,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "safeStreamHashes": {
+    "stdout.log": "4e2ee89343f6c3d3f9b5bc2a65e2e98f9feadd0838486a9131916ef665115ae4",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "finishedAt": "2026-10-22T09:08:02Z",
+  "temporaryOwnerRemoved": true,
+  "sourceUnchanged": true
+}

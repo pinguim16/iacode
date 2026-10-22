@@ -170,6 +170,55 @@
         "continuation-attempts/run-0001/RECEIPT.json",
         "causal-attempts/all-m2/run-0003.json"
       ]
+    },
+    {
+      "id": "ROOT-CODEPAGE-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "GUARDRAIL_FAILURE LSN-0035",
+      "observed": "The unchanged codepage guard rejects the actual publication-test Git capture. No actual Unicode decoding crash is claimed.",
+      "evidence": "causal-attempts/inherited-streams/run-0002.json",
+      "originalWholeCycle": "published-green-keeper/run-0003/RECEIPT.json",
+      "requiredCorrection": "State the decoder explicitly, exercise Unicode through the real capture, and execute the unchanged whole-tree guard before publication and the next complete mandatory cycle. No test weakening or old seal rewrite.",
+      "currentProof": [
+        "quality-attempts/lint/run-0013.json",
+        "quality-attempts/helper-quality/run-0029/RECEIPT.json",
+        "causal-attempts/all-m2/run-0007.json",
+        "causal-attempts/inherited-streams/run-0003.json",
+        "causal-attempts/history-transport/run-0006.json",
+        "causal-attempts/inherited-git/run-0001.json",
+        "causal-attempts/review-reconstruction/run-0001.json",
+        "quality-attempts/checkpointValidation/run-0009.json",
+        "history-diagnostics/run-0008/RECEIPT.json",
+        "history-diagnostics/run-0008/stdout.log",
+        "history-diagnostics/run-0006/RECEIPT.json",
+        "history-diagnostics/run-0006/stdout.log",
+        "history-diagnostics/run-0007/RECEIPT.json",
+        "history-diagnostics/run-0007/stdout.log"
+      ]
+    },
+    {
+      "id": "HISTORY-TRANSPORT-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "GUARDRAIL_FAILURE LSN-0151",
+      "observed": "Actual clone exits128 on long checkpoint-observation filenames at the public runner's child temporary depth. The complete cycle reports three historical declaration failures; only CP0001 has a detailed diagnostic yet.",
+      "evidence": "history-diagnostics/run-0001/RECEIPT.json",
+      "requiredCorrection": "Extend child-only Git path handling to transport materialization, prove real deep/null/genuine-refusal controls and actual historical declarations without changing sealed bytes or global settings.",
+      "currentProof": [
+        "quality-attempts/lint/run-0013.json",
+        "quality-attempts/helper-quality/run-0029/RECEIPT.json",
+        "causal-attempts/all-m2/run-0007.json",
+        "causal-attempts/inherited-streams/run-0003.json",
+        "causal-attempts/history-transport/run-0006.json",
+        "causal-attempts/inherited-git/run-0001.json",
+        "causal-attempts/review-reconstruction/run-0001.json",
+        "quality-attempts/checkpointValidation/run-0009.json",
+        "history-diagnostics/run-0008/RECEIPT.json",
+        "history-diagnostics/run-0008/stdout.log",
+        "history-diagnostics/run-0006/RECEIPT.json",
+        "history-diagnostics/run-0006/stdout.log",
+        "history-diagnostics/run-0007/RECEIPT.json",
+        "history-diagnostics/run-0007/stdout.log"
+      ]
     }
   ]
 }

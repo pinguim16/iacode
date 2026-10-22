@@ -1,0 +1,22 @@
+{
+  "kind": "POST_PUBLICATION_OBSERVATION_NOT_CANONICAL_SEAL",
+  "observedAt": "2026-10-22T06:01:47Z",
+  "commit": "9aef31990db2d224bd036c2cb2d72664f04dc9aa",
+  "tag": "iacode-subjects/GATE-7-CP-0003-runtime-v3",
+  "sourceFingerprint": "783fac502c9de3ff092996efd59b3fb6a72c9c3b866913a75795433945794668",
+  "branch": "main",
+  "localTagEqualsHead": true,
+  "remoteMainEqualsHead": true,
+  "remoteTagEqualsHead": true,
+  "workingTreeWasCleanBeforeThisObservation": true,
+  "publisherActualExitCode": 0,
+  "stagedSecretScan": {"command": "cmd-0365", "exitCode": 0, "findings": 0, "allowlisted": 0},
+  "actualStages": ["current-lint-precondition", "current-authored-quality-precondition", "stage-declared-inputs", "staged-scan", "canonical-finalizer", "stage-finalized-content", "commit", "committed-validation", "immutable-runtime-tag", "atomic-normal-push"],
+  "allObservedStageExits": 0,
+  "originalConsoleBytesRetainedHere": false,
+  "observationBasis": "Actual tool completion and later read-only Git head/tag/remote queries; this is a derived observation, not raw console output",
+  "checkpointStatus": "IN_PROGRESS",
+  "checkpointSealed": false,
+  "independentM2": "PENDING",
+  "gate8Authorized": false
+}

@@ -1,0 +1,57 @@
+{
+  "observedAt": "2026-10-22T06:02:15Z",
+  "kind": "COMPLETE_CANONICAL_GREEN_KEEPER_PUBLIC_TRANSPORT",
+  "subjectCommit": "9aef31990db2d224bd036c2cb2d72664f04dc9aa",
+  "subjectTag": "iacode-subjects/GATE-7-CP-0003-runtime-v3",
+  "sourceFingerprint": "783fac502c9de3ff092996efd59b3fb6a72c9c3b866913a75795433945794668",
+  "result": "FAIL",
+  "allMandatoryGatesRequested": true,
+  "gateSelectionOverride": false,
+  "localPrivateRefsFilteredOrChanged": false,
+  "sourceEdited": false,
+  "cloneCredentialHelperDisabled": true,
+  "cloneInteractivePromptsDisabled": true,
+  "canonicalEvidenceImported": true,
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 1,
+      "arguments": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/green_keeper.py",
+        "--trigger",
+        "Current complete corrective assurance from an exact public transported subject",
+        "--root-cause",
+        "M2 literal invocation/cleanup evidence and measured adapter/UTF-8 guard corrections"
+      ],
+      "stdout": {
+        "bytes": 8821,
+        "sha256": "7b420ae95ec1e578d2209baad0cad008a513d61b769c12a56dbab682510414bb",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "cloneSourceUnchanged": true,
+  "workingSourceUnchanged": true,
+  "importedCommandsSha256": "cac1cc8a56eadfef41639b88054bdd29e65ca92a3588e89117f339f030861ce5",
+  "temporaryClone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2cp3-public-quality-sxbeg45o\\repository",
+  "temporaryCloneRemoved": true,
+  "finishedAt": "2026-10-22T08:42:35Z"
+}

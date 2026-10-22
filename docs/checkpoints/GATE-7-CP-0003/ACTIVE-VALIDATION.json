@@ -1,12 +1,30 @@
 {
-  "recordedAt": "2026-10-22T05:43:37Z",
+  "recordedAt": "2026-10-22T10:29:45Z",
   "kind": "TRANSIENT_OPERATOR_RESUME_MARKER_NOT_ACCEPTANCE",
-  "sourceFingerprint": "783fac502c9de3ff092996efd59b3fb6a72c9c3b866913a75795433945794668",
+  "sourceFingerprint": "8db349056ee964dca80133038b075b9204c6fbc224e4371bf7e6b7704acb02bd",
   "nativeToolSessions": [],
+  "subjectCommit": "9aef31990db2d224bd036c2cb2d72664f04dc9aa",
+  "subjectTag": "iacode-subjects/GATE-7-CP-0003-runtime-v3",
+  "completedPublicCycle": {
+    "nativeSession": 80486,
+    "commandId": "cmd-0383",
+    "receipt": "published-green-keeper/run-0003/RECEIPT.json",
+    "result": "FAIL",
+    "requiredGates": 16,
+    "passingGates": 15,
+    "failingGate": "tests",
+    "observedRootTestsRun": 1066,
+    "reportedUnittestFailureEvents": 4,
+    "canonicalEvidenceImported": true,
+    "nativeCleanup": "PASS",
+    "temporaryCloneRemoved": true
+  },
+  "ledgerDiscipline": "The public wrapper finished and imported its exact append-only canonical evidence before later records. No current full-quality PASS exists. A running process or diagnostic completion is not a successful Gate verdict. Never reuse historical PIDs/controllers.",
   "pausedByOwner": false,
   "cleanup": "ORIGINAL_DISPOSED_PHASE_0002_ACTIVE_FINAL_DISPOSAL_PENDING",
   "ownedBuilderReceipt": "resource-phases/phase-0002/OWNED-DOCKER-SCOPE.json",
   "independentAuditorStarted": false,
   "gate8Authorized": false,
-  "warning": "Never rerun any historical PID controller or disposed receipt. Preserve original failed comparisons and every failed producer."
+  "warning": "Never rerun any historical PID controller or disposed receipt. Preserve original failed comparisons and every failed producer.",
+  "localGuardRestoration": "POST-QUALITY-LOCAL-RESTORATION.json"
 }

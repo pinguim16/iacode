@@ -4,7 +4,7 @@
 - Scope: `Knowledge-Engine-M2-corrective-checkpoint-command-replay-client-producer-evidence-Docker-isolated-validation`
 - Technologies: `Python`, `PostgreSQL`, `Docker`, `Windows`
 - Modules: `services/knowledge`, `apps/api`, `packages/contracts`, `packages/persistence`, `scripts/iacode`, `scripts/development-ledger`
-- Generated: `2026-10-22T05:33:33Z`
+- Generated: `2026-10-22T10:20:06Z`
 - Lessons considered: 152
 - Lessons applicable: 151
 
@@ -163,7 +163,7 @@ delivery when one is absent.
 | `LSN-0148` Minimal protocol fixtures inherit control contracts, never deployment-owned source data | `GUARDED` | HIGH | `LESSON-REQ-0147` | Construct minimal protocol repositories from explicit canonical control assets and declared runtime dependencies, not deployment-owned curator sources, unrelated histories or attestation verdicts. |
 | `LSN-0149` A shell exit zero is not a produced digest or verified original evidence | `GUARDED` | HIGH | `LESSON-REQ-0148` | Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance. |
 | `LSN-0150` Build and verification root inputs need subject-versioned assurance binding | `GUARDED` | HIGH | `LESSON-REQ-0149` | Bind every current required root build/verification input by exact subject-versioned policy; real material changes, ignored files and deletion must invalidate current evidence while legacy subject fingerprints retain their original semantics. |
-| `LSN-0151` Immutable Git object reads must handle Windows long paths only in the owning child | `GUARDED` | HIGH | `LESSON-REQ-0150` | Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics. |
+| `LSN-0151` Immutable Git object reads must handle Windows long paths only in the owning child | `GUARDED` | CRITICAL | `LESSON-REQ-0150` | Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics. |
 | `LSN-0152` Private runner inputs require physical containment, not lexical ancestry | `GUARDED` | MEDIUM | `LESSON-REQ-0151` | Reject physical escapes, parent aliases, redirected ancestors and hardlinks before reading a frozen input or publishing a report; retain an actual valid inside-file control. |
 
 ## Why each lesson applies
@@ -1213,7 +1213,7 @@ delivery when one is absent.
 
 ### LSN-0151 — Immutable Git object reads must handle Windows long paths only in the owning child
 
-- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics.
 - Required evidence: Actual bare-reader long-path failure beside a real scoped-child binary-byte success with unchanged configuration and observed owner cleanup; current owning reconstruction/declaration controls and complete immutable verification.
 - Derived requirement: `LESSON-REQ-0150`

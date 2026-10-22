@@ -1,0 +1,26 @@
+test_every_tool_that_re_emits_captured_output_configures_its_own_stream (test_gate0_foundation.SubprocessDecodingTests.test_every_tool_that_re_emits_captured_output_configures_its_own_stream)
+Reading a child's UTF-8 is half of it: writing it back out encodes again. ... ok
+test_no_capture_relies_on_the_platform_codepage (test_gate0_foundation.SubprocessDecodingTests.test_no_capture_relies_on_the_platform_codepage) ... FAIL
+test_the_rule_detects_a_capture_that_would_fail (test_gate0_foundation.SubprocessDecodingTests.test_the_rule_detects_a_capture_that_would_fail)
+The control is exercised against a call it must reject, not only against clean code. ... ok
+
+======================================================================
+FAIL: test_no_capture_relies_on_the_platform_codepage (test_gate0_foundation.SubprocessDecodingTests.test_no_capture_relies_on_the_platform_codepage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate0_foundation.py", line 436, in test_no_capture_relies_on_the_platform_codepage
+    self.assertEqual(offenders, [], "captures without an explicit encoding")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['tests/test_m2_progress_publication.py:149'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'tests/test_m2_progress_publication.py:149'
+
+- ['tests/test_m2_progress_publication.py:149']
++ [] : captures without an explicit encoding
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.793s
+
+FAILED (failures=1)

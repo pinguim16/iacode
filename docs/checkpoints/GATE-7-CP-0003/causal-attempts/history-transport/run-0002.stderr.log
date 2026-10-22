@@ -1,0 +1,17 @@
+test_genuine_bad_subject_remains_refused_without_configuration_effects (test_m2_history_transport.M2HistoryTransportTests.test_genuine_bad_subject_remains_refused_without_configuration_effects) ... ok
+test_real_short_null_and_long_materialization_preserve_config_and_refusal (test_m2_history_transport.M2HistoryTransportTests.test_real_short_null_and_long_materialization_preserve_config_and_refusal) ... 
+  test_real_short_null_and_long_materialization_preserve_config_and_refusal (test_m2_history_transport.M2HistoryTransportTests.test_real_short_null_and_long_materialization_preserve_config_and_refusal) (premise='long') ... FAIL
+
+======================================================================
+FAIL: test_real_short_null_and_long_materialization_preserve_config_and_refusal (test_m2_history_transport.M2HistoryTransportTests.test_real_short_null_and_long_materialization_preserve_config_and_refusal) (premise='long')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_history_transport.py", line 95, in test_real_short_null_and_long_materialization_preserve_config_and_refusal
+    self.assertEqual(report["cloneExitCode"], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 128 != 0
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.552s
+
+FAILED (failures=1)
