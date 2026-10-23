@@ -1,0 +1,75 @@
+{
+  "Name": "repository/apps/web",
+  "Ref": "hkndnanlkwv10t9pld1160byi",
+  "Context": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-verification-1_e7hm5p\\repository",
+  "Dockerfile": "apps\\web\\Dockerfile",
+  "VCSRepository": "https://github.com/pinguim16/iacode.git",
+  "VCSRevision": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "StartedAt": "2026-10-22T19:06:41.724979521-03:00",
+  "CompletedAt": "2026-10-22T19:07:37.478488179-03:00",
+  "Duration": 55753508658,
+  "Status": "completed",
+  "NumCompletedSteps": 18,
+  "NumTotalSteps": 18,
+  "NumCachedSteps": 6,
+  "BuildArgs": [
+    {
+      "Name": "IACODE_BUILD_TIMESTAMP",
+      "Value": "2026-10-22T22:06:38Z"
+    },
+    {
+      "Name": "IACODE_COMMIT",
+      "Value": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3"
+    },
+    {
+      "Name": "IACODE_VERSION",
+      "Value": "0.1.0"
+    }
+  ],
+  "Labels": [
+    {
+      "Name": "com.docker.compose.project",
+      "Value": "iacode-verify-a7c2d86ad60d"
+    },
+    {
+      "Name": "com.docker.compose.service",
+      "Value": "web"
+    },
+    {
+      "Name": "com.docker.compose.version",
+      "Value": "5.5.1"
+    }
+  ],
+  "Config": {
+    "RestRaw": [
+      {
+        "Name": "local-sessionid:context",
+        "Value": "7czolxg9yhahhrwrqy2rb2qbs"
+      }
+    ]
+  },
+  "Materials": [
+    {
+      "URI": "pkg:docker/nginx@1.30.5-alpine-slim?platform=linux%2Famd64",
+      "Digests": [
+        "sha256:32463212baf0e7d91aded2e9b843a4f2b9e017804b8c9d5bae7b51dcef64389c"
+      ]
+    },
+    {
+      "URI": "pkg:docker/node@22.23.2-bookworm-slim?platform=linux%2Famd64",
+      "Digests": [
+        "sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9"
+      ]
+    }
+  ],
+  "Attachments": [
+    {
+      "Digest": "sha256:89ef923c0b66ac6fbc96ff9b08501a098f5b81bd07ee214d98feac591657b457",
+      "Type": "application/vnd.oci.image.manifest.v1+json"
+    },
+    {
+      "Digest": "sha256:62f0a13fbbb84dc2c95f84a8da1d808ab254dcd09d35f1ec4cd99b0d75da410c",
+      "Type": "https://slsa.dev/provenance/v1"
+    }
+  ]
+}

@@ -1,0 +1,1652 @@
+{
+  "startedAt": "2026-10-23T01:28:40Z",
+  "kind": "EXACT_UNUSED_PRIVATE_IMAGES_ONLY",
+  "ownershipPreview": "cleanup-previews/private-history/run-0006.json",
+  "candidates": [
+    "sha256:33a48cb44b1337790ae5564feb080be00f669e22f7acdcc5f5fcec21f1e20959",
+    "sha256:3e5a6201885eb9884baf4b22339ce1c08eba1dad7a7d342d211084e9eea80091",
+    "sha256:c9a9ca6f78e1bfd8a31f23429ad30442db3c328f5395c6400fc813cac1e896a2",
+    "sha256:db91158312c16f7c587481dcd0403ff2ffad7464a839e172f60bdf187c138d7b",
+    "sha256:e3fed9c4ef8341ec20b48d105c3886e81f6429ba910f4b59b16a76dbb94b1596",
+    "sha256:e9c04d445e11acdd3862df8d96a84e366325eeca0ed3bdbf6bd3e05a110a0d88"
+  ],
+  "executions": [
+    {
+      "imageId": "sha256:33a48cb44b1337790ae5564feb080be00f669e22f7acdcc5f5fcec21f1e20959",
+      "producer": {
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "arguments": [
+          "docker",
+          "image",
+          "rm",
+          "sha256:33a48cb44b1337790ae5564feb080be00f669e22f7acdcc5f5fcec21f1e20959"
+        ],
+        "stdout": {
+          "bytes": 129,
+          "sha256": "2f856441f3322fe64564096098121ac0fb877c41ce2d7705ebbdd31272d764bb",
+          "refusal": null
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "refusal": null
+        }
+      },
+      "cleanup": {
+        "result": "PASS",
+        "observation": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 1,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 1,
+          "signaledProcessCount": 1,
+          "forcedTermination": false,
+          "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+        }
+      }
+    },
+    {
+      "imageId": "sha256:3e5a6201885eb9884baf4b22339ce1c08eba1dad7a7d342d211084e9eea80091",
+      "producer": {
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "arguments": [
+          "docker",
+          "image",
+          "rm",
+          "sha256:3e5a6201885eb9884baf4b22339ce1c08eba1dad7a7d342d211084e9eea80091"
+        ],
+        "stdout": {
+          "bytes": 129,
+          "sha256": "85c46f145e291382ba9524dee873a46c112ef1083cb37eed4d7b3d432e1f849c",
+          "refusal": null
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "refusal": null
+        }
+      },
+      "cleanup": {
+        "result": "PASS",
+        "observation": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 1,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 1,
+          "signaledProcessCount": 1,
+          "forcedTermination": false,
+          "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+        }
+      }
+    },
+    {
+      "imageId": "sha256:c9a9ca6f78e1bfd8a31f23429ad30442db3c328f5395c6400fc813cac1e896a2",
+      "producer": {
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "arguments": [
+          "docker",
+          "image",
+          "rm",
+          "sha256:c9a9ca6f78e1bfd8a31f23429ad30442db3c328f5395c6400fc813cac1e896a2"
+        ],
+        "stdout": {
+          "bytes": 135,
+          "sha256": "1ce67d91efacaa31b1fc4efd1c4fa0464b109402a0ca1b5d67fa1481cd12df3b",
+          "refusal": null
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "refusal": null
+        }
+      },
+      "cleanup": {
+        "result": "PASS",
+        "observation": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 1,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 1,
+          "signaledProcessCount": 1,
+          "forcedTermination": false,
+          "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+        }
+      }
+    },
+    {
+      "imageId": "sha256:db91158312c16f7c587481dcd0403ff2ffad7464a839e172f60bdf187c138d7b",
+      "producer": {
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "arguments": [
+          "docker",
+          "image",
+          "rm",
+          "sha256:db91158312c16f7c587481dcd0403ff2ffad7464a839e172f60bdf187c138d7b"
+        ],
+        "stdout": {
+          "bytes": 132,
+          "sha256": "59cca1e66d0f196f527ca030ac0fdbcc8d57e1af029946207465ecd0851444f7",
+          "refusal": null
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "refusal": null
+        }
+      },
+      "cleanup": {
+        "result": "PASS",
+        "observation": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 1,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 1,
+          "signaledProcessCount": 1,
+          "forcedTermination": false,
+          "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+        }
+      }
+    },
+    {
+      "imageId": "sha256:e3fed9c4ef8341ec20b48d105c3886e81f6429ba910f4b59b16a76dbb94b1596",
+      "producer": {
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "arguments": [
+          "docker",
+          "image",
+          "rm",
+          "sha256:e3fed9c4ef8341ec20b48d105c3886e81f6429ba910f4b59b16a76dbb94b1596"
+        ],
+        "stdout": {
+          "bytes": 81,
+          "sha256": "b994ccb0e8c403720e3659e2680b071c843df3dc72d739394a7a5eb4deff6859",
+          "refusal": null
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "refusal": null
+        }
+      },
+      "cleanup": {
+        "result": "PASS",
+        "observation": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 1,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 1,
+          "signaledProcessCount": 1,
+          "forcedTermination": false,
+          "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+        }
+      }
+    },
+    {
+      "imageId": "sha256:e9c04d445e11acdd3862df8d96a84e366325eeca0ed3bdbf6bd3e05a110a0d88",
+      "producer": {
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "arguments": [
+          "docker",
+          "image",
+          "rm",
+          "sha256:e9c04d445e11acdd3862df8d96a84e366325eeca0ed3bdbf6bd3e05a110a0d88"
+        ],
+        "stdout": {
+          "bytes": 133,
+          "sha256": "4342f93ebea026f1e6c9cd5f1894a4a44f681d35e6e518de2e709da83b32ff98",
+          "refusal": null
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "refusal": null
+        }
+      },
+      "cleanup": {
+        "result": "PASS",
+        "observation": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 1,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 1,
+          "signaledProcessCount": 1,
+          "forcedTermination": false,
+          "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+        }
+      }
+    }
+  ],
+  "result": "PASS",
+  "builderAndNeededCacheRetained": true,
+  "finishedAt": "2026-10-23T01:28:51Z",
+  "remainingCandidates": [],
+  "removedImages": [
+    "sha256:33a48cb44b1337790ae5564feb080be00f669e22f7acdcc5f5fcec21f1e20959",
+    "sha256:3e5a6201885eb9884baf4b22339ce1c08eba1dad7a7d342d211084e9eea80091",
+    "sha256:c9a9ca6f78e1bfd8a31f23429ad30442db3c328f5395c6400fc813cac1e896a2",
+    "sha256:db91158312c16f7c587481dcd0403ff2ffad7464a839e172f60bdf187c138d7b",
+    "sha256:e3fed9c4ef8341ec20b48d105c3886e81f6429ba910f4b59b16a76dbb94b1596",
+    "sha256:e9c04d445e11acdd3862df8d96a84e366325eeca0ed3bdbf6bd3e05a110a0d88"
+  ],
+  "containerObservationsUnchanged": true,
+  "baselineImagesRemovedByTheseCommands": [],
+  "after": {
+    "observedAt": "2026-10-23T01:28:51Z",
+    "containers": [
+      {
+        "id": "00c99897900a3ba2f8b19850869204f3a7a35aab1a26e87462e5d27031223fef",
+        "name": "iacode-worker",
+        "image": "sha256:87334077b35855ce77b9c94fad1a8160255ec2ba727ce36cc2bf8230f3599215",
+        "running": false,
+        "startedAt": "2026-10-15T15:38:19.847301093Z",
+        "restartCount": 782,
+        "project": "iacode"
+      },
+      {
+        "id": "084884b16929fabca4130098224d8991e04ccac5b2ab340372c66f954eddc4e6",
+        "name": "iacode-api",
+        "image": "sha256:4e3fcf1ba3ed80db573e9ba5ab91bae012ed66f3b5f12164639b68a1e57e9346",
+        "running": false,
+        "startedAt": "2026-10-13T22:53:34.082404626Z",
+        "restartCount": 0,
+        "project": "iacode"
+      },
+      {
+        "id": "0a20a920e959720fd1afa32451f5055ade26ba8782fa15f0ce93c529f7e09212",
+        "name": "iacode-postgres",
+        "image": "sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
+        "running": false,
+        "startedAt": "2026-10-13T22:53:34.086149301Z",
+        "restartCount": 0,
+        "project": "iacode"
+      },
+      {
+        "id": "1786c2851d84e15328d726e7d31e9d7fcc1c34f96f08b7428d8e96a8de8bdd47",
+        "name": "iacode-redis",
+        "image": "sha256:8d02c1dc547ea659066d2ca18fce4e80f0a84cfe56a61af2ced2c2a48de3597c",
+        "running": false,
+        "startedAt": "2026-10-13T22:53:34.04304283Z",
+        "restartCount": 0,
+        "project": "iacode"
+      },
+      {
+        "id": "188c16e1e4fdc3ff7c39fb86bd72669d2478a75854114ab662c41a3af8921e81",
+        "name": "fliki-frontend",
+        "image": "sha256:6f01e544ba86b5b9477ece186f402e31a09f187c04f9a059cf759d5ab24dd8a3",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.635400311Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "1a175d3e0d40dd032f8097e045f525b216fd742bf489cc3b59c85efcaebf1581",
+        "name": "planner-chromadb",
+        "image": "sha256:18e67eecc172abbcd9413d751bde64983b3d167fe497c98f979083eb24c0c942",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.658137285Z",
+        "restartCount": 0,
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "1d741084b00fe22ca7a0841cf6256201959d9d253a94ec0eace72d8469d87c39",
+        "name": "fliki-v2-puller",
+        "image": "sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.833841113Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "20892c06d61d6382132642dac7c8e8e78db148da90c62afe0fd3d12fe0296963",
+        "name": "iacode-temporal",
+        "image": "sha256:f14912b699cf73015ad5c4fc18d522d4b014db90e794039214dfb7c022c2644f",
+        "running": false,
+        "startedAt": "2026-10-15T15:38:16.833208523Z",
+        "restartCount": 2434,
+        "project": "iacode"
+      },
+      {
+        "id": "3701864e9d2a869c48ee9648389dd14981890d4b4c6b6415e57fd543e3be660b",
+        "name": "fliki-worker",
+        "image": "sha256:2ca60381b2ac304cdcfb147b3eff4b125ee48889bc0678376067c519b274fa13",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.610526005Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "37c71ad8e886aad8843e761211683153f14ba31829a48c7e52dad623b74b9209",
+        "name": "fliki-amazon-media-puller",
+        "image": "sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.831132318Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "3c423f7e242be9206b7ea571dbdd507caef776a544318ded18c490d9abafea27",
+        "name": "fliki-worker-tts",
+        "image": "sha256:e495a68211c85969acfbee5d12cf74a9c45b564d63f8b3c8fef8680e584bd01c",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.614778327Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "4309b39493297837a88bdfcbdf3d88fb2c498c336917266999e2c3773008c292",
+        "name": "iacode-temporal-ui",
+        "image": "sha256:ff0943fe532b8e33c46cd28b29e81e0ce0b6f55b9ee50a38ef1b437cc4de3fa5",
+        "running": false,
+        "startedAt": "2026-10-13T22:53:34.037963463Z",
+        "restartCount": 0,
+        "project": "iacode"
+      },
+      {
+        "id": "46caceb8af9c43bf0153de5cce04faf67ce2cc14e05ab2d7656b7a478f9869d3",
+        "name": "barsi-frontend",
+        "image": "sha256:f34934e8fb7e5ea8ab102d3c0143b4bbe624540b14be8aa40fd1e20f256c3452",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.649811487Z",
+        "restartCount": 0,
+        "project": "barsi"
+      },
+      {
+        "id": "47625b43350fcaeaa7b434f50912b42c7b34d55d856fe5f059db31fd072fc2d9",
+        "name": "f0-placar10",
+        "image": "sha256:2ca60381b2ac304cdcfb147b3eff4b125ee48889bc0678376067c519b274fa13",
+        "running": true,
+        "startedAt": "2026-10-23T01:01:00.967381589Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "48f8e39ddf466b145ff05b2e7d3da7408233fb24110ea6b513a444d8a494f395",
+        "name": "megasena-homolog-web",
+        "image": "sha256:a8cd1e78ad0325b14120fbf8019404ae30ce9c4d50b08118f75dff1336c5362a",
+        "running": false,
+        "startedAt": "2026-10-01T00:08:41.473103122Z",
+        "restartCount": 0,
+        "project": "megasena-analytics"
+      },
+      {
+        "id": "4ab558622c98ca15e9a786cc592a9f2d749649b5a7cc0b8c4ec0483baac40731",
+        "name": "iacode-sandbox",
+        "image": "sha256:f04176312c6bb178c5884f7ad7e42e31880260fa7b65f8a3d979e682b64df2ac",
+        "running": false,
+        "startedAt": "2026-10-15T15:37:32.931812063Z",
+        "restartCount": 1153,
+        "project": "iacode"
+      },
+      {
+        "id": "51a85d9aac9d87a50fcc4b7b3ccfd456beebbcda8da056b846465ee26976c2a0",
+        "name": "megasena-analytics-updater-1",
+        "image": "sha256:fbe7d59b1bc24e84005ae72bbac61e146c99b2889c670077810dacd8e7d1327d",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.653091192Z",
+        "restartCount": 0,
+        "project": "megasena-analytics"
+      },
+      {
+        "id": "5d213e89249f83b4c726839c780d50b18524aef98a9325322009d0a777525282",
+        "name": "fliki-captions-pipeline",
+        "image": "sha256:2ca60381b2ac304cdcfb147b3eff4b125ee48889bc0678376067c519b274fa13",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.639405861Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "648872625eb0cefd837a04d6b7c436162f88495c04a058314f8ad1b10b40baca",
+        "name": "iacode-minio-bootstrap",
+        "image": "sha256:a7fe349ef4bd8521fb8497f55c6042871b2ae640607cf99d9bede5e9bdf11727",
+        "running": false,
+        "startedAt": "2026-10-11T10:45:33.377262925Z",
+        "restartCount": 0,
+        "project": "iacode"
+      },
+      {
+        "id": "79790defdc4bc71eee82709a4cae392ef457b8a70d7fecf595f180ebee535933",
+        "name": "esteira-videos-worker-1",
+        "image": "sha256:916573742b73f82dceddc736f491c6248a119415dac6a0d353203d6aa3d2b725",
+        "running": true,
+        "startedAt": "2026-10-23T01:17:42.433427604Z",
+        "restartCount": 0,
+        "project": "esteira-videos"
+      },
+      {
+        "id": "7da54e917aa7f6f9cf1f4b937158ed249f0fd2ac7c7ba18d49b22a5b5136556b",
+        "name": "fliki-youtubei-worker",
+        "image": "sha256:2ca60381b2ac304cdcfb147b3eff4b125ee48889bc0678376067c519b274fa13",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.594223947Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "839841899ccfed51083e8f12f7d3ff3521a474cf6d14ff34f490cb5d85c75223",
+        "name": "fliki-api",
+        "image": "sha256:2ca60381b2ac304cdcfb147b3eff4b125ee48889bc0678376067c519b274fa13",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.656597304Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "85ef8915d075738cd8142b6fd8d114d2fbedc9b7b6c7c360b194abd52969aa13",
+        "name": "iacode-prometheus",
+        "image": "sha256:332c2f43e7e389d74d3893b55bb02fbbd684208e681eeb604641d5d769c0fe2a",
+        "running": false,
+        "startedAt": "2026-10-11T10:45:27.934857836Z",
+        "restartCount": 0,
+        "project": "iacode"
+      },
+      {
+        "id": "92b3d8ab835095cc1d89eca5314b658fcc2a5d9b06e0e1e07a2a1e4064928708",
+        "name": "planner-backend",
+        "image": "sha256:e41f38ebcd1e883f9c4e28c66ff3b0b030a40199616d400b9a161359b7590275",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.648552903Z",
+        "restartCount": 0,
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "a5aa7cd2f5f6f2b6de0089bdbf889b8f7a4dba9a1f27302d669177ed3c7f9f90",
+        "name": "fliki-ollama",
+        "image": "sha256:f1a705f2bd113fb8d15f85f7c217f0dc5f6bebda6b0cc42b82c3ad165ffcb9dc",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.553078685Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "aa063691b1b7963d62db3c58b1fbd957387f044c8190b0372d46902d29c4945b",
+        "name": "iacode-web",
+        "image": "sha256:9d30399928f027c5889cd373a42f8d4d9577ed0a3ed6b8129767864757a7cf36",
+        "running": false,
+        "startedAt": "2026-10-13T22:53:33.913980341Z",
+        "restartCount": 0,
+        "project": "iacode"
+      },
+      {
+        "id": "aaf04bf3e96dd095bec94deb77c38b0cc6012851a321645b2ac318583f368287",
+        "name": "megasena-analytics-web-1",
+        "image": "sha256:ac188bef56e314078259c6f9e28e9328c9364b1ed581907fb0a688d3bbe95f5f",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.651774495Z",
+        "restartCount": 0,
+        "project": "megasena-analytics"
+      },
+      {
+        "id": "b1f17c591fa8234fcdd6589b067469af08c93c229447d1c7cb5b25f3cbd37b95",
+        "name": "fliki-shopee-media-puller",
+        "image": "sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.826611836Z",
+        "restartCount": 0,
+        "project": "fliki"
+      },
+      {
+        "id": "b5bb16c7cb8b435762505852b93e5d74d6906892e207120a9b40b1a931200ffe",
+        "name": "planner-frontend",
+        "image": "sha256:aa0515b44869e880a6e60ef1693faf997279610368a08fec747c7d676e637314",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.628796654Z",
+        "restartCount": 0,
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "ca813ffd4b8ee88f738e20e2305b31ec70a053f160b3700a35dda1c09885c7c5",
+        "name": "barsi-backend",
+        "image": "sha256:b86f0bc484511c628df9c8b81a99318479d248ad78a6ef6e2352a6205426db89",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.622335568Z",
+        "restartCount": 0,
+        "project": "barsi"
+      },
+      {
+        "id": "db41331b72f2441fbc24fb1efdbf265e0ce036d95fbc6e6a797d16ca0924f861",
+        "name": "iacode-migrate",
+        "image": "sha256:4e3fcf1ba3ed80db573e9ba5ab91bae012ed66f3b5f12164639b68a1e57e9346",
+        "running": false,
+        "startedAt": "2026-10-11T10:45:34.045888465Z",
+        "restartCount": 0,
+        "project": "iacode"
+      },
+      {
+        "id": "e3ca87ef0b46a799664212f1708e60fb8e91fd6b7979fab7b8eb3042c472559d",
+        "name": "buildx_buildkit_iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c0",
+        "image": "sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea",
+        "running": true,
+        "startedAt": "2026-10-23T00:35:52.523953512Z",
+        "restartCount": 0,
+        "project": null
+      },
+      {
+        "id": "e3d61392a46d39f3f25cafe34248f9c970e58509c93d3cef06cb1ad856c3cde7",
+        "name": "iacode-minio",
+        "image": "sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e",
+        "running": false,
+        "startedAt": "2026-10-13T22:53:34.003142186Z",
+        "restartCount": 0,
+        "project": "iacode"
+      },
+      {
+        "id": "e82ee09c9838f0f720b3ccfee0fd20ca069d1620a484cc4e6373bae82caec8cf",
+        "name": "esteira-videos-web-1",
+        "image": "sha256:916573742b73f82dceddc736f491c6248a119415dac6a0d353203d6aa3d2b725",
+        "running": true,
+        "startedAt": "2026-10-23T01:17:24.790031157Z",
+        "restartCount": 0,
+        "project": "esteira-videos"
+      },
+      {
+        "id": "f1eff2f32a2dae3862c9a8030fc10ef2083e5a0cbe26d3c3474b90b8f1c85995",
+        "name": "iacode-grafana",
+        "image": "sha256:c26daa778ea9fd817be3fe606ba4b78ea4c217a7a27c1ba8f5faa4418ecc48dd",
+        "running": false,
+        "startedAt": "2026-10-13T22:53:34.022473896Z",
+        "restartCount": 0,
+        "project": "iacode"
+      },
+      {
+        "id": "f435dc20d454cd6f87bd340fc6e436d9e14c6725f08550a7c78a92f67a532683",
+        "name": "iacode-evaluator",
+        "image": "sha256:6cec782f69ce1956da76c938173c1e033fdc306ed3e9b7821efb62b5a5eb905c",
+        "running": false,
+        "startedAt": "2026-10-15T15:37:06.106679534Z",
+        "restartCount": 1152,
+        "project": "iacode"
+      },
+      {
+        "id": "fa9088490ef2fe29b2f3d7359a4c9acfd64bd56e7261d3c8c7bbe297cd51a149",
+        "name": "teldrive",
+        "image": "sha256:9ea0ef0bab614c42e9d797fe62fe1dc2f68d2cd74d4740f17ef76a9c6bf3cfb4",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.538720139Z",
+        "restartCount": 0,
+        "project": "teldrive2"
+      },
+      {
+        "id": "fd1c66a1348f3315797543cbebded2e3509e6134c5ec122eb93c11057cef1d38",
+        "name": "planner-redis",
+        "image": "sha256:8b81dd37ff027bec4e516d41acfbe9fe2460070dc6d4a4570a2ac5b9d59df065",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.645467691Z",
+        "restartCount": 0,
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "fed8a1271851e2b4b847400c62e78fd392545df3b8da9de5478f01289bd30fe3",
+        "name": "fliki-yt-sidecar",
+        "image": "sha256:2ac06981aaef024c418a308f18903b21adcbd1fe675783dbd6f41910ebde689e",
+        "running": true,
+        "startedAt": "2026-10-22T02:30:57.584795385Z",
+        "restartCount": 0,
+        "project": "fliki"
+      }
+    ],
+    "images": [
+      {
+        "id": "sha256:05735b377db0c448a6837eb9630128e0d3949d4e4759798a4a5c49bb266bdf4a",
+        "tags": [
+          "barsi-frontend:rollback-20261015-1329"
+        ],
+        "digests": [
+          "barsi-frontend@sha256:05735b377db0c448a6837eb9630128e0d3949d4e4759798a4a5c49bb266bdf4a"
+        ],
+        "size": 80030486,
+        "project": null
+      },
+      {
+        "id": "sha256:0ff345d0393ecb242d9a23bf4046b67d62a7f3c0518cb7d02e813e1856a785c9",
+        "tags": [
+          "megasena-analytics-updater:3.3.0"
+        ],
+        "digests": [
+          "megasena-analytics-updater@sha256:0ff345d0393ecb242d9a23bf4046b67d62a7f3c0518cb7d02e813e1856a785c9"
+        ],
+        "size": 640993061,
+        "project": "megasena-analytics"
+      },
+      {
+        "id": "sha256:100b5f09855c1a02ebfa3f9d3930f880efca9721bf3e5453ec4f2010900c09a0",
+        "tags": [
+          "fliki-backend:pre-p1-20261020"
+        ],
+        "digests": [
+          "fliki-backend@sha256:100b5f09855c1a02ebfa3f9d3930f880efca9721bf3e5453ec4f2010900c09a0"
+        ],
+        "size": 6137145827,
+        "project": "fliki"
+      },
+      {
+        "id": "sha256:10c38cf5cbb9d8f0b91925a0a2af430cd4d10302dc79334c27fb02c7a66a78d0",
+        "tags": [
+          "iacode/sandbox-quality-python:04672001cc6f7ea4"
+        ],
+        "digests": [
+          "iacode/sandbox-quality-python@sha256:10c38cf5cbb9d8f0b91925a0a2af430cd4d10302dc79334c27fb02c7a66a78d0"
+        ],
+        "size": 642261369,
+        "project": null
+      },
+      {
+        "id": "sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e",
+        "tags": [
+          "quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z"
+        ],
+        "digests": [
+          "quay.io/minio/minio@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e"
+        ],
+        "size": 240789018,
+        "project": null
+      },
+      {
+        "id": "sha256:18e67eecc172abbcd9413d751bde64983b3d167fe497c98f979083eb24c0c942",
+        "tags": [
+          "chromadb/chroma:0.5.23"
+        ],
+        "digests": [
+          "chromadb/chroma@sha256:18e67eecc172abbcd9413d751bde64983b3d167fe497c98f979083eb24c0c942"
+        ],
+        "size": 667882342,
+        "project": null
+      },
+      {
+        "id": "sha256:1ee70e19303d5452b1efd2fe6206c6be49e3b6ac0bae2695c18faf9a4cecdc4f",
+        "tags": [
+          "iacode/sandbox-quality-java:40dfbe3da6551813"
+        ],
+        "digests": [
+          "iacode/sandbox-quality-java@sha256:1ee70e19303d5452b1efd2fe6206c6be49e3b6ac0bae2695c18faf9a4cecdc4f"
+        ],
+        "size": 1417569276,
+        "project": null
+      },
+      {
+        "id": "sha256:22397815a40f5d3eb10913e2d71d85ccd66b0df0ad2b8adb0216ccf2b124177f",
+        "tags": [
+          "iacode/sandbox-quality-node:8bce0975d27c24dd"
+        ],
+        "digests": [
+          "iacode/sandbox-quality-node@sha256:22397815a40f5d3eb10913e2d71d85ccd66b0df0ad2b8adb0216ccf2b124177f"
+        ],
+        "size": 812134484,
+        "project": null
+      },
+      {
+        "id": "sha256:2325bb286ec344af3e5898cc224b5844e2707ac6e26b1632516fd3edc84a5e26",
+        "tags": [
+          "python:3.13.15-slim-bookworm"
+        ],
+        "digests": [
+          "python@sha256:2325bb286ec344af3e5898cc224b5844e2707ac6e26b1632516fd3edc84a5e26"
+        ],
+        "size": 181658180,
+        "project": null
+      },
+      {
+        "id": "sha256:2ac06981aaef024c418a308f18903b21adcbd1fe675783dbd6f41910ebde689e",
+        "tags": [
+          "fliki-yt-sidecar:latest"
+        ],
+        "digests": [
+          "fliki-yt-sidecar@sha256:2ac06981aaef024c418a308f18903b21adcbd1fe675783dbd6f41910ebde689e"
+        ],
+        "size": 346309936,
+        "project": "fliki"
+      },
+      {
+        "id": "sha256:2ca60381b2ac304cdcfb147b3eff4b125ee48889bc0678376067c519b274fa13",
+        "tags": [
+          "fliki-backend:latest"
+        ],
+        "digests": [
+          "fliki-backend@sha256:2ca60381b2ac304cdcfb147b3eff4b125ee48889bc0678376067c519b274fa13"
+        ],
+        "size": 6144725316,
+        "project": "fliki"
+      },
+      {
+        "id": "sha256:332c2f43e7e389d74d3893b55bb02fbbd684208e681eeb604641d5d769c0fe2a",
+        "tags": [
+          "prom/prometheus:v3.5.5"
+        ],
+        "digests": [
+          "prom/prometheus@sha256:332c2f43e7e389d74d3893b55bb02fbbd684208e681eeb604641d5d769c0fe2a"
+        ],
+        "size": 426695816,
+        "project": null
+      },
+      {
+        "id": "sha256:364695ba33b9faa762820e2271ab96ef47ff65aef2de81345f38b2596ceab10c",
+        "tags": [
+          "fliki-backend-tts:pre-p1-20261020"
+        ],
+        "digests": [
+          "fliki-backend-tts@sha256:364695ba33b9faa762820e2271ab96ef47ff65aef2de81345f38b2596ceab10c"
+        ],
+        "size": 15916370713,
+        "project": "fliki"
+      },
+      {
+        "id": "sha256:3c7673cb56d07594ab5f56b6d15ac5ff513c310836c20a101033aeff2e453f1c",
+        "tags": [
+          "fliki-frontend:pre-p1-20261020"
+        ],
+        "digests": [
+          "fliki-frontend@sha256:3c7673cb56d07594ab5f56b6d15ac5ff513c310836c20a101033aeff2e453f1c"
+        ],
+        "size": 79387579,
+        "project": "fliki"
+      },
+      {
+        "id": "sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9",
+        "tags": [
+          "node:22.23.2-bookworm-slim",
+          "node@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9"
+        ],
+        "digests": [
+          "node@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9"
+        ],
+        "size": 326575654,
+        "project": null
+      },
+      {
+        "id": "sha256:4fce0294a8af9fede33874b78c5b0c315a51e4428246a29ce0642fc5600f7240",
+        "tags": [
+          "iacode/sandbox-iacode-dev:44b453e562a78031"
+        ],
+        "digests": [
+          "iacode/sandbox-iacode-dev@sha256:4fce0294a8af9fede33874b78c5b0c315a51e4428246a29ce0642fc5600f7240"
+        ],
+        "size": 315685876,
+        "project": null
+      },
+      {
+        "id": "sha256:516475cc129da42866742567714ddc681e5eed7b9ee0b9e9c015e464b4221a00",
+        "tags": [
+          "nginx:1.25-alpine@sha256:516475cc129da42866742567714ddc681e5eed7b9ee0b9e9c015e464b4221a00"
+        ],
+        "digests": [
+          "nginx:1.25-alpine@sha256:516475cc129da42866742567714ddc681e5eed7b9ee0b9e9c015e464b4221a00"
+        ],
+        "size": 74105671,
+        "project": null
+      },
+      {
+        "id": "sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8",
+        "tags": [
+          "alpine:3.22"
+        ],
+        "digests": [
+          "alpine@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8"
+        ],
+        "size": 12759852,
+        "project": null
+      },
+      {
+        "id": "sha256:6f01e544ba86b5b9477ece186f402e31a09f187c04f9a059cf759d5ab24dd8a3",
+        "tags": [
+          "fliki-frontend:latest"
+        ],
+        "digests": [
+          "fliki-frontend@sha256:6f01e544ba86b5b9477ece186f402e31a09f187c04f9a059cf759d5ab24dd8a3"
+        ],
+        "size": 79411792,
+        "project": "fliki"
+      },
+      {
+        "id": "sha256:72706117896356fa8fd7140298128149dfd0d7c50125df0d52d07e61ae28c28c",
+        "tags": [
+          "iacode/web-toolchain:0.1.0"
+        ],
+        "digests": [
+          "iacode/web-toolchain@sha256:72706117896356fa8fd7140298128149dfd0d7c50125df0d52d07e61ae28c28c"
+        ],
+        "size": 937000360,
+        "project": null
+      },
+      {
+        "id": "sha256:87334077b35855ce77b9c94fad1a8160255ec2ba727ce36cc2bf8230f3599215",
+        "tags": [
+          "iacode/worker:0.1.0"
+        ],
+        "digests": [
+          "iacode/worker@sha256:87334077b35855ce77b9c94fad1a8160255ec2ba727ce36cc2bf8230f3599215"
+        ],
+        "size": 505650380,
+        "project": "iacode"
+      },
+      {
+        "id": "sha256:8b81dd37ff027bec4e516d41acfbe9fe2460070dc6d4a4570a2ac5b9d59df065",
+        "tags": [
+          "redis:7-alpine"
+        ],
+        "digests": [
+          "redis@sha256:8b81dd37ff027bec4e516d41acfbe9fe2460070dc6d4a4570a2ac5b9d59df065"
+        ],
+        "size": 60665158,
+        "project": null
+      },
+      {
+        "id": "sha256:8d02c1dc547ea659066d2ca18fce4e80f0a84cfe56a61af2ced2c2a48de3597c",
+        "tags": [
+          "redis:8.2.10-alpine"
+        ],
+        "digests": [
+          "redis@sha256:8d02c1dc547ea659066d2ca18fce4e80f0a84cfe56a61af2ced2c2a48de3597c"
+        ],
+        "size": 101357604,
+        "project": null
+      },
+      {
+        "id": "sha256:909d2105e078320218523c72b1092ed81bf6883bb516e984d7cdf23e6c2d95f6",
+        "tags": [
+          "iacode-m2cp3-91500867ff844a7ca13dfbe301838869/api:0.1.0"
+        ],
+        "digests": [
+          "iacode-m2cp3-91500867ff844a7ca13dfbe301838869/api@sha256:909d2105e078320218523c72b1092ed81bf6883bb516e984d7cdf23e6c2d95f6"
+        ],
+        "size": 516371352,
+        "project": "iacode-m2cp3-91500867ff844a7ca13dfbe301838869"
+      },
+      {
+        "id": "sha256:916573742b73f82dceddc736f491c6248a119415dac6a0d353203d6aa3d2b725",
+        "tags": [
+          "esteira-videos:local"
+        ],
+        "digests": [
+          "esteira-videos@sha256:916573742b73f82dceddc736f491c6248a119415dac6a0d353203d6aa3d2b725"
+        ],
+        "size": 5196953711,
+        "project": "esteira-videos"
+      },
+      {
+        "id": "sha256:9884c939a8a4a1c013468faa37928977b3fe03e0b1d11ff6aa115d81ab617bdf",
+        "tags": [],
+        "digests": [],
+        "size": 936815952,
+        "project": null
+      },
+      {
+        "id": "sha256:9d30399928f027c5889cd373a42f8d4d9577ed0a3ed6b8129767864757a7cf36",
+        "tags": [
+          "iacode/web:0.1.0"
+        ],
+        "digests": [
+          "iacode/web@sha256:9d30399928f027c5889cd373a42f8d4d9577ed0a3ed6b8129767864757a7cf36"
+        ],
+        "size": 21540146,
+        "project": "iacode"
+      },
+      {
+        "id": "sha256:9ea0ef0bab614c42e9d797fe62fe1dc2f68d2cd74d4740f17ef76a9c6bf3cfb4",
+        "tags": [
+          "ghcr.io/tgdrive/teldrive:1.8.3"
+        ],
+        "digests": [
+          "ghcr.io/tgdrive/teldrive@sha256:9ea0ef0bab614c42e9d797fe62fe1dc2f68d2cd74d4740f17ef76a9c6bf3cfb4"
+        ],
+        "size": 80835264,
+        "project": null
+      },
+      {
+        "id": "sha256:a5995dfdf108997f8a7c9587f54fad5e94ed5848de5236a6b28119e99efd67e0",
+        "tags": [
+          "redis:7"
+        ],
+        "digests": [
+          "redis@sha256:a5995dfdf108997f8a7c9587f54fad5e94ed5848de5236a6b28119e99efd67e0"
+        ],
+        "size": 172901244,
+        "project": null
+      },
+      {
+        "id": "sha256:a7fe349ef4bd8521fb8497f55c6042871b2ae640607cf99d9bede5e9bdf11727",
+        "tags": [
+          "quay.io/minio/mc:RELEASE.2025-08-13T08-35-41Z"
+        ],
+        "digests": [
+          "quay.io/minio/mc@sha256:a7fe349ef4bd8521fb8497f55c6042871b2ae640607cf99d9bede5e9bdf11727"
+        ],
+        "size": 117257268,
+        "project": null
+      },
+      {
+        "id": "sha256:aa0515b44869e880a6e60ef1693faf997279610368a08fec747c7d676e637314",
+        "tags": [
+          "meu_financeiro_ia-frontend:latest"
+        ],
+        "digests": [
+          "meu_financeiro_ia-frontend@sha256:aa0515b44869e880a6e60ef1693faf997279610368a08fec747c7d676e637314"
+        ],
+        "size": 79213015,
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "sha256:ac188bef56e314078259c6f9e28e9328c9364b1ed581907fb0a688d3bbe95f5f",
+        "tags": [
+          "megasena-analytics:3.4.0"
+        ],
+        "digests": [
+          "megasena-analytics@sha256:ac188bef56e314078259c6f9e28e9328c9364b1ed581907fb0a688d3bbe95f5f"
+        ],
+        "size": 234754678,
+        "project": "megasena-analytics"
+      },
+      {
+        "id": "sha256:b05b89a4472eb3ae1ef881f58d89f60659323acc91da9a8445d7f8bebc802f2b",
+        "tags": [],
+        "digests": [],
+        "size": 891508869,
+        "project": null
+      },
+      {
+        "id": "sha256:b86f0bc484511c628df9c8b81a99318479d248ad78a6ef6e2352a6205426db89",
+        "tags": [
+          "barsi-backend:latest",
+          "barsi-backend:ultima-boa"
+        ],
+        "digests": [
+          "barsi-backend@sha256:b86f0bc484511c628df9c8b81a99318479d248ad78a6ef6e2352a6205426db89"
+        ],
+        "size": 520048246,
+        "project": null
+      },
+      {
+        "id": "sha256:c0470f3c6f8227c3ac95ed77f70162720a7f7814c334831a0799f12c1dc4a8c5",
+        "tags": [
+          "iacode/sandbox-quality-node:651453e76d6b6abf"
+        ],
+        "digests": [
+          "iacode/sandbox-quality-node@sha256:c0470f3c6f8227c3ac95ed77f70162720a7f7814c334831a0799f12c1dc4a8c5"
+        ],
+        "size": 789697052,
+        "project": null
+      },
+      {
+        "id": "sha256:c26daa778ea9fd817be3fe606ba4b78ea4c217a7a27c1ba8f5faa4418ecc48dd",
+        "tags": [
+          "grafana/grafana:13.0.9"
+        ],
+        "digests": [
+          "grafana/grafana@sha256:c26daa778ea9fd817be3fe606ba4b78ea4c217a7a27c1ba8f5faa4418ecc48dd"
+        ],
+        "size": 1474203517,
+        "project": null
+      },
+      {
+        "id": "sha256:c2ff202ebd08694768cf7a2fac1f46605266bf52f5437cd820f53f6a45c0cd7a",
+        "tags": [
+          "barsi-backend:rollback-20261015-1329"
+        ],
+        "digests": [
+          "barsi-backend@sha256:c2ff202ebd08694768cf7a2fac1f46605266bf52f5437cd820f53f6a45c0cd7a"
+        ],
+        "size": 520017626,
+        "project": null
+      },
+      {
+        "id": "sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea",
+        "tags": [
+          "moby/buildkit:buildx-stable-1"
+        ],
+        "digests": [
+          "moby/buildkit@sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea"
+        ],
+        "size": 363385194,
+        "project": null
+      },
+      {
+        "id": "sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
+        "tags": [
+          "pgvector/pgvector:0.8.6-pg17"
+        ],
+        "digests": [
+          "pgvector/pgvector@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f"
+        ],
+        "size": 627018023,
+        "project": null
+      },
+      {
+        "id": "sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc",
+        "tags": [
+          "alpine:3.20"
+        ],
+        "digests": [
+          "alpine@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc"
+        ],
+        "size": 12102484,
+        "project": null
+      },
+      {
+        "id": "sha256:e40fe2d2a5eca494ebdd9845c473c9c2b17333b5cd61dfa33c3e403281f4d474",
+        "tags": [
+          "megasena-analytics:3.3.0"
+        ],
+        "digests": [
+          "megasena-analytics@sha256:e40fe2d2a5eca494ebdd9845c473c9c2b17333b5cd61dfa33c3e403281f4d474"
+        ],
+        "size": 234380884,
+        "project": "megasena-analytics"
+      },
+      {
+        "id": "sha256:e41f38ebcd1e883f9c4e28c66ff3b0b030a40199616d400b9a161359b7590275",
+        "tags": [
+          "meu_financeiro_ia-backend:latest"
+        ],
+        "digests": [
+          "meu_financeiro_ia-backend@sha256:e41f38ebcd1e883f9c4e28c66ff3b0b030a40199616d400b9a161359b7590275"
+        ],
+        "size": 752516843,
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "sha256:e495a68211c85969acfbee5d12cf74a9c45b564d63f8b3c8fef8680e584bd01c",
+        "tags": [
+          "fliki-backend-tts:latest"
+        ],
+        "digests": [
+          "fliki-backend-tts@sha256:e495a68211c85969acfbee5d12cf74a9c45b564d63f8b3c8fef8680e584bd01c"
+        ],
+        "size": 15924153271,
+        "project": "fliki"
+      },
+      {
+        "id": "sha256:eab29c3c78feef5418df0eba8568dc3deb3b9d6530b3c068cf590cb916fc06e0",
+        "tags": [
+          "ghcr.io/tgdrive/teldrive:1.8.2"
+        ],
+        "digests": [
+          "ghcr.io/tgdrive/teldrive@sha256:eab29c3c78feef5418df0eba8568dc3deb3b9d6530b3c068cf590cb916fc06e0"
+        ],
+        "size": 77433337,
+        "project": null
+      },
+      {
+        "id": "sha256:f14912b699cf73015ad5c4fc18d522d4b014db90e794039214dfb7c022c2644f",
+        "tags": [
+          "temporalio/auto-setup:1.29.7"
+        ],
+        "digests": [
+          "temporalio/auto-setup@sha256:f14912b699cf73015ad5c4fc18d522d4b014db90e794039214dfb7c022c2644f"
+        ],
+        "size": 1260210299,
+        "project": null
+      },
+      {
+        "id": "sha256:f1a705f2bd113fb8d15f85f7c217f0dc5f6bebda6b0cc42b82c3ad165ffcb9dc",
+        "tags": [
+          "ollama/ollama:latest"
+        ],
+        "digests": [
+          "ollama/ollama@sha256:f1a705f2bd113fb8d15f85f7c217f0dc5f6bebda6b0cc42b82c3ad165ffcb9dc"
+        ],
+        "size": 8009791114,
+        "project": null
+      },
+      {
+        "id": "sha256:f34934e8fb7e5ea8ab102d3c0143b4bbe624540b14be8aa40fd1e20f256c3452",
+        "tags": [
+          "barsi-frontend:latest",
+          "barsi-frontend:ultima-boa"
+        ],
+        "digests": [
+          "barsi-frontend@sha256:f34934e8fb7e5ea8ab102d3c0143b4bbe624540b14be8aa40fd1e20f256c3452"
+        ],
+        "size": 80035331,
+        "project": null
+      },
+      {
+        "id": "sha256:f3a8d8b1542e71a7e25b61640c84180e6a6e01f529f7e14cbf9ce03a570a40a6",
+        "tags": [
+          "iacode/sandbox-quality-python:2dc16ee66fbb5282"
+        ],
+        "digests": [
+          "iacode/sandbox-quality-python@sha256:f3a8d8b1542e71a7e25b61640c84180e6a6e01f529f7e14cbf9ce03a570a40a6"
+        ],
+        "size": 636102489,
+        "project": null
+      },
+      {
+        "id": "sha256:fbe7d59b1bc24e84005ae72bbac61e146c99b2889c670077810dacd8e7d1327d",
+        "tags": [
+          "megasena-analytics-updater:3.4.0"
+        ],
+        "digests": [
+          "megasena-analytics-updater@sha256:fbe7d59b1bc24e84005ae72bbac61e146c99b2889c670077810dacd8e7d1327d"
+        ],
+        "size": 642456613,
+        "project": "megasena-analytics"
+      },
+      {
+        "id": "sha256:ff0943fe532b8e33c46cd28b29e81e0ce0b6f55b9ee50a38ef1b437cc4de3fa5",
+        "tags": [
+          "temporalio/ui:2.54.1"
+        ],
+        "digests": [
+          "temporalio/ui@sha256:ff0943fe532b8e33c46cd28b29e81e0ce0b6f55b9ee50a38ef1b437cc4de3fa5"
+        ],
+        "size": 102384926,
+        "project": null
+      }
+    ],
+    "networks": [
+      {
+        "id": "028b4c1054ee1c705833a150fa0c1dae1eea74b19ce1cb10532907c18b9ed87e",
+        "name": "megasena-analytics_default",
+        "project": "megasena-analytics"
+      },
+      {
+        "id": "051d8f9707d2879964c6f49a415c9b63b3e47bda4dd9cfccffa9c60a8968c1c6",
+        "name": "megasena-closeout-20261001t192036-0300-recovery_default",
+        "project": "megasena-closeout-20261001t192036-0300-recovery"
+      },
+      {
+        "id": "144c835123acfdd0504ed269824dcb515a7b1aac3b1b61c39fcc45e090f753c3",
+        "name": "none",
+        "project": null
+      },
+      {
+        "id": "1ff2b9da89c7b328e8422d69e794a21b0dacd7616f3ec80ef5addb98a43770d0",
+        "name": "iacode-network",
+        "project": "iacode"
+      },
+      {
+        "id": "43582f405774a32c3341b6f5585adc15bced7f91b7fa1d67a28b376555aa8658",
+        "name": "megasena-closeout-20261001t210714-0300-recovery_default",
+        "project": "megasena-closeout-20261001t210714-0300-recovery"
+      },
+      {
+        "id": "4574ceaf078e0aa43f046abbe0a3f968a2e2b477866c96999836dbe9b20ff2ab",
+        "name": "host",
+        "project": null
+      },
+      {
+        "id": "575da122ae4dffe291dfe0e1d233b40caab27843af5a312c0eb3c27b2d4dec10",
+        "name": "script-amazon-v2_default",
+        "project": "script-amazon-v2"
+      },
+      {
+        "id": "61233abe02f464f4b670092d2e316a4f6999c8c25f7920a411e83e98ced439db",
+        "name": "teldrive2_default",
+        "project": "teldrive2"
+      },
+      {
+        "id": "74b0c95c6644e2f2f692bc98826bed3f265e697e1cac35d4241e1690063c26f7",
+        "name": "megasena-closeout-20261002t002237-0300-recovery_default",
+        "project": "megasena-closeout-20261002t002237-0300-recovery"
+      },
+      {
+        "id": "784b9d2a55e90428c801de0156d081102e8f660f8c9bf3ff17e566a3aaa5570d",
+        "name": "megasena-analytics_web_internal",
+        "project": "megasena-analytics"
+      },
+      {
+        "id": "9a4c71b8279593499232dfb366534337828e139a52a19dcdc708e2d825780e67",
+        "name": "fliki_default",
+        "project": "fliki"
+      },
+      {
+        "id": "b13698115294be27eb4d0ef585518b8c66d5cd077fc7652bf63ffd11165501a0",
+        "name": "bridge",
+        "project": null
+      },
+      {
+        "id": "b3afb1119d404e9b882612726b6bd029f2aa352dd9142b680da0b105c4360b30",
+        "name": "llm_shared",
+        "project": null
+      },
+      {
+        "id": "c35dc1a062e5487c123f0129864218d1e6ba1e75e128ab6e83f2b37c949f61ac",
+        "name": "barsi_default",
+        "project": "barsi"
+      },
+      {
+        "id": "ca9ebd038becce23dab42368a3006b232e602dc2e78dab8c4f0aeb40fc4cf090",
+        "name": "esteira-videos_default",
+        "project": "esteira-videos"
+      },
+      {
+        "id": "f313a1b785603386f7c9f302da4db5f95438344c0852fa4c6515bf22d6d42fdd",
+        "name": "megasena-closeout-20261001t075254-0300_default",
+        "project": "megasena-closeout-20261001t075254-0300"
+      },
+      {
+        "id": "fbd0992696d485de53dcc9b9ae4b24a54721cf2debfea4aa9618fa84433fe694",
+        "name": "iacode-m2cp3-91500867ff844a7ca13dfbe301838869-network",
+        "project": "iacode-m2cp3-91500867ff844a7ca13dfbe301838869"
+      },
+      {
+        "id": "fcfcadeedded7fdcf0e65dbd917cf6a162b8a3d89318c0beac9cbe2698eaf5a8",
+        "name": "planner-network",
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "fd0eb25eb817c44e49e1e61772c0043039e7b09aba70e2b89af6b0534fc58dec",
+        "name": "megasena-closeout-20261001t232009-0300-recovery_default",
+        "project": "megasena-closeout-20261001t232009-0300-recovery"
+      }
+    ],
+    "volumes": [
+      {
+        "id": "000856def041b7c8e46945d240fb87816036d0e1c56133f96c9f6848931157b7",
+        "name": "000856def041b7c8e46945d240fb87816036d0e1c56133f96c9f6848931157b7",
+        "project": null
+      },
+      {
+        "id": "0137531895d16f2cb171d17c3b28892a117d73ef0abd9ab617f553f917c91daf",
+        "name": "0137531895d16f2cb171d17c3b28892a117d73ef0abd9ab617f553f917c91daf",
+        "project": null
+      },
+      {
+        "id": "01a87a7e2233e4c0aed1b350d52258f4f4c51772ebbe2460997eb2042f729edd",
+        "name": "01a87a7e2233e4c0aed1b350d52258f4f4c51772ebbe2460997eb2042f729edd",
+        "project": null
+      },
+      {
+        "id": "0d82968e35d301e342bd0b60d8bcd868809c2683ffc0b089fc9ad0cd9fd3b4db",
+        "name": "0d82968e35d301e342bd0b60d8bcd868809c2683ffc0b089fc9ad0cd9fd3b4db",
+        "project": null
+      },
+      {
+        "id": "11911fdc7e9725ad3c71d66f07e5fc5374440db17bcd96274bc3635493d5df8f",
+        "name": "11911fdc7e9725ad3c71d66f07e5fc5374440db17bcd96274bc3635493d5df8f",
+        "project": null
+      },
+      {
+        "id": "18337ce344cd20be0da12dda78a0d85abf8be3ef32b1f54149b5f7708045fd82",
+        "name": "18337ce344cd20be0da12dda78a0d85abf8be3ef32b1f54149b5f7708045fd82",
+        "project": null
+      },
+      {
+        "id": "1aa6e3554638eafca4414918acad41fc24e73c27f0ea38a37645d2914017db16",
+        "name": "1aa6e3554638eafca4414918acad41fc24e73c27f0ea38a37645d2914017db16",
+        "project": null
+      },
+      {
+        "id": "1b55abe3b058bdfb02de96f8d9777e0f6d9bd5b8d07d1d99a8ae72b444984adc",
+        "name": "1b55abe3b058bdfb02de96f8d9777e0f6d9bd5b8d07d1d99a8ae72b444984adc",
+        "project": null
+      },
+      {
+        "id": "2d9bf243988f157951359b1580230087dd2db812a6fadc6ccc01080cfd0ff8fc",
+        "name": "2d9bf243988f157951359b1580230087dd2db812a6fadc6ccc01080cfd0ff8fc",
+        "project": null
+      },
+      {
+        "id": "34165ea35c1cc00a41e02727f261de4868b39c60b72ffb036a4dbb5ecb918507",
+        "name": "34165ea35c1cc00a41e02727f261de4868b39c60b72ffb036a4dbb5ecb918507",
+        "project": null
+      },
+      {
+        "id": "417af126b8ede4d007b46054c85972e76414fa3f02c790f1de7f2b1e673167cf",
+        "name": "417af126b8ede4d007b46054c85972e76414fa3f02c790f1de7f2b1e673167cf",
+        "project": null
+      },
+      {
+        "id": "4a7987b8448c351da3fed7c8707d004644ed8ed2f250654fbee7f765a6345f34",
+        "name": "4a7987b8448c351da3fed7c8707d004644ed8ed2f250654fbee7f765a6345f34",
+        "project": null
+      },
+      {
+        "id": "55d4c1a7b5ce69f30137891de15da7c3a8c5780c84f22cbc37df7e4035972bd4",
+        "name": "55d4c1a7b5ce69f30137891de15da7c3a8c5780c84f22cbc37df7e4035972bd4",
+        "project": null
+      },
+      {
+        "id": "567c0e06cc4a54346e76d5ec32b84bd9eb822e1a5668ef7213d6d851ec608e8a",
+        "name": "567c0e06cc4a54346e76d5ec32b84bd9eb822e1a5668ef7213d6d851ec608e8a",
+        "project": null
+      },
+      {
+        "id": "5bddb4e5f90cb09f64cc9259405ec7db26f8c896136dcc6c64cdd5cc4e1d2ffd",
+        "name": "5bddb4e5f90cb09f64cc9259405ec7db26f8c896136dcc6c64cdd5cc4e1d2ffd",
+        "project": null
+      },
+      {
+        "id": "5fe37e130323e884cce2b67b51c2396cdd62b9724fa5ae4885451ce53e6d784f",
+        "name": "5fe37e130323e884cce2b67b51c2396cdd62b9724fa5ae4885451ce53e6d784f",
+        "project": null
+      },
+      {
+        "id": "62ba81f061ec7222df72527f4878e130e08f836148ea909c94f180caa7dd5c22",
+        "name": "62ba81f061ec7222df72527f4878e130e08f836148ea909c94f180caa7dd5c22",
+        "project": null
+      },
+      {
+        "id": "64690e215e115054bb4e35dcb6b25d35aff6fab91990e950ed94352ea4a57f2b",
+        "name": "64690e215e115054bb4e35dcb6b25d35aff6fab91990e950ed94352ea4a57f2b",
+        "project": null
+      },
+      {
+        "id": "71b95e76864c4e1ae256a9fd147352959b6d4e6ca20f1782ded90fb672656e03",
+        "name": "71b95e76864c4e1ae256a9fd147352959b6d4e6ca20f1782ded90fb672656e03",
+        "project": null
+      },
+      {
+        "id": "7300fbeca8528e6e420d96e0122b26881fc2ec0f2892d4058a401319ed92e2f3",
+        "name": "7300fbeca8528e6e420d96e0122b26881fc2ec0f2892d4058a401319ed92e2f3",
+        "project": null
+      },
+      {
+        "id": "74cb608e5c8597b7d956e1c88c602db91c247db8318a18dd296607214649ee7e",
+        "name": "74cb608e5c8597b7d956e1c88c602db91c247db8318a18dd296607214649ee7e",
+        "project": null
+      },
+      {
+        "id": "7879bfab69622ca56068405a3622606e42c7063d513dc213d921077176d2e450",
+        "name": "7879bfab69622ca56068405a3622606e42c7063d513dc213d921077176d2e450",
+        "project": null
+      },
+      {
+        "id": "7f07fe3e10dca75e8f498067bee31660839e0c4a7fda0e44ca93283f76b22a5e",
+        "name": "7f07fe3e10dca75e8f498067bee31660839e0c4a7fda0e44ca93283f76b22a5e",
+        "project": null
+      },
+      {
+        "id": "81280fcb35cd121035d78c23e3e72dc72e6a5a69bdc14e7ad5690fb56972b4c6",
+        "name": "81280fcb35cd121035d78c23e3e72dc72e6a5a69bdc14e7ad5690fb56972b4c6",
+        "project": null
+      },
+      {
+        "id": "8272ef078c94f810497177b5cc9ed1899e4dcebe1e7bdd563f106376145a0382",
+        "name": "8272ef078c94f810497177b5cc9ed1899e4dcebe1e7bdd563f106376145a0382",
+        "project": null
+      },
+      {
+        "id": "84ee97a98df319ad0a29e6903067519b7771a03a7ae822f7232699511aa75f13",
+        "name": "84ee97a98df319ad0a29e6903067519b7771a03a7ae822f7232699511aa75f13",
+        "project": null
+      },
+      {
+        "id": "886c68cfe648fea6b0b10c80fcbcc2c30a3f56cacf14249ff8a48cfa5625db10",
+        "name": "886c68cfe648fea6b0b10c80fcbcc2c30a3f56cacf14249ff8a48cfa5625db10",
+        "project": null
+      },
+      {
+        "id": "8b224f7a5d20a5555a07791adca81f8829ae9b01a8d11b4cde9f76822aa72359",
+        "name": "8b224f7a5d20a5555a07791adca81f8829ae9b01a8d11b4cde9f76822aa72359",
+        "project": null
+      },
+      {
+        "id": "919ef87f844f35a3324c0d3182d6d4830eff2f45719b23e324abf5a98c8f429e",
+        "name": "919ef87f844f35a3324c0d3182d6d4830eff2f45719b23e324abf5a98c8f429e",
+        "project": null
+      },
+      {
+        "id": "952e9e5c8290fb9fa70a572653b15a01dd31dae01925703ffb42689bbf597dfb",
+        "name": "952e9e5c8290fb9fa70a572653b15a01dd31dae01925703ffb42689bbf597dfb",
+        "project": null
+      },
+      {
+        "id": "9551ea89b6685e76a17bd92877340102eb385aac3d27a3b8a78a328af536569c",
+        "name": "9551ea89b6685e76a17bd92877340102eb385aac3d27a3b8a78a328af536569c",
+        "project": null
+      },
+      {
+        "id": "a0887a330a387c5ca95c625a7635c43ba276726a4c4738eb4c773b24d90b3e25",
+        "name": "a0887a330a387c5ca95c625a7635c43ba276726a4c4738eb4c773b24d90b3e25",
+        "project": null
+      },
+      {
+        "id": "a3a8dd6aba26fa027b8bde858716e48257d4e5806bb980d6da3a0bd28388c784",
+        "name": "a3a8dd6aba26fa027b8bde858716e48257d4e5806bb980d6da3a0bd28388c784",
+        "project": null
+      },
+      {
+        "id": "ab2cd20995a61e73e36fef99662e4620345e487d8edef66362f901c07d011757",
+        "name": "ab2cd20995a61e73e36fef99662e4620345e487d8edef66362f901c07d011757",
+        "project": null
+      },
+      {
+        "id": "ad74ea5ec2adb8df97daf7bf21d3ec590185ada683b588cdb969b2019e7b2179",
+        "name": "ad74ea5ec2adb8df97daf7bf21d3ec590185ada683b588cdb969b2019e7b2179",
+        "project": null
+      },
+      {
+        "id": "b613fee7f3bbd912d7cec70a49b542b056ade5d7de76a88506af4a2d6555a409",
+        "name": "b613fee7f3bbd912d7cec70a49b542b056ade5d7de76a88506af4a2d6555a409",
+        "project": null
+      },
+      {
+        "id": "barsi-fe-a-nm",
+        "name": "barsi-fe-a-nm",
+        "project": null
+      },
+      {
+        "id": "barsi_frontend_nm",
+        "name": "barsi_frontend_nm",
+        "project": null
+      },
+      {
+        "id": "barsi_m2",
+        "name": "barsi_m2",
+        "project": null
+      },
+      {
+        "id": "barsi_pgdata",
+        "name": "barsi_pgdata",
+        "project": "barsi"
+      },
+      {
+        "id": "barsimonitor_backups_data",
+        "name": "barsimonitor_backups_data",
+        "project": "barsimonitor"
+      },
+      {
+        "id": "barsimonitor_documents_data",
+        "name": "barsimonitor_documents_data",
+        "project": "barsimonitor"
+      },
+      {
+        "id": "barsimonitor_market_data",
+        "name": "barsimonitor_market_data",
+        "project": "barsimonitor"
+      },
+      {
+        "id": "barsimonitor_postgres_data",
+        "name": "barsimonitor_postgres_data",
+        "project": "barsimonitor"
+      },
+      {
+        "id": "barsimonitorv2_dividendos_postgres",
+        "name": "barsimonitorv2_dividendos_postgres",
+        "project": "barsimonitorv2"
+      },
+      {
+        "id": "bdcc6fd5b10547fd24a1ca80aad50c986f512b3dc7fd43d3b11689c963861856",
+        "name": "bdcc6fd5b10547fd24a1ca80aad50c986f512b3dc7fd43d3b11689c963861856",
+        "project": null
+      },
+      {
+        "id": "buildx_buildkit_iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c0_state",
+        "name": "buildx_buildkit_iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c0_state",
+        "project": null
+      },
+      {
+        "id": "c2037882f9e3fb9ad9bed9e55219f9ce2fe0c1d50a458bdcbf4d5f4c99baec4d",
+        "name": "c2037882f9e3fb9ad9bed9e55219f9ce2fe0c1d50a458bdcbf4d5f4c99baec4d",
+        "project": null
+      },
+      {
+        "id": "ce88d682172ea6667ff3deca0d2c9c937391ce7811aac1f685caf787e2d5f919",
+        "name": "ce88d682172ea6667ff3deca0d2c9c937391ce7811aac1f685caf787e2d5f919",
+        "project": null
+      },
+      {
+        "id": "clips_ollama",
+        "name": "clips_ollama",
+        "project": "clips"
+      },
+      {
+        "id": "clips_pgdata",
+        "name": "clips_pgdata",
+        "project": "clips"
+      },
+      {
+        "id": "dc2b0c0d63010fd45e9b279e7d23473a8093cc9e5700dbe1406005dcfc9cd001",
+        "name": "dc2b0c0d63010fd45e9b279e7d23473a8093cc9e5700dbe1406005dcfc9cd001",
+        "project": null
+      },
+      {
+        "id": "dd439832ce526f238f638096c97d149dd8cc2dd17224ef5082bc5877b4c24c0e",
+        "name": "dd439832ce526f238f638096c97d149dd8cc2dd17224ef5082bc5877b4c24c0e",
+        "project": null
+      },
+      {
+        "id": "dividendos_m2",
+        "name": "dividendos_m2",
+        "project": null
+      },
+      {
+        "id": "e9f06df5f19c75c77186a252c26a66694ef450a97b2cbce4b0b10f6131e78287",
+        "name": "e9f06df5f19c75c77186a252c26a66694ef450a97b2cbce4b0b10f6131e78287",
+        "project": null
+      },
+      {
+        "id": "f29d29f271c8396c718903ee0037dfb876d8050e0aec9b7521ba3a16b3f8a775",
+        "name": "f29d29f271c8396c718903ee0037dfb876d8050e0aec9b7521ba3a16b3f8a775",
+        "project": null
+      },
+      {
+        "id": "f3e0c2bac4931335e757e022a2f64758c665957f5769742edfd4adad5b709c9a",
+        "name": "f3e0c2bac4931335e757e022a2f64758c665957f5769742edfd4adad5b709c9a",
+        "project": null
+      },
+      {
+        "id": "f7373d80df60604393c33b155097e4437822c92ba22f9a1b121c629af093272b",
+        "name": "f7373d80df60604393c33b155097e4437822c92ba22f9a1b121c629af093272b",
+        "project": null
+      },
+      {
+        "id": "f78fbef39adb283c439412e957b137c9f0be8f18fa9d60f1a72cbd2e3a66bc9c",
+        "name": "f78fbef39adb283c439412e957b137c9f0be8f18fa9d60f1a72cbd2e3a66bc9c",
+        "project": null
+      },
+      {
+        "id": "fliki_amazon_profile_api",
+        "name": "fliki_amazon_profile_api",
+        "project": "fliki"
+      },
+      {
+        "id": "fliki_amazon_profile_worker",
+        "name": "fliki_amazon_profile_worker",
+        "project": "fliki"
+      },
+      {
+        "id": "fliki_data",
+        "name": "fliki_data",
+        "project": null
+      },
+      {
+        "id": "fliki_fliki_data",
+        "name": "fliki_fliki_data",
+        "project": "fliki"
+      },
+      {
+        "id": "fliki_hf_cache",
+        "name": "fliki_hf_cache",
+        "project": "fliki"
+      },
+      {
+        "id": "fliki_ollama_models",
+        "name": "fliki_ollama_models",
+        "project": "fliki"
+      },
+      {
+        "id": "fliki_v2_share",
+        "name": "fliki_v2_share",
+        "project": "fliki"
+      },
+      {
+        "id": "iacode-m2cp3-91500867ff844a7ca13dfbe301838869_minio-data",
+        "name": "iacode-m2cp3-91500867ff844a7ca13dfbe301838869_minio-data",
+        "project": "iacode-m2cp3-91500867ff844a7ca13dfbe301838869"
+      },
+      {
+        "id": "iacode-m2cp3-91500867ff844a7ca13dfbe301838869_postgres-data",
+        "name": "iacode-m2cp3-91500867ff844a7ca13dfbe301838869_postgres-data",
+        "project": "iacode-m2cp3-91500867ff844a7ca13dfbe301838869"
+      },
+      {
+        "id": "iacode_grafana-data",
+        "name": "iacode_grafana-data",
+        "project": "iacode"
+      },
+      {
+        "id": "iacode_minio-data",
+        "name": "iacode_minio-data",
+        "project": "iacode"
+      },
+      {
+        "id": "iacode_postgres-data",
+        "name": "iacode_postgres-data",
+        "project": "iacode"
+      },
+      {
+        "id": "iacode_prometheus-data",
+        "name": "iacode_prometheus-data",
+        "project": "iacode"
+      },
+      {
+        "id": "llm_contract_data",
+        "name": "llm_contract_data",
+        "project": null
+      },
+      {
+        "id": "llm_gateway_contract_data",
+        "name": "llm_gateway_contract_data",
+        "project": null
+      },
+      {
+        "id": "llm_gateway_llm_contract_data",
+        "name": "llm_gateway_llm_contract_data",
+        "project": "llm_gateway"
+      },
+      {
+        "id": "maven_repo",
+        "name": "maven_repo",
+        "project": null
+      },
+      {
+        "id": "meu_financeiro_ia_pgdata",
+        "name": "meu_financeiro_ia_pgdata",
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "meu_financeiro_ia_redis_data",
+        "name": "meu_financeiro_ia_redis_data",
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "planner-chromadb-data",
+        "name": "planner-chromadb-data",
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "planner-postgres-data",
+        "name": "planner-postgres-data",
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "planner-redis-data",
+        "name": "planner-redis-data",
+        "project": "meu_financeiro_ia"
+      },
+      {
+        "id": "planner-uploads-data",
+        "name": "planner-uploads-data",
+        "project": "meu_financeiro_ia"
+      }
+    ],
+    "dockerConfigHash": "6accc089aa05f3e81eb1d5204bfc4b427e5887e9be24984d4c18b72d3f61890d"
+  }
+}

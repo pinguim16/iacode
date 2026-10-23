@@ -1,0 +1,35 @@
+{
+  "Name": "repository/apps/web (builder)",
+  "Ref": "fdtce11yt6cg2vl24hi49j7b9",
+  "Context": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-verification-1_e7hm5p\\repository",
+  "Dockerfile": "apps\\web\\Dockerfile",
+  "VCSRepository": "https://github.com/pinguim16/iacode.git",
+  "VCSRevision": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "Target": "builder",
+  "StartedAt": "2026-10-22T19:04:38.871926879-03:00",
+  "CompletedAt": "2026-10-22T19:05:09.048666123-03:00",
+  "Duration": 30176739244,
+  "Status": "completed",
+  "NumCompletedSteps": 12,
+  "NumTotalSteps": 12,
+  "NumCachedSteps": 6,
+  "Config": {},
+  "Materials": [
+    {
+      "URI": "pkg:docker/node@22.23.2-bookworm-slim?platform=linux%2Famd64",
+      "Digests": [
+        "sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9"
+      ]
+    }
+  ],
+  "Attachments": [
+    {
+      "Digest": "sha256:d298dd1f65926b72ad57b41c9c8376be2977b75c8e9e7ff1919cffbe45fea397",
+      "Type": "application/vnd.oci.image.manifest.v1+json"
+    },
+    {
+      "Digest": "sha256:df281ce3f5744ec4c67c1ea6055a3ebe45f9cc36ecfba59038f966d0b2686f35",
+      "Type": "https://slsa.dev/provenance/v1"
+    }
+  ]
+}

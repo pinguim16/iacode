@@ -24,16 +24,16 @@
     "lint": {
       "status": "PASS",
       "evidence": [
-        "file:quality-attempts/lint/run-0015.json"
+        "file:quality-attempts/lint/run-0017.json"
       ],
-      "justification": "Actual complete current canonical lint on source813a2857, cmd0494; not whole quality or readiness. Publication must independently verify the current binding before effects."
+      "justification": "Actual complete current canonical lint on source626a7767, cmd0610; not whole quality or readiness. Publication independently verifies original bytes and current binding before effects."
     },
     "staticAnalysis": {
       "status": "PASS",
       "evidence": [
-        "file:quality-attempts/staticAnalysis/run-0011.json"
+        "file:quality-attempts/staticAnalysis/run-0013.json"
       ],
-      "justification": "Actual complete current canonical static analysis, cmd0499; complete immutable quality and functional assurance remain due."
+      "justification": "Actual complete current canonical static analysis on source626a7767, cmd0608; complete immutable quality and functional assurance remain due."
     },
     "security": {
       "status": "NOT_EXECUTED",

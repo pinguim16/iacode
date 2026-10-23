@@ -1,0 +1,44 @@
+{
+  "observedAt": "2026-10-23T00:22:09Z",
+  "kind": "DIAGNOSTIC_NOT_ACCEPTANCE",
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "sourceFingerprint": "0137dd2020763b23a729963db9e9fcd2b2bd275cc25406473a70297a64eac8e3",
+  "sourceUnchanged": false,
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "arguments": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "E:\\iacode\\docs\\checkpoints\\GATE-7-CP-0003\\audit-harness\\diagnose_full_transport.py",
+        "--inner",
+        "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-diagnostic-kpnx3xap\\repository"
+      ],
+      "stdout": {
+        "bytes": 1435,
+        "sha256": "1ec0bd4fd8e150b65bfd5c91e67e5784c95a3e78acd7dc7957f37d0d997978b6",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 1,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 1,
+        "signaledProcessCount": 1,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "temporaryOwnerRemoved": true,
+  "owner": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-diagnostic-kpnx3xap",
+  "applicationsControlled": false
+}

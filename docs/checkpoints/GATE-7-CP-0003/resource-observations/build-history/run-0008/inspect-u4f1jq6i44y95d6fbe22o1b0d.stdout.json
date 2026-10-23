@@ -1,0 +1,35 @@
+{
+  "Name": "iacode/apps/web (builder)",
+  "Ref": "u4f1jq6i44y95d6fbe22o1b0d",
+  "Context": ".",
+  "Dockerfile": "apps\\web\\Dockerfile",
+  "VCSRepository": "https://github.com/pinguim16/iacode.git",
+  "VCSRevision": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "Target": "builder",
+  "StartedAt": "2026-10-22T22:04:37.776522449-03:00",
+  "CompletedAt": "2026-10-22T22:05:42.585359215-03:00",
+  "Duration": 64808836766,
+  "Status": "completed",
+  "NumCompletedSteps": 12,
+  "NumTotalSteps": 12,
+  "NumCachedSteps": 6,
+  "Config": {},
+  "Materials": [
+    {
+      "URI": "pkg:docker/node@22.23.2-bookworm-slim?platform=linux%2Famd64",
+      "Digests": [
+        "sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9"
+      ]
+    }
+  ],
+  "Attachments": [
+    {
+      "Digest": "sha256:72706117896356fa8fd7140298128149dfd0d7c50125df0d52d07e61ae28c28c",
+      "Type": "application/vnd.oci.image.manifest.v1+json"
+    },
+    {
+      "Digest": "sha256:bad1d855fd2359735e34831d1de1072119448c6bf6a377fabe84ccba97ab11cf",
+      "Type": "https://slsa.dev/provenance/v1"
+    }
+  ]
+}

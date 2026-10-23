@@ -1,0 +1,113 @@
+{
+  "result": "FAIL",
+  "blockingSeverities": [
+    "critical",
+    "high"
+  ],
+  "scans": [
+    {
+      "ecosystem": "pypi",
+      "status": "SCANNED",
+      "counts": {
+        "total": 1
+      },
+      "blocking": [
+        {
+          "name": "certifi",
+          "version": "2026.7.22",
+          "id": "PYSEC-2026-4320",
+          "severity": "unknown",
+          "fixVersions": [
+            "2026.10.19"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "name": "certifi",
+          "version": "2026.7.22",
+          "id": "PYSEC-2026-4320",
+          "severity": "unknown",
+          "fixVersions": [
+            "2026.10.19"
+          ]
+        }
+      ]
+    },
+    {
+      "ecosystem": "npm",
+      "status": "SCANNED",
+      "counts": {
+        "info": 0,
+        "low": 1,
+        "moderate": 2,
+        "high": 1,
+        "critical": 0
+      },
+      "blocking": [
+        {
+          "name": "vite",
+          "severity": "high",
+          "via": [
+            "launch-editor: escapeCmdArgs() omits % escaping on Windows",
+            "launch-editor: Editor CLI flag misinterpretation causing arbitrary command execution for some editors",
+            "launch-editor: `fs.existsSync()` existence check can be bypassed on Windows"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "name": "@angular/build",
+          "severity": "low",
+          "via": [
+            "vite"
+          ]
+        },
+        {
+          "name": "@vitest/mocker",
+          "severity": "moderate",
+          "via": [
+            "Vitest: Code injection via unauthenticated manual mock registration",
+            "Vitest: Windows backslash traversal bypasses the @vitest/mocker redirect allowlist fix"
+          ]
+        },
+        {
+          "name": "vite",
+          "severity": "high",
+          "via": [
+            "launch-editor: escapeCmdArgs() omits % escaping on Windows",
+            "launch-editor: Editor CLI flag misinterpretation causing arbitrary command execution for some editors",
+            "launch-editor: `fs.existsSync()` existence check can be bypassed on Windows"
+          ]
+        },
+        {
+          "name": "vitest",
+          "severity": "moderate",
+          "via": [
+            "@vitest/mocker"
+          ]
+        }
+      ]
+    },
+    {
+      "ecosystem": "npm-cli",
+      "status": "EMPTY_GRAPH_VALIDATED",
+      "counts": {
+        "thirdPartyDependencies": 0
+      },
+      "blocking": [],
+      "findings": [],
+      "detail": "No third-party advisory lookup applies to an empty graph; Node/VS Code runtime compatibility is tested separately."
+    },
+    {
+      "ecosystem": "npm-vscode-extension",
+      "status": "EMPTY_GRAPH_VALIDATED",
+      "counts": {
+        "thirdPartyDependencies": 0
+      },
+      "blocking": [],
+      "findings": [],
+      "detail": "No third-party advisory lookup applies to an empty graph; Node/VS Code runtime compatibility is tested separately."
+    }
+  ]
+}

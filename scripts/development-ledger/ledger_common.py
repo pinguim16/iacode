@@ -502,6 +502,11 @@ def assurance_root_files(root: Path, *, required: bool = False) -> tuple[str, ..
             raise LedgerError("Gate 5+ requires the versioned root assurance-scope policy")
         return ()
     document = load_json(policy)
+    return assurance_root_files_from_document(document)
+
+
+def assurance_root_files_from_document(document: Any) -> tuple[str, ...]:
+    """Validate the same closed policy when the owning bytes came from immutable Git."""
     if not isinstance(document, dict) or not isinstance(document.get("schemaVersion"), str):
         raise LedgerError("unsupported or narrowed root assurance-scope policy")
     versions = {

@@ -1,0 +1,327 @@
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/claim_private_build_outputs.py:19:1
+   |
+17 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+18 |
+19 | from audit_runner_bridge import Job, cleanup_plan, regular, run_owned
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 | from ledger_common import find_secrets, load_json, utc_now, write_json
+21 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/claim_private_build_outputs.py:20:1
+   |
+19 | from audit_runner_bridge import Job, cleanup_plan, regular, run_owned
+20 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/claim_private_build_outputs.py:21:1
+   |
+19 | from audit_runner_bridge import Job, cleanup_plan, regular, run_owned
+20 | from ledger_common import find_secrets, load_json, utc_now, write_json
+21 | from native_process import WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_full_transport.py:18:1
+   |
+16 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+17 |
+18 | from audit_runner_bridge import Job, run_owned
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+19 | from ledger_common import find_secrets, load_json, scope_fingerprint, utc_now, write_json
+20 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_full_transport.py:19:1
+   |
+18 | from audit_runner_bridge import Job, run_owned
+19 | from ledger_common import find_secrets, load_json, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_full_transport.py:20:1
+   |
+18 | from audit_runner_bridge import Job, run_owned
+19 | from ledger_common import find_secrets, load_json, scope_fingerprint, utc_now, write_json
+20 | from native_process import WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21 |
+22 | SUBJECT = "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3"
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_full_rework.py:20:1
+   |
+18 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+19 |
+20 | from audit_runner_bridge import Job, run_owned
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21 | from ledger_common import find_secrets, load_json, utc_now, write_json
+22 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_full_rework.py:21:1
+   |
+20 | from audit_runner_bridge import Job, run_owned
+21 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+22 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_full_rework.py:22:1
+   |
+20 | from audit_runner_bridge import Job, run_owned
+21 | from ledger_common import find_secrets, load_json, utc_now, write_json
+22 | from native_process import WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+S310 Audit URL open for permitted schemes. Allowing use of `file:` or custom schemes is often unexpected.
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_full_rework.py:35:18
+   |
+33 |     for url in urls:
+34 |         try:
+35 |             with urllib.request.urlopen(url, timeout=20) as response:
+   |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+36 |                 raw = response.read(1024 * 1024 + 1)
+37 |         except urllib.error.HTTPError as error:
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:12:1
+   |
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 |
+12 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from lessons import load_lessons, recurrence_key, register_recurrence, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:13:1
+   |
+12 | from ledger_common import load_json, utc_now, write_json
+13 | from lessons import load_lessons, recurrence_key, register_recurrence, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (172 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:48:101
+   |
+46 | …
+47 | …
+48 | …actual long-depth null/adverse controls remain pending. Preserve all historical results and counters."
+   |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+49 | …
+50 | …ull-host-transport/run-0001/RECEIPT.json"
+   |
+
+E501 Line too long (111 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:50:101
+   |
+48 |         "Confirmed missing host Red Team transport caller; repair and actual long-depth null/adverse controls remain pending. Preserve…
+49 |     )
+50 |     evidence = "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/full-host-transport/run-0001/RECEIPT.json"
+   |                                                                                                     ^^^^^^^^^^^
+51 |     revised["evidence"] += [
+52 |         evidence,
+   |
+
+E501 Line too long (107 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:61:101
+   |
+59 |     lesson = {
+60 |         "lessonId": "LSN-0154",
+61 |         "title": "Self-qualification must separate bounded product inputs from accumulated audit evidence",
+   |                                                                                                     ^^^^^^^
+62 |         "category": "quality",
+63 |         "severity": "HIGH",
+   |
+
+E501 Line too long (205 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:69:101
+   |
+67 | …
+68 | …
+69 | …ng after audit evidence accumulates; the whole canonical functional verifier rejects its self-qualification snapshot.",
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+70 | …it tree, including accumulated checkpoint outputs, rather than distinguishing the product-input boundary from separately validated le…
+71 | …ew, complete project/check preservation and separate complete evidence validation must be proven before correction can be accepted. N…
+   |
+
+E501 Line too long (235 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:70:101
+   |
+68 | …
+69 | …audit evidence accumulates; the whole canonical functional verifier rejects its self-qualification snapshot.",
+70 | …including accumulated checkpoint outputs, rather than distinguishing the product-input boundary from separately validated ledger evidence.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+71 | …ete project/check preservation and separate complete evidence validation must be proven before correction can be accepted. No size limit is raise…
+72 | …
+   |
+
+E501 Line too long (280 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:71:101
+   |
+69 | …audit evidence accumulates; the whole canonical functional verifier rejects its self-qualification snapshot.",
+70 | …including accumulated checkpoint outputs, rather than distinguishing the product-input boundary from separately validated ledger evidence.",
+71 | …ete project/check preservation and separate complete evidence validation must be proven before correction can be accepted. No size limit is raised and no original evidence is removed.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+72 | …
+73 | …
+   |
+
+E501 Line too long (248 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:82:101
+   |
+80 | …
+81 | …
+82 | …thout dropping any required project, runner, test or check; separately retain and validate all ledger evidence and preserve snapshot security ceilings.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+83 | …iew controls, exact project/check equivalence, unchanged capacity refusal and whole current verifier/assurance.",
+84 | …
+   |
+
+E501 Line too long (208 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:83:101
+   |
+81 | …
+82 | …puts without dropping any required project, runner, test or check; separately retain and validate all ledger evidence and preserve sn…
+83 | …input-view controls, exact project/check equivalence, unchanged capacity refusal and whole current verifier/assurance.",
+   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+84 | …
+85 | …
+   |
+
+E501 Line too long (120 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:126:101
+    |
+124 |             "DEPENDENCY-ADVISORY-001",
+125 |             "ACTIVE_SECURITY_CONTROL_DETECTED_VULNERABLE_PINS",
+126 |             "Live scan blocks certifi and vite; LSN-0057 control fired rather than allowing false security acceptance.",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^
+127 |         ),
+128 |         (
+    |
+
+E501 Line too long (176 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:131:101
+    |
+129 | …
+130 | …
+131 | …ure and all-container comparison require actual bounded diagnosis, not guessed fixes or waived checks.",
+    |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+132 | …
+133 | …
+    |
+
+E501 Line too long (174 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:143:101
+    |
+141 | …
+142 | …
+143 | …original red/null/green evidence, and repeat the unchanged complete current assurance before sealing.",
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+144 | …
+145 | …
+    |
+
+E501 Line too long (119 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py:166:101
+    |
+164 |     )
+165 |     print(
+166 |         "LSN-0151 recurrence2 escalated; LSN-0154 confirmed; complete requirement derivation is required before repair"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+167 |     )
+168 |     return 0
+    |
+
+E501 Line too long (111 > 100)
+   --> scripts/iacode/scenarios/quality_engine_e2e.py:709:101
+    |
+707 |                 )
+708 |             },
+709 |             "all immutable non-checkpoint inputs; checkpoint outputs separately validated; unchanged capacity",
+    |                                                                                                     ^^^^^^^^^^^
+710 |         )
+711 |         steps.artifacts.append({"kind": "self-qualification-source", **selection})
+    |
+
+N802 Function name `setUp` should be lowercase
+  --> tests/test_m2_host_transport.py:18:9
+   |
+17 | class M2HostTransportTests(unittest.TestCase):
+18 |     def setUp(self):
+   |         ^^^^^
+19 |         search = mock.patch.object(
+20 |             sys, "path", [str(ROOT / "scripts/development-ledger"), *sys.path]
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+N802 Function name `setUp` should be lowercase
+  --> tests/test_m2_self_snapshot.py:24:9
+   |
+23 | class M2SelfSnapshotTests(unittest.TestCase):
+24 |     def setUp(self):
+   |         ^^^^^
+25 |         self.owner = tempfile.TemporaryDirectory(prefix="iacode-m2-self-view-")
+26 |         self.addCleanup(self.owner.cleanup)
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+E501 Line too long (116 > 100)
+  --> tests/test_m2_self_snapshot.py:38:101
+   |
+36 |             "apps/api/tests/test_real.py": b"def test_actual():\n    assert 2 + 2 == 4\n",
+37 |             "apps/api/docs/checkpoints/test_not_top_level.py": b"# keep actual nested input\n",
+38 |             "future-project/package.json": b'{"name":"actual-future-project","scripts":{"test":"node test.cjs"}}\n',
+   |                                                                                                     ^^^^^^^^^^^^^^^^
+39 |             "future-project/test.cjs": b"require('node:assert').equal(2 + 2, 4);\n",
+40 |             "future-project/binary.dat": b"actual binary\x00\xff\r\n",
+   |
+
+E501 Line too long (110 > 100)
+  --> tests/test_m2_self_snapshot.py:42:101
+   |
+40 |             "future-project/binary.dat": b"actual binary\x00\xff\r\n",
+41 |             "docs/checkpoints/FIXTURE/REPORT.json": b'{"kind":"old-audit-output"}\n',
+42 |             "docs/checkpoints/FIXTURE/audit-harness/helper.py": b"# separately validated checkpoint helper\n",
+   |                                                                                                     ^^^^^^^^^^
+43 |         }
+44 |         for name, raw in self.files.items():
+   |
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+   --> tests/test_m2_self_snapshot.py:148:9
+    |
+146 |       def test_canonical_scope_disagreement_is_a_refusal_not_a_narrowed_view(self):
+147 |           target = self.directory / "never"
+148 | /         with mock.patch.object(self.module, "in_assurance_scope", return_value=True):
+149 | |             with self.assertRaisesRegex(ValueError, "CANONICAL_SCOPE_REQUIRES_CHECKPOINT_INPUTS"):
+    | |__________________________________________________________________________________________________^
+150 |                   self.module.materialize_committed_source(self.source, target)
+151 |           self.assertFalse(target.exists())
+    |
+help: Combine `with` statements
+
+Found 30 errors.

@@ -1,0 +1,69 @@
+{
+  "Name": "iacode/services/orchestrator",
+  "Ref": "1um12zg6hxut85lx5yd0ef6ml",
+  "Context": ".",
+  "Dockerfile": "services\\orchestrator\\Dockerfile",
+  "VCSRepository": "https://github.com/pinguim16/iacode.git",
+  "VCSRevision": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "StartedAt": "2026-10-22T22:10:48.830236816-03:00",
+  "CompletedAt": "2026-10-22T22:12:12.628109583-03:00",
+  "Duration": 83797872767,
+  "Status": "completed",
+  "NumCompletedSteps": 25,
+  "NumTotalSteps": 25,
+  "NumCachedSteps": 19,
+  "BuildArgs": [
+    {
+      "Name": "IACODE_BUILD_TIMESTAMP",
+      "Value": "unknown"
+    },
+    {
+      "Name": "IACODE_COMMIT",
+      "Value": "unknown"
+    },
+    {
+      "Name": "IACODE_VERSION",
+      "Value": "0.1.0"
+    }
+  ],
+  "Labels": [
+    {
+      "Name": "com.docker.compose.project",
+      "Value": "iacode-desktop-e7c2bea0f028"
+    },
+    {
+      "Name": "com.docker.compose.service",
+      "Value": "worker"
+    },
+    {
+      "Name": "com.docker.compose.version",
+      "Value": "5.5.1"
+    }
+  ],
+  "Config": {
+    "RestRaw": [
+      {
+        "Name": "local-sessionid:context",
+        "Value": "rqh0v30k6ytljv8piccsr6c1y"
+      }
+    ]
+  },
+  "Materials": [
+    {
+      "URI": "pkg:docker/python@3.13.15-slim-bookworm?platform=linux%2Famd64",
+      "Digests": [
+        "sha256:2325bb286ec344af3e5898cc224b5844e2707ac6e26b1632516fd3edc84a5e26"
+      ]
+    }
+  ],
+  "Attachments": [
+    {
+      "Digest": "sha256:db91158312c16f7c587481dcd0403ff2ffad7464a839e172f60bdf187c138d7b",
+      "Type": "application/vnd.oci.image.manifest.v1+json"
+    },
+    {
+      "Digest": "sha256:0030d32745a49be536060ba1c3d2d13901f17cb42b477fc014c5a6a55644981d",
+      "Type": "https://slsa.dev/provenance/v1"
+    }
+  ]
+}

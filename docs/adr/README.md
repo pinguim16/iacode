@@ -74,3 +74,4 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0062](ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md) | Isolated audit uses closed host validation jobs | Accepted |
 | [ADR-0063](ADR-0063-historical-review-producers-inherit-only-process-scoped-git-path-handling.md) | Historical review producers inherit only process-scoped Git path handling | Accepted |
 | [ADR-0064](ADR-0064-unittest-discovery-restores-caller-import-bindings.md) | Unittest discovery restores caller import bindings | Accepted |
+| [ADR-0065](ADR-0065-self-qualification-uses-immutable-product-inputs-not-checkpoint-outputs.md) | Self-qualification uses immutable product inputs, not checkpoint outputs | Accepted |

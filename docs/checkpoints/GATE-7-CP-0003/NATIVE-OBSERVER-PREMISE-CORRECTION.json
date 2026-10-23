@@ -1,0 +1,10 @@
+{
+  "kind": "DIAGNOSTIC_INSTRUMENTATION_FAULT_NOT_PRODUCT_CAUSAL_PROOF",
+  "original": "causal-attempts/live-stages/native/run-0001/RECEIPT.json",
+  "originalCommand": "cmd-0616",
+  "cause": "The new metadata observer initializes handle identity before its first wait; incrementing an absent polls field raises KeyError inside that observer.",
+  "correction": "Initialize the observer counter from zero without changing any actual wait result, ownership, cleanup budget or product assertion.",
+  "originalBytesChanged": false,
+  "firstObservationAcceptedAsProductFailureOrSuccess": false,
+  "actualEarlierNativeCleanupFailureStillOpen": "causal-attempts/live-stages/desktop/run-0002/ORIGINAL-PRODUCER.json"
+}

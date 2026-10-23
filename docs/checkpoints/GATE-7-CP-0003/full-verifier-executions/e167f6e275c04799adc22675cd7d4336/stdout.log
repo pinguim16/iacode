@@ -1,0 +1,263 @@
+[iacode] isolated Compose project=iacode-verify-a7c2d86ad60d; published ports allocated by Docker
+[iacode] verifying GATE-7: 49 stage(s)
+[iacode] --- gate:tests: mandatory gate tests
+[iacode] --- gate:tests: PASS in 13092.6s
+[iacode] --- gate:staticAnalysis: mandatory gate staticAnalysis
+[iacode] --- gate:staticAnalysis: PASS in 0.6s
+[iacode] --- gate:lessons: mandatory gate lessons
+[iacode] --- gate:lessons: PASS in 3.3s
+[iacode] --- gate:integrity: mandatory gate integrity
+[iacode] --- gate:integrity: PASS in 16.4s
+[iacode] --- gate:checkpointValidation: mandatory gate checkpointValidation
+[iacode] --- gate:checkpointValidation: PASS in 77.7s
+[iacode] --- gate:apiTests: mandatory gate apiTests
+[iacode] --- gate:apiTests: PASS in 200s
+[iacode] --- gate:gatewayTests: mandatory gate gatewayTests
+[iacode] --- gate:gatewayTests: PASS in 72s
+[iacode] --- gate:agentRuntimeTests: mandatory gate agentRuntimeTests
+[iacode] --- gate:agentRuntimeTests: PASS in 61s
+[iacode] --- gate:sandboxTests: mandatory gate sandboxTests
+[iacode] --- gate:sandboxTests: PASS in 348.8s
+[iacode] --- gate:evaluatorTests: mandatory gate evaluatorTests
+[iacode] --- gate:evaluatorTests: PASS in 92.3s
+[iacode] --- gate:webTests: mandatory gate webTests
+[iacode] --- gate:webTests: PASS in 47.2s
+[iacode] --- gate:lint: mandatory gate lint
+[iacode] --- gate:lint: PASS in 57.5s
+[iacode] --- gate:clientTests: mandatory gate clientTests
+[iacode] --- gate:clientTests: PASS in 35.9s
+[iacode] --- gate:experienceTests: mandatory gate experienceTests
+[iacode] --- gate:experienceTests: PASS in 24.4s
+[iacode] --- gate:knowledgeTests: mandatory gate knowledgeTests
+[iacode] --- gate:knowledgeTests: PASS in 22.5s
+[iacode] --- gate:infraDefinition: mandatory gate infraDefinition
+[iacode] --- gate:infraDefinition: PASS in 0.7s
+[iacode] --- stack: build and start an isolated stack, then wait for real health
+[iacode] --- stack: PASS in 168.7s
+[iacode] --- integration: the backend suite against the real services
+[iacode] --- integration: PASS in 213s
+[iacode] --- infra: our configuration of each service, exercised live
+[iacode] --- infra: PASS in 17.2s
+[iacode] --- smoke: the API, the web shell, the observability stack and a workflow
+[iacode] --- smoke: PASS in 4.1s
+[iacode] --- gateway-smoke: the Model Gateway against the real configured provider
+[iacode] --- gateway-smoke: PASS in 24.5s
+[iacode] --- agent-runtime-smoke: the Agent Runtime against the real provider, through the gateway
+[iacode] --- agent-runtime-smoke: PASS in 17.3s
+[iacode] --- agent-durability: a run waiting for a tool survives a real worker restart
+[iacode] --- agent-durability: PASS in 68s
+[iacode] --- agent-cancellation: a paused run is cancelled, stays cancelled and refuses a late result
+[iacode] --- agent-cancellation: PASS in 38.1s
+[iacode] --- agent-deadline: a run that is alive and going nowhere is ended by its own deadline
+[iacode] --- agent-deadline: PASS in 37.8s
+[iacode] --- sandbox-integration: the sandbox's store and artifact sink against the real services
+[iacode] --- sandbox-integration: PASS in 12.2s
+[iacode] --- quality-integration: quality lifecycle and immutable evidence against the real services
+[iacode] --- quality-integration: PASS in 116.4s
+[iacode] --- quality-pass: a passing fixture derives PASS through the complete Quality Engine
+[iacode] --- quality-pass: PASS in 42.8s
+[iacode] --- quality-fail: a failing fixture preserves its failed check, finding and evidence
+[iacode] --- quality-fail: PASS in 39.3s
+[iacode] --- quality-iacode: the committed IACode tree is evaluated by its canonical profile
+[stack] waiting for evaluator=starting
+[stack] waiting for evaluator=starting
+the snapshot could not be stored:
+{"error": "SNAPSHOT_TOO_LARGE", "detail": "the source exceeds 67108864 bytes"}
+
+ Container iacode-verify-a7c2d86ad60d-sandbox-run-30f68847176b Creating 
+ Container iacode-verify-a7c2d86ad60d-sandbox-run-30f68847176b Created
+[iacode] --- quality-iacode: FAIL in 257.8s
+[iacode] --- quality-reproduction: stored inputs reproduce an equivalent result under the same plan identity
+[iacode] --- quality-reproduction: PASS in 74s
+[iacode] --- quality-recovery: a quality run survives evaluator restart without duplicate results
+[iacode] --- quality-recovery: PASS in 66.6s
+[iacode] --- quality-cancellation: cancellation waits for sandbox cleanup and remains fail-closed
+[iacode] --- quality-cancellation: PASS in 33.5s
+[iacode] --- quality-timeout: policy-owned deadlines record timeout evidence and a FAIL verdict
+[iacode] --- quality-timeout: PASS in 53s
+[iacode] --- sandbox-coding: a coding team fixes a synthetic repository in a real sandbox; the host is untouched
+[iacode] --- sandbox-coding: PASS in 132.2s
+[iacode] --- sandbox-timeout: a command past its timeout is stopped and the run carries on
+[iacode] --- sandbox-timeout: PASS in 286.8s
+[iacode] --- sandbox-cancellation: a run cancelled during a long command stops it and leaves no sandbox
+[iacode] --- sandbox-cancellation: PASS in 627.6s
+[iacode] --- sandbox-recovery: a restarted sandbox service keeps the run's session and its workspace
+[iacode] --- sandbox-recovery: PASS in 186.9s
+[iacode] --- sandbox-tool-result-origin: a result posted to the API for a sandboxed request is refused, and the agent receives the sandbox's own
+[iacode] --- sandbox-tool-result-origin: PASS in 305.1s
+[iacode] --- quality-false-pass: the Gate 4 false-PASS battery rejects every mandatory mutation
+[iacode] [PASS] secret-output.control.after_refusal_pass: PASS
+[iacode] wrote var\quality-secret-output.json
+{"schemaVersion":"1.0.0","result":"PASS","scenarios":[{"schemaVersion":"1.0.0","scenario":"secret-output","result":"PASS","environment":"real-compose-temporal-postgresql-minio-sandbox-container-engine","steps":[{"step":"snapshot.stored","result":"PASS","expected":["artifactId","key","sha256","sizeBytes"],"observed":["artifactId","key","sha256","sizeBytes"]},{"step":"control.accepted","result":"PASS","expected":"SUCCEEDED with PASS","observed":"SUCCEEDED"},{"step":"snapshot.stored","result":"PASS","expected":["artifactId","key","sha256","sizeBytes"],"observed":["artifactId","key","sha256","sizeBytes"]},{"step":"run.terminal","result":"PASS","expected":"FAILED","observed":"FAILED"},{"step":"results.complete","result":"PASS","expected":7,"observed":7},{"step":"evidence.one_or_more_per_result","result":"PASS","expected":">=7","observed":7},{"step":"findings.evidence_resolved","result":"PASS","expected":[],"observed":[]},{"step":"evidence.rights_closed","result":"PASS","expected":"every evidence item trainingAllowed=false and ragAllowed=false","observed":7},{"step":"sandbox.no_active_session","result":"PASS","expected":"0","observed":"0"},{"step":"python-secret-output.verdict_fail","result":"PASS","expected":"FAIL","observed":"FAIL"},{"step":"python-secret-output.api_output_clean","result":"PASS","expected":true,"observed":true},{"step":"python-secret-output.history_clean","result":"PASS","expected":"decoded durable payloads contain no prohibited bytes","observed":{"prohibitedBytesAbsent":true,"payloadsScanned":122,"workflowStatus":"COMPLETED","sandboxObjects":0,"failures":[],"pendingActivityTypes":[],"containmentRefusals":2}},{"step":"python-secret-output.no_sandbox_artifact","result":"PASS","expected":0,"observed":0},{"step":"python-secret-output.causal_containment_refusal","result":"PASS","expected":"one or more explicit output-containment refusals","observed":2},{"step":"snapshot.stored","result":"PASS","expected":["artifactId","key","sha256","sizeBytes"],"observed":["artifactId","key","sha256","sizeBytes"]},{"step":"run.terminal","result":"PASS","expected":"FAILED","observed":"FAILED"},{"step":"results.complete","result":"PASS","expected":7,"observed":7},{"step":"evidence.one_or_more_per_result","result":"PASS","expected":">=7","observed":7},{"step":"findings.evidence_resolved","result":"PASS","expected":[],"observed":[]},{"step":"evidence.rights_closed","result":"PASS","expected":"every evidence item trainingAllowed=false and ragAllowed=false","observed":7},{"step":"sandbox.no_active_session","result":"PASS","expected":"0","observed":"0"},{"step":"python-secret-output-full.verdict_fail","result":"PASS","expected":"FAIL","observed":"FAIL"},{"step":"python-secret-output-full.api_output_clean","result":"PASS","expected":true,"observed":true},{"step":"python-secret-output-full.history_clean","result":"PASS","expected":"decoded durable payloads contain no prohibited bytes","observed":{"prohibitedBytesAbsent":true,"payloadsScanned":132,"workflowStatus":"COMPLETED","sandboxObjects":0,"failures":[],"pendingActivityTypes":[],"containmentRefusals":2}},{"step":"python-secret-output-full.no_sandbox_artifact","result":"PASS","expected":0,"observed":0},{"step":"python-secret-output-full.causal_containment_refusal","result":"PASS","expected":"one or more explicit output-containment refusals","observed":2},{"step":"snapshot.stored","result":"PASS","expected":["artifactId","key","sha256","sizeBytes"],"observed":["artifactId","key","sha256","sizeBytes"]},{"step":"run.terminal","result":"PASS","expected":"SUCCEEDED","observed":"SUCCEEDED"},{"step":"results.complete","result":"PASS","expected":7,"observed":7},{"step":"evidence.one_or_more_per_result","result":"PASS","expected":">=7","observed":7},{"step":"findings.evidence_resolved","result":"PASS","expected":[],"observed":[]},{"step":"evidence.rights_closed","result":"PASS","expected":"every evidence item trainingAllowed=false and ragAllowed=false","observed":7},{"step":"sandbox.no_active_session","result":"PASS","expected":"0","observed":"0"},{"step":"control.after_refusal_pass","result":"PASS","expected":"PASS","observed":"PASS"}],"artifacts":[{"kind":"snapshot","artifactId":"01a165d2-c1fe-7000-909f-fc8ee344ab1d","digest":"495ace45220529aa71fbb8c434dbb470bfa0d01339e245152094f605f1f35be5","sizeBytes":476},{"kind":"snapshot","artifactId":"01a165d4-2418-7000-8b89-3200c338a915","digest":"ac085097f046aa9801b061a23a1abeb076dddca2f9b0ce32115abfb4483eab79","sizeBytes":549},{"kind":"quality-run","runId":"01a165d4-281d-7000-9635-4d0e6bf23e56","planId":"db75c5717d8bf7228e092d9d3f3632c037f6572bc0849cf3d7c9e322d18eb2fc"},{"kind":"snapshot","artifactId":"01a165d4-cdc3-7000-878d-b80db2352d43","digest":"59b6b526f290e9a99d8487b1f8825a40a0a30cecb22a1ed07e7bf931de42cd64","sizeBytes":530},{"kind":"quality-run","runId":"01a165d4-d0e5-7000-bf52-12753a519ac4","planId":"88442fcfd465f8335176a5b0e9fe7ac856fd983e79d1d0093dc50becaaf430e5"},{"kind":"snapshot","artifactId":"01a165d5-c71b-7000-9f04-31670dc1f2e4","digest":"84ab67b433a322fc2b39f9bc7475e6895b1c79cb4fedbb7ed5a7bd2a0b520b7f","sizeBytes":476}],"recordedAt":"2026-10-22T22:58:20Z"}],"recordedAt":"2026-10-22T22:58:20Z"}
+[iacode] QUALITY_ENGINE_E2E=PASS scenarios=secret-output
+[DEFENDED] A missing result: verdict=FAIL; reasons=('missing result for q001-unit',)
+[DEFENDED] B exit-code forgery: contract refused non-zero PASS
+[DEFENDED] C forged evidence: verdict=FAIL; reasons=('q001-unit has unresolved evidence evidence-red-team',)
+[DEFENDED] D policy mutation: store refused PLAN_ID_CONFLICT
+[DEFENDED] E snapshot mutation: store refused PLAN_ID_CONFLICT
+[DEFENDED] F wrong origin: contract refused origin
+[DEFENDED] G timed_out result: verdict=FAIL; reasons=('q001-unit ended TIMED_OUT',)
+[DEFENDED] H denied result: verdict=FAIL; reasons=('q001-unit ended DENIED',)
+[DEFENDED] I cancelled result: verdict=FAIL; reasons=('q001-unit ended CANCELLED',)
+[DEFENDED] J unknown status: contract refused status
+[DEFENDED] K bundle integrity: result=FAIL; expected-finding=True
+[DEFENDED] L mandatory bundle evidence: result=FAIL; expected-finding=True
+[DEFENDED] M archive path safety: result=FAIL; expected-finding=True
+[DEFENDED] N bundle secret scan: result=FAIL; expected-finding=True
+[DEFENDED] O archive uniqueness: result=FAIL; expected-finding=True
+[DEFENDED] P live adverse lifecycle: recovery=PASS; cancellation=PASS; timeout=PASS; forged-origin=PASS; secret-output=PASS
+[DEFENDED] Q pre-persistence secret containment: status=ERROR; verdict=FAIL; objects=0; records=0; prohibited-bytes-absent=True
+[DEFENDED] R scanner availability: scan-before-store=True; status=ERROR; verdict=FAIL; objects=0; records=0
+[DEFENDED] S legacy persisted object: resolved=False; rescanned-after-read=True; verdict=FAIL
+[ESCAPED] T review bundle portability, determinism and declaration binding: deterministic=False; portable=False; categories=False; declaration=False; stale-refused=False
+RED_TEAM=RED_TEAM_FAIL 19/20 control=VALID
+[iacode] --- quality-false-pass: FAIL in 289.3s
+[iacode] --- backup: backup, restore into a disposable target, verified read-back
+[iacode] --- backup: PASS in 63.3s
+[iacode] --- dependency-scan: known vulnerabilities in the pinned dependencies
+[iacode] [SCANNED] pypi: {'total': 1} blocking=1
+[iacode] [SCANNED] npm: {'info': 0, 'low': 1, 'moderate': 2, 'high': 1, 'critical': 0} blocking=1
+[iacode] [EMPTY_GRAPH_VALIDATED] npm-cli: {'thirdPartyDependencies': 0} blocking=0
+[iacode] [EMPTY_GRAPH_VALIDATED] npm-vscode-extension: {'thirdPartyDependencies': 0} blocking=0
+[iacode]   BLOCKING certifi PYSEC-2026-4320 severity=unknown
+[iacode]   BLOCKING vite  severity=high
+[iacode] DEPENDENCY_SCAN=FAIL
+[iacode] --- dependency-scan: FAIL in 535.5s
+[iacode] --- native-client-installation: fresh actual VSIX installation, workspace trust and owned storage/process cleanup
+[iacode] --- native-client-installation: PASS in 107.2s
+[iacode] --- desktop-client-e2e: fresh CLI/native recovery through real hardened provider/sandbox/quality workflows
+[iacode] building and starting separate owned authenticated desktop stack
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "desktop-e2e",
+  "result": "FAIL",
+  "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "sourceDirty": false,
+  "sourceFingerprint": "813a2857d944d8197921aea0032b336fdd55356ff1757ead671b74ae1ee78dbd",
+  "steps": [],
+  "composeProject": "iacode-desktop-09a34021b98b",
+  "failure": {
+    "type": "StackError",
+    "message": "owned desktop stack startup failed: mat\n#115 exporting layers 0.1s done\n#115 exporting manifest sha256:5dd9207af7844fbe41f0ec9603503fa623fdf76cb91324124f5119a7985f99ad 0.0s done\n#115 exporting config sha256:d3703b951f1999b17f170cf68455779e4a6fd5f14df984e91db8adc96a5e2b73 0.0s done\n#115 ...\n\n#116 [api] exporting to oci image format\n#116 exporting layers done\n#116 exporting manifest sha256:06b9a3455b51333a54767275fe8636b7721a7532bca29316411e308acc596b65 0.0s done\n#116 exporting config sha256:43059c1a23f1e23ac16c142c5ad37657a42003a723616c3c685bef2f1243035b 0.0s done\n#116 ...\n\n#117 importing to docker\n#117 DONE 0.0s\n\n#115 [web] exporting to oci image format\n#115 sending tarball 15.7s done\n#115 DONE 15.8s\n\n#114 [evaluator] exporting to oci image format\n#114 ...\n\n#118 [web] resolving provenance for metadata file\n#118 DONE 1.0s\n\n#62 [worker] exporting to oci image format\n#62 ...\n\n#116 [api] exporting to oci image format\n#116 sending tarball 108.7s done\n#116 CANCELED\n\n#114 [evaluator] exporting to oci image format\n#114 sending tarball 109.3s done\n#114 CANCELED\n\n#62 [worker] exporting to oci image format\n#62 sending tarball 109.7s done\n#62 CANCELED\n\n#113 [migrate] exporting to oci image format\n#113 sending tarball 108.7s done\n#113 CANCELED\n\n#86 [sandbox] exporting to oci image format\n#86 sending tarball 108.8s done\n#86 CANCELED\ntarget evaluator: failed to solve: Canceled: failed to copy to tar: rpc error: code = Canceled desc = context canceled\n\n\n\nView build details: docker-desktop://dashboard/build/iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c/iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c0/fslqi3n8qfuq4ghut9ocjbgma\n\n"
+  },
+  "failureCleanupExitCode": 0,
+  "failureSandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  }
+}
+[iacode] --- desktop-client-e2e: FAIL in 133.5s
+[iacode] --- experience-store-e2e: real authenticated source-bound capture, rights, restart, corruption and retention
+    {
+      "name": "fresh-owned-authenticated-stack-started",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-owned-authenticated-stack-healthy",
+      "result": "PASS"
+    }
+  ],
+  "composeProject": "iacode-experience-99ddd8b9a043",
+  "sandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  },
+  "cleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0,
+    "remainingNetworks": 0
+  },
+  "failure": {
+    "type": "StackError",
+    "code": "EXPERIENCE_LIVE_PROOF_FAILED"
+  }
+}
+[iacode] --- experience-store-e2e: FAIL in 288.9s
+[iacode] --- knowledge-engine-e2e: real governed source ingestion, measured retrieval, citations and invalidation
+      "expectedSources": [],
+      "observedHits": 0
+    },
+    {
+      "queryOrdinal": 8,
+      "result": "PASS",
+      "expectedSources": [],
+      "observedHits": 0
+    },
+    {
+      "queryOrdinal": 9,
+      "result": "PASS",
+      "expectedSources": [],
+      "observedHits": 0
+    }
+  ],
+  "sandboxCleanup": {
+    "container": 0,
+    "network": 0
+  },
+  "failure": {
+    "type": "StackError",
+    "code": "KNOWLEDGE_LIVE_PROOF_FAILED"
+  }
+}
+[iacode] --- knowledge-engine-e2e: FAIL in 396.5s
+[iacode] --- restart: restart with data intact
+[iacode] --- restart: PASS in 118s
+[iacode] --- dependency-failure: liveness holds, readiness refuses, both recover
+[iacode] --- dependency-failure: PASS in 20.6s
+[iacode] --- fresh-install: a complete installation from no volumes at all
+[iacode] --- fresh-install: PASS in 119.2s
+[iacode] wrote artifacts\review\INTERNAL-FULL-VERIFY.json
+
+[PASS] gate:tests             13092.6s  mandatory gate tests
+[PASS] gate:staticAnalysis       0.6s  mandatory gate staticAnalysis
+[PASS] gate:lessons              3.3s  mandatory gate lessons
+[PASS] gate:integrity           16.4s  mandatory gate integrity
+[PASS] gate:checkpointValidation   77.7s  mandatory gate checkpointValidation
+[PASS] gate:apiTests           200.0s  mandatory gate apiTests
+[PASS] gate:gatewayTests        72.0s  mandatory gate gatewayTests
+[PASS] gate:agentRuntimeTests   61.0s  mandatory gate agentRuntimeTests
+[PASS] gate:sandboxTests       348.8s  mandatory gate sandboxTests
+[PASS] gate:evaluatorTests      92.3s  mandatory gate evaluatorTests
+[PASS] gate:webTests            47.2s  mandatory gate webTests
+[PASS] gate:lint                57.5s  mandatory gate lint
+[PASS] gate:clientTests         35.9s  mandatory gate clientTests
+[PASS] gate:experienceTests     24.4s  mandatory gate experienceTests
+[PASS] gate:knowledgeTests      22.5s  mandatory gate knowledgeTests
+[PASS] gate:infraDefinition      0.7s  mandatory gate infraDefinition
+[PASS] stack                   168.7s  build and start an isolated stack, then wait for real health
+[PASS] integration             213.0s  the backend suite against the real services
+[PASS] infra                    17.2s  our configuration of each service, exercised live
+[PASS] smoke                     4.1s  the API, the web shell, the observability stack and a workflow
+[PASS] gateway-smoke            24.5s  the Model Gateway against the real configured provider
+[PASS] agent-runtime-smoke      17.3s  the Agent Runtime against the real provider, through the gateway
+[PASS] agent-durability         68.0s  a run waiting for a tool survives a real worker restart
+[PASS] agent-cancellation       38.1s  a paused run is cancelled, stays cancelled and refuses a late result
+[PASS] agent-deadline           37.8s  a run that is alive and going nowhere is ended by its own deadline
+[PASS] sandbox-integration      12.2s  the sandbox's store and artifact sink against the real services
+[PASS] quality-integration     116.4s  quality lifecycle and immutable evidence against the real services
+[PASS] quality-pass             42.8s  a passing fixture derives PASS through the complete Quality Engine
+[PASS] quality-fail             39.3s  a failing fixture preserves its failed check, finding and evidence
+[FAIL] quality-iacode          257.8s  the committed IACode tree is evaluated by its canonical profile
+[PASS] quality-reproduction     74.0s  stored inputs reproduce an equivalent result under the same plan identity
+[PASS] quality-recovery         66.6s  a quality run survives evaluator restart without duplicate results
+[PASS] quality-cancellation     33.5s  cancellation waits for sandbox cleanup and remains fail-closed
+[PASS] quality-timeout          53.0s  policy-owned deadlines record timeout evidence and a FAIL verdict
+[PASS] sandbox-coding          132.2s  a coding team fixes a synthetic repository in a real sandbox; the host is untouched
+[PASS] sandbox-timeout         286.8s  a command past its timeout is stopped and the run carries on
+[PASS] sandbox-cancellation    627.6s  a run cancelled during a long command stops it and leaves no sandbox
+[PASS] sandbox-recovery        186.9s  a restarted sandbox service keeps the run's session and its workspace
+[PASS] sandbox-tool-result-origin  305.1s  a result posted to the API for a sandboxed request is refused, and the agent receives the sandbox's own
+[FAIL] quality-false-pass      289.3s  the Gate 4 false-PASS battery rejects every mandatory mutation
+[PASS] backup                   63.3s  backup, restore into a disposable target, verified read-back
+[FAIL] dependency-scan         535.5s  known vulnerabilities in the pinned dependencies
+[PASS] native-client-installation  107.2s  fresh actual VSIX installation, workspace trust and owned storage/process cleanup
+[FAIL] desktop-client-e2e      133.5s  fresh CLI/native recovery through real hardened provider/sandbox/quality workflows
+[FAIL] experience-store-e2e    288.9s  real authenticated source-bound capture, rights, restart, corruption and retention
+[FAIL] knowledge-engine-e2e    396.5s  real governed source ingestion, measured retrieval, citations and invalidation
+[PASS] restart                 118.0s  restart with data intact
+[PASS] dependency-failure       20.6s  liveness holds, readiness refuses, both recover
+[PASS] fresh-install           119.2s  a complete installation from no volumes at all
+[PASS] verification-cleanup     isolated project removed
+VERIFY=FAIL 43/49 stages in 19070.9s

@@ -1,0 +1,102 @@
+{
+  "kind": "READ_ONLY_OWNED_TREE_ACTIVITY_NOT_JOB_MEMBERSHIP_OR_TEST_ACCEPTANCE",
+  "observedAt": "2026-10-22T16:18:57.064219+00:00",
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "sourceFingerprint": "813a2857d944d8197921aea0032b336fdd55356ff1757ead671b74ae1ee78dbd",
+  "nativeToolSession": 46429,
+  "rootMatches": [41012, 34516],
+  "relatedProcesses": [
+    {"pid": 41012, "parentPid": 5036, "name": "python.exe", "creationFileTime": 134371522052025314, "cpuSeconds": 0.109375, "exitCodeAtObservation": 259, "commandSha256": "3395651a243ed2514dcc84ed472fa47151191552a34b1e8801545695710b7203", "role": "published-cycle-wrapper"},
+    {"pid": 34516, "parentPid": 41012, "name": "python.exe", "creationFileTime": 134371522054224375, "cpuSeconds": 1.109375, "exitCodeAtObservation": 259, "commandSha256": "8a51315e33c1fb91d0cd21de277216b2ac938f5e4dd3e13462dbb7ceb8131429", "role": "published-cycle-wrapper"},
+    {"pid": 24652, "parentPid": 34516, "name": "python.exe", "creationFileTime": 134371522208251498, "cpuSeconds": 0.109375, "exitCodeAtObservation": 259, "commandSha256": "b40929ab9f0357bff8e62dfe2c8e41567bb284bd5c76fa25f34a9820af7e0a67", "role": "canonical-green-keeper"},
+    {"pid": 45704, "parentPid": 24652, "name": "conhost.exe"},
+    {"pid": 23796, "parentPid": 24652, "name": "python.exe", "creationFileTime": 134371522211957385, "cpuSeconds": 881.09375, "exitCodeAtObservation": 259, "commandSha256": "49e25a27c55b0196e0473398a09530087b119d52b685c69275391b557fd6f025", "role": "unittest-process"},
+    {"pid": 43948, "parentPid": 23796, "name": "python.exe", "creationFileTime": 134371595240150652, "cpuSeconds": 1.3125, "exitCodeAtObservation": 259, "commandSha256": "cc0d2702fbfdcce6712db8c0574df82ac2f7043207b4909554e1af09e24e9dc7", "role": "checkpoint-validator"}
+  ],
+  "observer": {
+    "kind": "Temporary standard-library native read-only utility importing only the existing frozen identity structures",
+    "path": "C:/Users/cesar/AppData/Local/Temp/iacode-m2cp3-public-quality-47lg2_jc/operator-activity-8e115221.py",
+    "lifecycle": "Created only inside this exact task-owned disposable owner, outside the repository and its source scope; remove after the read-only comparison or with owner cleanup",
+    "rawConsoleBytesArchived": false,
+    "observationBasis": "Actual tool output, copied as neutral operational facts; no manufactured raw stream or canonical test execution"
+  },
+  "processesSignaled": 0,
+  "comparison": {
+    "observedAt": "2026-10-22T16:20:32.358087+00:00",
+    "sameUnittestNativeIdentity": {"pid": 23796, "creationFileTime": 134371522211957385, "commandSha256": "49e25a27c55b0196e0473398a09530087b119d52b685c69275391b557fd6f025"},
+    "unittestCpuSeconds": 881.15625,
+    "unittestCpuIncreaseSeconds": 0.0625,
+    "newObservedValidator": {"pid": 43860, "parentPid": 23796, "creationFileTime": 134371596035913796, "cpuSeconds": 7.265625, "exitCodeAtObservation": 259, "commandSha256": "2b2be40c71b7786302b313ccfa71f51217238c68fbaaf654e4b84a82d1fcdf05", "role": "checkpoint-validator"},
+    "interpretation": "The same live unittest process advanced to a different newly created validator. This is activity evidence only; no test/gate PASS or cleanup result is inferred."
+  },
+  "subsequentActivity": {
+    "observedAt": "2026-10-22T16:37:36.064686+00:00",
+    "sameRootMatches": [41012, 34516],
+    "sameUnittestNativeIdentity": {"pid": 23796, "creationFileTime": 134371522211957385, "commandSha256": "49e25a27c55b0196e0473398a09530087b119d52b685c69275391b557fd6f025"},
+    "unittestCpuSeconds": 990.046875,
+    "unittestCpuIncreaseSincePreviousComparisonSeconds": 108.890625,
+    "unittestExitCodeAtObservation": 259,
+    "validatorPresentInThisSnapshot": false,
+    "temporaryReadOnlyUtility": "C:/Users/cesar/AppData/Local/Temp/iacode-m2cp3-public-quality-47lg2_jc/operator-activity-2a0ef87f.py",
+    "temporaryUtilityRemoval": "Exact newly created read-only utility removed with apply_patch; subsequent literal dir query returned file-not-found. Its live owner remains untouched while the canonical cycle runs.",
+    "interpretation": "The same live unittest process accumulated additional real CPU time after its validator changed. This is activity only, not an assertion of any test result, job membership or permission to signal a PID."
+  },
+  "readOnlyTemporaryArchiveObservation": {
+    "observedAt": "2026-10-22T17:08:35Z",
+    "ownerRelativeDirectory": "temporary/iacode-review-rebuild-3zy05m8_",
+    "previousObservedDirectory": "temporary/iacode-review-rebuild-8uw595c9",
+    "previousDirectoryAbsentAndNewDirectoryPresent": true,
+    "archiveSizesBytes": {"rebuild-a.zip": 8195266, "rebuild-b.zip": 8195266},
+    "archiveLastWriteLocalTimes": {"rebuild-a.zip": "2026-10-22T13:59", "rebuild-b.zip": "2026-10-22T14:05"},
+    "archiveReviewState": {
+      "checkpoint": "GATE-7-CP-0001",
+      "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+      "subjectTree": "57b4b5a14e7909eec4571f954b14b8bd3f80d30f",
+      "source": "immutable-git-objects"
+    },
+    "interpretation": "Current-subject temporary producer artifacts were observed without edits. Equal sizes are not byte equality or producer success. This is not a reconstruction verdict about the old canonical declaration, any completed unittest, or the whole cycle."
+  },
+  "subsequentTemporaryObservation": {
+    "observedAt": "2026-10-22T17:21:27Z",
+    "ordinaryTemporaryOwnerEmptyAtObservation": true,
+    "cloneVarEmptyAtObservation": true,
+    "previousRebuildDirectoryAbsent": "temporary/iacode-review-rebuild-3zy05m8_",
+    "operatorDeletionPerformed": false,
+    "interpretation": "Previously observed transient producer trees are now absent under the same live owner. This is activity/lifecycle telemetry only; no unittest result, whole cycle PASS, final owned-resource cleanup or independent verdict is granted."
+  },
+  "ownedBuildDiagnostics": {
+    "observedAt": ["2026-10-22T17:40:41.158443+00:00", "2026-10-22T17:41:57.630046+00:00"],
+    "pinnedCanonicalJob": {"pid": 24652, "creationFileTime": 134371522208251498, "commandSha256": "b40929ab9f0357bff8e62dfe2c8e41567bb284bd5c76fa25f34a9820af7e0a67"},
+    "sameCanonicalIdentityMatchedInBothObservations": true,
+    "observedOwnedDescendantNames": ["python.exe", "docker.exe", "docker-compose.exe", "docker-buildx.exe"],
+    "firstBuildxObservation": {"pid": 42556, "parentPid": 31164, "creationFileTime": 134371644100544082, "cpuSeconds": 1.6875, "exitCodeAtObservation": 259, "commandSha256": "97619045f921eecde670bb53d175c21544a36b8efd71d8f5324585dc08b6c0c2"},
+    "secondBuildxObservation": {"pid": 38764, "parentPid": 48724, "creationFileTime": 134371644652961702, "cpuSeconds": 0.328125, "exitCodeAtObservation": 259, "commandSha256": "5a1d4d5f5ea71b66a4d95b981235289d3e1902fc82d06ca5193816fc0e8df7a2"},
+    "dockerReadOnlyServerQuery": {"arguments": ["docker", "version", "--format", "{{.Server.Version}}"], "exitCode": 0, "version": "29.8.1"},
+    "privateBuilderLiveHistoryPeek": {"exitCode": 0, "recordsObserved": 42, "stdoutBytes": 13944, "stdoutSha256": "67555575bc7ff5ee76e9c4001b7c2f7bb5641e4c8c9cfc9f3709dc36c5b599b6", "stderrBytes": 0, "statusClassification": "UNCLASSIFIED_NOT_INTERPRETED_AS_BUILD_RESULTS", "rawConsoleBytesArchived": false, "completeOwnershipOrDisposalProof": false},
+    "temporaryUtility": "C:/Users/cesar/AppData/Local/Temp/iacode-m2cp3-public-quality-47lg2_jc/operator-activity-a3fb76cb.py",
+    "temporaryUtilityRemovedAndLiteralAbsenceQueryConfirmed": true,
+    "processesSignaled": 0,
+    "dockerMutationsPerformed": false,
+    "interpretation": "The live canonical job advanced between owned build subprocesses. The Docker server and private Buildx history query responded. These are read-only environment/activity facts, not build acceptance, native job-membership proof, final cleanup or permission to act on historical PIDs."
+  },
+  "sandboxUnitActivityObservation": {
+    "observedAt": "2026-10-22T17:55:52.339515+00:00",
+    "container": "iacode-m2cp3-91500867ff844a7ca13dfbe301838869-sandbox-run-a1086d54feb1",
+    "source": "Read-only Docker top and bounded 30-line log-tail queries for this exact current-task container",
+    "observedProcesses": [{"pid": 23659, "parentPid": 23633, "elapsed": "09:22", "cpuPercent": 0.8, "commandName": "python"}, {"pid": 58790, "parentPid": 23659, "elapsed": "00:01", "cpuPercent": 1.8, "commandName": "docker"}],
+    "logQueryExitCode": 0,
+    "logTailStdoutBytes": 0,
+    "logTailStderrBytes": 0,
+    "emptyStreamSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "originalQueryBytesArchived": false,
+    "temporaryUtility": "C:/Users/cesar/AppData/Local/Temp/iacode-m2cp3-public-quality-47lg2_jc/operator-sandbox-log-19a49d14.py",
+    "temporaryUtilityRemovedAndLiteralAbsenceQueryConfirmed": true,
+    "dockerMutationsPerformed": false,
+    "processesSignaled": 0,
+    "interpretation": "The task-owned pytest container was alive with a newly created Docker child. An empty available log tail is not a test result. Its image healthcheck does not replace the canonical pytest exit verdict: this unit stage overrides the image entrypoint with pytest, while full-stack health and integration remain separately mandatory. No healthcheck, source, test, primary stream or command was altered."
+  },
+  "privateCommandBodiesPublished": false,
+  "interpretation": "The exact current tagged cycle has a live unittest descendant and a newly started checkpoint validator. Process activity is not test completion, a passing gate, job-membership proof or permission for PID-based termination.",
+  "sourceOrParentCanonicalLedgersModified": false,
+  "gateVerdictGranted": false
+}

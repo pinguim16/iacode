@@ -1,0 +1,46 @@
+{
+  "observedAt": "2026-10-22T23:56:39Z",
+  "result": "PASS",
+  "action": "STOP_ONLY_EXACT_OWNED_IDLE_BUILDER_NOT_FINAL_DISPOSAL",
+  "builder": "iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c",
+  "containerId": "e3ca87ef0b46a799664212f1708e60fb8e91fd6b7979fab7b8eb3042c472559d",
+  "runningAfter": false,
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "arguments": [
+        "docker",
+        "stop",
+        "--time=30",
+        "e3ca87ef0b46a799664212f1708e60fb8e91fd6b7979fab7b8eb3042c472559d"
+      ],
+      "stdout": {
+        "bytes": 120,
+        "sha256": "1691c94f8f982089026318d84b82d67e26c4a74fee056999f203d5aa2c19b06c",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 1,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 1,
+        "signaledProcessCount": 1,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "streamHashesRechecked": true,
+  "cacheStillRequiredForCorrectiveBuilds": true,
+  "finalDisposalStillRequired": true,
+  "otherApplicationsControlled": false
+}

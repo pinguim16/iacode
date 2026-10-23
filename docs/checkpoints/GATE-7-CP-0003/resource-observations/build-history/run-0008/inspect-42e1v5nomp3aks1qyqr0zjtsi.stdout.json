@@ -1,0 +1,40 @@
+{
+  "Name": "iacode/services/sandbox/images/quality-python",
+  "Ref": "42e1v5nomp3aks1qyqr0zjtsi",
+  "Context": ".",
+  "Dockerfile": "services\\sandbox\\images\\quality-python\\Dockerfile",
+  "VCSRepository": "https://github.com/pinguim16/iacode.git",
+  "VCSRevision": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "StartedAt": "2026-10-22T21:51:22.133631759-03:00",
+  "CompletedAt": "2026-10-22T21:53:32.0894273-03:00",
+  "Duration": 129955795541,
+  "Status": "completed",
+  "NumCompletedSteps": 17,
+  "NumTotalSteps": 17,
+  "NumCachedSteps": 1,
+  "Labels": [
+    {
+      "Name": "org.iacode.sandbox.fingerprint",
+      "Value": "04672001cc6f7ea457ab8365ac196b2fb0e4a44dc74c9f7aba251a2fcf9b3b2f"
+    }
+  ],
+  "Config": {},
+  "Materials": [
+    {
+      "URI": "pkg:docker/python@3.13.15-slim-bookworm?digest=sha256:2325bb286ec344af3e5898cc224b5844e2707ac6e26b1632516fd3edc84a5e26\u0026platform=linux%2Famd64",
+      "Digests": [
+        "sha256:2325bb286ec344af3e5898cc224b5844e2707ac6e26b1632516fd3edc84a5e26"
+      ]
+    }
+  ],
+  "Attachments": [
+    {
+      "Digest": "sha256:10c38cf5cbb9d8f0b91925a0a2af430cd4d10302dc79334c27fb02c7a66a78d0",
+      "Type": "application/vnd.oci.image.manifest.v1+json"
+    },
+    {
+      "Digest": "sha256:c7ae63461d28061e628d7d6f3768f6f702102e3894aa86bea7742d5af27cdd97",
+      "Type": "https://slsa.dev/provenance/v1"
+    }
+  ]
+}

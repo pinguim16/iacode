@@ -2358,7 +2358,10 @@
         "M2HistoryTransportTests.test_real_short_null_and_long_materialization_preserve_config_and_refusal",
         "M2HistoryTransportTests.test_genuine_bad_subject_remains_refused_without_configuration_effects",
         "M2HistoryTransportTests.test_legacy_git_read_gets_exact_bytes_only_with_child_runtime_override",
-        "M2HistoryTransportTests.test_child_runtime_configuration_preserves_existing_pairs_and_refuses_malformed_input"
+        "M2HistoryTransportTests.test_child_runtime_configuration_preserves_existing_pairs_and_refuses_malformed_input",
+        "M2HostTransportTests.test_real_short_null_and_long_host_transport_preserve_exact_bytes_and_parent_configuration",
+        "M2HostTransportTests.test_missing_source_is_a_real_nonzero_refusal_not_successful_transport",
+        "M2HostTransportTests.test_malformed_inherited_runtime_configuration_refuses_before_git_launch"
       ],
       "lessons": [
         "LSN-0151"
@@ -2401,6 +2404,26 @@
         "LSN-0153"
       ],
       "removingItWouldAllow": "Inspected historical test imports to select old auditing helpers or a cached foreign test module to change the measured denominator."
+    },
+    {
+      "guardrailId": "GRD-0157",
+      "title": "Immutable bounded product inputs preserve every non-checkpoint blob",
+      "kind": "test",
+      "reference": "M2SelfSnapshotTests.test_every_committed_non_checkpoint_file_and_future_project_remains_byte_exact",
+      "verifiedBy": [
+        "M2SelfSnapshotTests.test_every_committed_non_checkpoint_file_and_future_project_remains_byte_exact",
+        "M2SelfSnapshotTests.test_dirty_source_policy_changes_and_untracked_files_cannot_replace_committed_inputs",
+        "M2SelfSnapshotTests.test_repeated_views_bind_the_same_tree_and_complete_selection_without_observation_time",
+        "M2SelfSnapshotTests.test_real_archive_export_filters_cannot_replace_the_committed_blob",
+        "M2SelfSnapshotTests.test_canonical_scope_disagreement_is_a_refusal_not_a_narrowed_view",
+        "M2SelfSnapshotTests.test_existing_destination_is_not_overwritten_or_cleaned",
+        "M2SelfSnapshotTests.test_real_nonregular_git_object_is_refused_before_any_materialization",
+        "M2SelfSnapshotTests.test_unknown_committed_policy_is_not_silently_downgraded"
+      ],
+      "lessons": [
+        "LSN-0154"
+      ],
+      "removingItWouldAllow": "Accumulated audit outputs to consume the self-snapshot ceiling, or product inputs to be silently omitted or replaced."
     }
   ]
 }

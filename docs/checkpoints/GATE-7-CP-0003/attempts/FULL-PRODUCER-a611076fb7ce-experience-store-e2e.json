@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "experience-store-e2e",
+  "result": "FAIL",
+  "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "sourceDirty": false,
+  "sourceFingerprint": "813a2857d944d8197921aea0032b336fdd55356ff1757ead671b74ae1ee78dbd",
+  "steps": [
+    {
+      "name": "current-sandbox-and-quality-images-built",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-owned-authenticated-stack-started",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-owned-authenticated-stack-healthy",
+      "result": "PASS"
+    }
+  ],
+  "composeProject": "iacode-experience-99ddd8b9a043",
+  "sandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  },
+  "cleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0,
+    "remainingNetworks": 0
+  },
+  "failure": {
+    "type": "StackError",
+    "code": "EXPERIENCE_LIVE_PROOF_FAILED"
+  }
+}

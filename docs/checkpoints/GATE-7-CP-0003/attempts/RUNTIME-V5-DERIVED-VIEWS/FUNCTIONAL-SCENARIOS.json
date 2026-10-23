@@ -1,0 +1,2461 @@
+{
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "source": "single full verifier invocation",
+  "scenarios": {
+    "agent-cancellation.json": {
+      "result": "PASS",
+      "container": "iacode-durability-rehearsal",
+      "steps": [
+        {
+          "step": "rehearsal.worker_started",
+          "result": "PASS",
+          "detail": "iacode-durability-rehearsal is polling"
+        },
+        {
+          "step": "run.created",
+          "result": "PASS",
+          "detail": "run 01a165af-11ee-7000-a1c6-15b0aee5284c"
+        },
+        {
+          "step": "run.waiting_for_tool",
+          "result": "PASS",
+          "detail": "pending tool rehearsal.read"
+        },
+        {
+          "step": "cancel.reached_the_workflow",
+          "result": "PASS",
+          "detail": "state CANCELLED"
+        },
+        {
+          "step": "cancel.is_terminal",
+          "result": "PASS",
+          "detail": "the run stayed cancelled"
+        },
+        {
+          "step": "cancel.closed_the_pending_request",
+          "result": "PASS",
+          "detail": "no request is left waiting for an answer nobody will give"
+        },
+        {
+          "step": "late_result.refused",
+          "result": "PASS",
+          "detail": "run 01a165af-11ee-7000-a1c6-15b0aee5284c is already CANCELLED; a tool result cannot be accepted"
+        },
+        {
+          "step": "history.records_the_cancellation",
+          "result": "PASS",
+          "detail": "RUN_STARTED, AGENT_STARTED, MODEL_CALL_STARTED, MODEL_CALL_COMPLETED, TOOL_REQUESTED, RUN_CANCELLED"
+        },
+        {
+          "step": "history.has_no_work_after_the_cancellation",
+          "result": "PASS",
+          "detail": "the cancellation is the last thing that happened"
+        }
+      ]
+    },
+    "agent-deadline.json": {
+      "result": "PASS",
+      "deadlineSeconds": 10,
+      "steps": [
+        {
+          "step": "rehearsal.worker_started",
+          "result": "PASS",
+          "detail": "iacode-durability-rehearsal is polling"
+        },
+        {
+          "step": "run.created",
+          "result": "PASS",
+          "detail": "run 01a165af-ab75-7000-81ed-365de25c72e5 with a 10s deadline and an agent that never finishes"
+        },
+        {
+          "step": "run.ended",
+          "result": "PASS",
+          "detail": "state FAILED"
+        },
+        {
+          "step": "run.ended_for_the_right_reason",
+          "result": "PASS",
+          "detail": "errorType RUN_DEADLINE_EXCEEDED"
+        },
+        {
+          "step": "run.did_not_run_for_ever",
+          "result": "PASS",
+          "detail": "it ended after 12.5s against a 10s deadline"
+        },
+        {
+          "step": "history.records_the_failure",
+          "result": "PASS",
+          "detail": "MODEL_CALL_STARTED, MODEL_CALL_COMPLETED, MODEL_CALL_STARTED, RUN_FAILED"
+        },
+        {
+          "step": "history.records_the_work_it_did",
+          "result": "PASS",
+          "detail": "26 completed model call(s) before the deadline"
+        }
+      ]
+    },
+    "agent-durability.json": {
+      "result": "PASS",
+      "container": "iacode-durability-rehearsal",
+      "steps": [
+        {
+          "step": "rehearsal.worker_started",
+          "result": "PASS",
+          "detail": "iacode-durability-rehearsal is polling"
+        },
+        {
+          "step": "run.created",
+          "result": "PASS",
+          "detail": "run 01a165ae-3fed-7000-b719-8c3e433f0d69"
+        },
+        {
+          "step": "run.waiting_for_tool",
+          "result": "PASS",
+          "detail": "pending tool rehearsal.read (985b81ac-4d63-4b6e-b6ff-9d1a0b580993)"
+        },
+        {
+          "step": "worker.restarted",
+          "result": "PASS",
+          "detail": "the container started again at 2026-10-22T22:14:47.402128203Z"
+        },
+        {
+          "step": "run.survived_the_restart",
+          "result": "PASS",
+          "detail": "state WAITING_FOR_TOOL after the restart"
+        },
+        {
+          "step": "tool.result_delivered",
+          "result": "PASS",
+          "detail": "the result was stored and the workflow signalled"
+        },
+        {
+          "step": "run.resumed_and_completed",
+          "result": "PASS",
+          "detail": "state SUCCEEDED"
+        },
+        {
+          "step": "run.answered",
+          "result": "PASS",
+          "detail": "the answer produced after the restart is the run's result"
+        },
+        {
+          "step": "history.records_the_pause_and_the_resume",
+          "result": "PASS",
+          "detail": "RUN_STARTED, AGENT_STARTED, MODEL_CALL_STARTED, MODEL_CALL_COMPLETED, TOOL_REQUESTED, TOOL_RESULT_RECEIVED, MODEL_CALL_STARTED, MODEL_CALL_COMPLETED, AGENT_COMPLETED, RUN_COMPLETED"
+        },
+        {
+          "step": "history.is_ordered",
+          "result": "PASS",
+          "detail": "10 event(s) in sequence order"
+        }
+      ]
+    },
+    "agent-runtime-smoke.json": {
+      "result": "PASS",
+      "provider": "openai",
+      "smokeModel": "openai:gpt-4o-mini",
+      "maxOutputTokens": 400,
+      "singleAgentRunId": "01a165ad-83be-7000-835e-ccc5d1ebc649",
+      "teamRunId": "01a165ad-93e3-7000-97b2-bd1fb9fcc4bf",
+      "singleAgentTask": "Reply with exactly: IACODE_AGENT_OK",
+      "teamTask": "Plan, in at most two steps, how to rename one function in one file. Keep every line under twenty words.",
+      "checks": [
+        {
+          "name": "single.succeeded",
+          "result": "PASS",
+          "detail": "state SUCCEEDED",
+          "data": {
+            "runId": "01a165ad-83be-7000-835e-ccc5d1ebc649"
+          }
+        },
+        {
+          "name": "single.answered",
+          "result": "PASS",
+          "detail": "contains IACODE_AGENT_OK"
+        },
+        {
+          "name": "single.one_agent_run",
+          "result": "PASS",
+          "detail": "1 agent run(s)"
+        },
+        {
+          "name": "single.workflow_executed",
+          "result": "PASS",
+          "detail": "workflow iacode-agent-run-01a165ad-83be-7000-835e-ccc5d1ebc649"
+        },
+        {
+          "name": "single.events_persisted",
+          "result": "PASS",
+          "detail": "7 event(s): RUN_CREATED, RUN_STARTED, AGENT_STARTED, MODEL_CALL_STARTED, MODEL_CALL_COMPLETED, AGENT_COMPLETED, RUN_COMPLETED"
+        },
+        {
+          "name": "single.sequence_is_monotonic",
+          "result": "PASS",
+          "detail": "the recorded order is the sequence order"
+        },
+        {
+          "name": "single.model_provenance",
+          "result": "PASS",
+          "detail": "openai:gpt-4o-mini call 01a165ad-8f88-7000-a084-fd7832e572c7"
+        },
+        {
+          "name": "single.gateway_only",
+          "result": "PASS",
+          "detail": "the call went to the model the run asked the gateway for"
+        },
+        {
+          "name": "single.no_content_in_events",
+          "result": "PASS",
+          "detail": "no event carries the model's output except the bounded summary"
+        },
+        {
+          "name": "single.no_tool_executed",
+          "result": "PASS",
+          "detail": "no tool was requested and none was executed"
+        },
+        {
+          "name": "single.training_denied",
+          "result": "PASS",
+          "detail": "the run is not training-eligible"
+        },
+        {
+          "name": "single.budget_recorded",
+          "result": "PASS",
+          "detail": "1 turn(s), 1 model call(s)"
+        },
+        {
+          "name": "team.succeeded",
+          "result": "PASS",
+          "detail": "state SUCCEEDED",
+          "data": {
+            "runId": "01a165ad-93e3-7000-97b2-bd1fb9fcc4bf"
+          }
+        },
+        {
+          "name": "team.two_agent_runs",
+          "result": "PASS",
+          "detail": "2 agent run(s)"
+        },
+        {
+          "name": "team.order",
+          "result": "PASS",
+          "detail": "plan then review"
+        },
+        {
+          "name": "team.agents",
+          "result": "PASS",
+          "detail": "planner then reviewer"
+        },
+        {
+          "name": "team.started_in_order",
+          "result": "PASS",
+          "detail": "the events record the same order the stages ran in"
+        },
+        {
+          "name": "team.outputs_are_separate",
+          "result": "PASS",
+          "detail": "each stage recorded its own output summary"
+        },
+        {
+          "name": "team.provenance_per_stage",
+          "result": "PASS",
+          "detail": "each stage recorded the profile and prompt that produced it"
+        },
+        {
+          "name": "team.result_is_the_last_stage",
+          "result": "PASS",
+          "detail": "the run's result is the reviewer's answer"
+        },
+        {
+          "name": "team.calls_were_bounded",
+          "result": "PASS",
+          "detail": "2 model call(s)"
+        },
+        {
+          "name": "team.no_tool_executed",
+          "result": "PASS",
+          "detail": "no tool was requested and none was executed"
+        },
+        {
+          "name": "team.reviewer_reads_the_plan",
+          "result": "PASS",
+          "detail": "the review stage declares inputs ['task', 'plan']"
+        },
+        {
+          "name": "team.reviewer_ran_second",
+          "result": "PASS",
+          "detail": "the reviewer executed after the planner and completed"
+        }
+      ]
+    },
+    "desktop-e2e.json": {
+      "schemaVersion": "1.0.0",
+      "scenario": "desktop-e2e",
+      "result": "FAIL",
+      "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+      "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+      "sourceDirty": false,
+      "sourceFingerprint": "813a2857d944d8197921aea0032b336fdd55356ff1757ead671b74ae1ee78dbd",
+      "steps": [],
+      "composeProject": "iacode-desktop-09a34021b98b",
+      "failure": {
+        "type": "StackError",
+        "message": "owned desktop stack startup failed: mat\n#115 exporting layers 0.1s done\n#115 exporting manifest sha256:5dd9207af7844fbe41f0ec9603503fa623fdf76cb91324124f5119a7985f99ad 0.0s done\n#115 exporting config sha256:d3703b951f1999b17f170cf68455779e4a6fd5f14df984e91db8adc96a5e2b73 0.0s done\n#115 ...\n\n#116 [api] exporting to oci image format\n#116 exporting layers done\n#116 exporting manifest sha256:06b9a3455b51333a54767275fe8636b7721a7532bca29316411e308acc596b65 0.0s done\n#116 exporting config sha256:43059c1a23f1e23ac16c142c5ad37657a42003a723616c3c685bef2f1243035b 0.0s done\n#116 ...\n\n#117 importing to docker\n#117 DONE 0.0s\n\n#115 [web] exporting to oci image format\n#115 sending tarball 15.7s done\n#115 DONE 15.8s\n\n#114 [evaluator] exporting to oci image format\n#114 ...\n\n#118 [web] resolving provenance for metadata file\n#118 DONE 1.0s\n\n#62 [worker] exporting to oci image format\n#62 ...\n\n#116 [api] exporting to oci image format\n#116 sending tarball 108.7s done\n#116 CANCELED\n\n#114 [evaluator] exporting to oci image format\n#114 sending tarball 109.3s done\n#114 CANCELED\n\n#62 [worker] exporting to oci image format\n#62 sending tarball 109.7s done\n#62 CANCELED\n\n#113 [migrate] exporting to oci image format\n#113 sending tarball 108.7s done\n#113 CANCELED\n\n#86 [sandbox] exporting to oci image format\n#86 sending tarball 108.8s done\n#86 CANCELED\ntarget evaluator: failed to solve: Canceled: failed to copy to tar: rpc error: code = Canceled desc = context canceled\n\n\n\nView build details: docker-desktop://dashboard/build/iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c/iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c0/fslqi3n8qfuq4ghut9ocjbgma\n\n"
+      },
+      "failureCleanupExitCode": 0,
+      "failureSandboxCleanup": {
+        "remainingContainers": 0,
+        "remainingNetworks": 0
+      }
+    },
+    "experience-store-e2e.json": {
+      "schemaVersion": "1.0.0",
+      "scenario": "experience-store-e2e",
+      "result": "FAIL",
+      "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+      "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+      "sourceDirty": false,
+      "sourceFingerprint": "813a2857d944d8197921aea0032b336fdd55356ff1757ead671b74ae1ee78dbd",
+      "steps": [
+        {
+          "name": "current-sandbox-and-quality-images-built",
+          "result": "PASS"
+        },
+        {
+          "name": "fresh-owned-authenticated-stack-started",
+          "result": "PASS"
+        },
+        {
+          "name": "fresh-owned-authenticated-stack-healthy",
+          "result": "PASS"
+        }
+      ],
+      "composeProject": "iacode-experience-99ddd8b9a043",
+      "sandboxCleanup": {
+        "remainingContainers": 0,
+        "remainingNetworks": 0
+      },
+      "cleanup": {
+        "composeExitCode": 0,
+        "remainingContainers": 0,
+        "remainingVolumes": 0,
+        "remainingNetworks": 0
+      },
+      "failure": {
+        "type": "StackError",
+        "code": "EXPERIENCE_LIVE_PROOF_FAILED"
+      }
+    },
+    "gateway-smoke.json": {
+      "result": "PASS",
+      "provider": "openai",
+      "adapter": "openai-compatible",
+      "smokeModel": "openai:gpt-4o-mini",
+      "prompt": "Reply with exactly: IACODE_GATEWAY_OK",
+      "maxOutputTokens": 32,
+      "requestId": "01a165ad-44de-7000-a72b-cae5cabecde5",
+      "checks": [
+        {
+          "name": "catalog.sync",
+          "result": "PASS",
+          "detail": "135 model(s) from the provider's own API",
+          "data": {
+            "added": 135,
+            "updated": 0,
+            "deactivated": 0,
+            "unchanged": 0
+          }
+        },
+        {
+          "name": "catalog.idempotent",
+          "result": "PASS",
+          "detail": "a second synchronisation added 0 and deactivated 0",
+          "data": {
+            "unchanged": 135,
+            "updated": 0
+          }
+        },
+        {
+          "name": "catalog.persisted",
+          "result": "PASS",
+          "detail": "135 active model(s) in the catalog",
+          "data": {
+            "total": 135
+          }
+        },
+        {
+          "name": "catalog.smoke_model_present",
+          "result": "PASS",
+          "detail": "openai:gpt-4o-mini is in the discovered catalog; it is never substituted, because spending on a different model is how a surprise bill happens"
+        },
+        {
+          "name": "catalog.normalised",
+          "result": "PASS",
+          "detail": "the provider's record was normalised into the catalog's shape",
+          "data": {
+            "contextWindow": null,
+            "streaming": "SUPPORTED",
+            "provenance": "MANUAL_CONFIGURATION"
+          }
+        },
+        {
+          "name": "inference.answered",
+          "result": "PASS",
+          "detail": "the model answered with 'IACODE_GATEWAY_OK'"
+        },
+        {
+          "name": "inference.attributed",
+          "result": "PASS",
+          "detail": "answered by openai:gpt-4o-mini over openai-chat-completions",
+          "data": {
+            "route": "EXPLICIT_MODEL",
+            "endpoint": "openai-chat-completions"
+          }
+        },
+        {
+          "name": "inference.latency",
+          "result": "PASS",
+          "detail": "3606 ms"
+        },
+        {
+          "name": "inference.usage",
+          "result": "PASS",
+          "detail": "usage as the provider reported it; absent fields stay absent",
+          "data": {
+            "inputTokens": 17,
+            "outputTokens": 6,
+            "totalTokens": 23,
+            "cachedInputTokens": 0,
+            "reasoningTokens": 0
+          }
+        },
+        {
+          "name": "inference.cost_is_not_invented",
+          "result": "PASS",
+          "detail": "no pricing is configured, so the cost is absent rather than zero"
+        },
+        {
+          "name": "stream.started",
+          "result": "PASS",
+          "detail": "the first event was start"
+        },
+        {
+          "name": "stream.delivered",
+          "result": "PASS",
+          "detail": "6 content event(s) carrying 17 character(s)"
+        },
+        {
+          "name": "stream.ended",
+          "result": "PASS",
+          "detail": "the last event was end"
+        },
+        {
+          "name": "stream.answered",
+          "result": "PASS",
+          "detail": "the streamed answer contained 'IACODE_GATEWAY_OK'"
+        },
+        {
+          "name": "stream.not_duplicated",
+          "result": "PASS",
+          "detail": "every sequence number is distinct and ascending, and the answer appears once",
+          "data": {
+            "events": 9
+          }
+        },
+        {
+          "name": "persistence.recorded",
+          "result": "PASS",
+          "detail": "the call is recorded as SUCCEEDED",
+          "data": {
+            "latencyMs": "3596",
+            "inputTokens": "17",
+            "outputTokens": "6",
+            "endpoint": "openai-chat-completions",
+            "route": null,
+            "retries": "0",
+            "fallbacks": "0"
+          }
+        },
+        {
+          "name": "persistence.attributed",
+          "result": "PASS",
+          "detail": "recorded against openai:gpt-4o-mini"
+        },
+        {
+          "name": "persistence.fingerprinted",
+          "result": "PASS",
+          "detail": "a request fingerprint was stored for correlation"
+        },
+        {
+          "name": "persistence.no_prompt",
+          "result": "PASS",
+          "detail": "the table has no column that could hold a prompt or a completion",
+          "data": {
+            "columns": 24
+          }
+        },
+        {
+          "name": "observability.scraped",
+          "result": "PASS",
+          "detail": "1 gateway request series, 2 observation(s), read after 3s",
+          "data": {
+            "series": 1
+          }
+        }
+      ]
+    },
+    "knowledge-engine-e2e.json": {
+      "schemaVersion": "1.0.0",
+      "scenario": "knowledge-engine-e2e",
+      "result": "FAIL",
+      "reportFile": "var/knowledge-engine-e2e.json",
+      "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+      "sourceDirty": false,
+      "sourceFingerprint": "813a2857d944d8197921aea0032b336fdd55356ff1757ead671b74ae1ee78dbd",
+      "composeProject": "iacode-knowledge-d0c234dde6dc",
+      "steps": [
+        {
+          "name": "actual-current-sandbox-quality-images-built",
+          "result": "PASS"
+        },
+        {
+          "name": "fresh-owned-authenticated-stack-started",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-owned-stack-healthy",
+          "result": "PASS"
+        },
+        {
+          "name": "exact-authorized-provider-model-discovered",
+          "result": "PASS",
+          "authorizedModel": "openai:gpt-4o-mini",
+          "provider": "openai",
+          "catalogModels": 135,
+          "discovered": 135
+        },
+        {
+          "name": "actual-snapshot-created",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-governed-task-created",
+          "result": "PASS"
+        },
+        {
+          "name": "real-provider-and-sandbox-completed",
+          "result": "PASS",
+          "sourceRunId": "01a165ea-35de-7000-a6be-bc20da9544bb",
+          "modelCallsUsed": 5,
+          "toolExecutions": 2
+        },
+        {
+          "name": "actual-quality-created",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-derived-quality-pass-with-evidence",
+          "result": "PASS",
+          "qualityRunId": "01a165eb-6fa7-7000-8b3b-82c14e522b3d"
+        },
+        {
+          "name": "actual-source-project-discovered",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-source-bound-experience-captured",
+          "result": "PASS",
+          "experienceId": "01a165ec-02a2-7000-a5e6-4f93d712a049",
+          "sourceDigest": "f7db5ff8c0f3898c963538e58716fb6470453b0ccf007d4f7c8d49d83c8fffc2"
+        },
+        {
+          "name": "owning-validated-storage-only-experience-cannot-be-laundered",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-content-bound-synthetic-source-grants-deployed",
+          "result": "PASS",
+          "corpusVersion": "knowledge-lexical-acceptance-v1",
+          "corpusSha256": "b36748c24a4ef41ed9e07be19dea3bbcd2edb5ff77f74164d28919580402c32e"
+        },
+        {
+          "name": "unauthenticated-ingestions-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "unauthenticated-search-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "unauthenticated-documents-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "invalid-authentication-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "stale-authentication-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "canonical-secret-adverse-premise",
+          "result": "PASS"
+        },
+        {
+          "name": "consent-missing-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "consent-denied-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "consent-coerced-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "caller-text-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "caller-path-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "caller-rights-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "caller-verdict-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "secret-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-capability-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-ingestion-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "authentication-replay-clean-control",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-redis-authentication-replay-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-accepted-response-loss-one-publication",
+          "result": "PASS"
+        },
+        {
+          "name": "stable-exact-request-recovers-original-publication",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-long",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-partial",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-tides",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-unicode",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-rights",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-instruction",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-0",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-1",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-2",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-3",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-4",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-5",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-6",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-7",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-8",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-9",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-export-inspect-roundtrip",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-bounded-project-pagination",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-cursor-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-document-get-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-document-delete-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "owned-api-restart",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-persistent-source-index-after-restart",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corrupt-body-is-not-empty-success",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-body-restoration-null-control",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-missing-index-is-not-empty-success",
+          "result": "PASS"
+        },
+        {
+          "name": "withdraw-owned-corrupt-projection",
+          "result": "PASS"
+        },
+        {
+          "name": "revoked-grant-immediately-denies-delivery",
+          "result": "PASS"
+        },
+        {
+          "name": "superseded-source-immediately-denies-old-citation",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-rebuild-publishes-current-revision",
+          "result": "PASS"
+        },
+        {
+          "name": "rebuilt-retrieval-selects-new-citation",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-withdrawal",
+          "result": "PASS"
+        },
+        {
+          "name": "same-key-cannot-resurrect-withdrawn-revision",
+          "result": "PASS"
+        },
+        {
+          "name": "new-key-cannot-resurrect-withdrawn-revision",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-finite-retention-created",
+          "result": "PASS"
+        },
+        {
+          "name": "expiry-denial-does-not-require-manual-sweep",
+          "result": "PASS"
+        },
+        {
+          "name": "owned-background-retention-physically-purges-primary-index",
+          "result": "PASS"
+        },
+        {
+          "name": "changed-raw-source-immediately-denies-delivery",
+          "result": "PASS"
+        },
+        {
+          "name": "missing-current-source-is-unavailable-not-empty-success",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-logs-retain-observability-not-private-ingress",
+          "result": "PASS"
+        },
+        {
+          "name": "knowledge-never-executes-or-mutates-upstream-evidence",
+          "result": "PASS"
+        },
+        {
+          "name": "upstream-experience-and-rights-remain-unchanged",
+          "result": "PASS"
+        },
+        {
+          "name": "owned-resources-actually-removed",
+          "result": "PASS"
+        },
+        {
+          "name": "unrelated-container-identities-and-running-states-preserved",
+          "result": "FAIL"
+        }
+      ],
+      "cleanup": {
+        "composeExitCode": 0,
+        "container": 0,
+        "volume": 0,
+        "network": 0
+      },
+      "retrievalMeasurements": [
+        {
+          "queryOrdinal": 0,
+          "result": "PASS",
+          "expectedSources": [
+            "full",
+            "long",
+            "partial"
+          ],
+          "observedHits": 3
+        },
+        {
+          "queryOrdinal": 1,
+          "result": "PASS",
+          "expectedSources": [
+            "full",
+            "long"
+          ],
+          "observedHits": 2
+        },
+        {
+          "queryOrdinal": 2,
+          "result": "PASS",
+          "expectedSources": [
+            "partial"
+          ],
+          "observedHits": 1
+        },
+        {
+          "queryOrdinal": 3,
+          "result": "PASS",
+          "expectedSources": [
+            "tides"
+          ],
+          "observedHits": 1
+        },
+        {
+          "queryOrdinal": 4,
+          "result": "PASS",
+          "expectedSources": [
+            "unicode"
+          ],
+          "observedHits": 1
+        },
+        {
+          "queryOrdinal": 5,
+          "result": "PASS",
+          "expectedSources": [
+            "rights"
+          ],
+          "observedHits": 1
+        },
+        {
+          "queryOrdinal": 6,
+          "result": "PASS",
+          "expectedSources": [
+            "instruction"
+          ],
+          "observedHits": 1
+        },
+        {
+          "queryOrdinal": 7,
+          "result": "PASS",
+          "expectedSources": [],
+          "observedHits": 0
+        },
+        {
+          "queryOrdinal": 8,
+          "result": "PASS",
+          "expectedSources": [],
+          "observedHits": 0
+        },
+        {
+          "queryOrdinal": 9,
+          "result": "PASS",
+          "expectedSources": [],
+          "observedHits": 0
+        }
+      ],
+      "sandboxCleanup": {
+        "container": 0,
+        "network": 0
+      },
+      "failure": {
+        "type": "StackError",
+        "code": "KNOWLEDGE_LIVE_PROOF_FAILED"
+      }
+    },
+    "native-editor-package.json": {
+      "kind": "NATIVE_INSTALLATION_AND_TRUST_NOT_LIVE_PROVIDER_ACCEPTANCE",
+      "result": "PASS",
+      "runs": [
+        {
+          "installation": {
+            "exitCode": 0,
+            "result": "PASS",
+            "freshProfile": true,
+            "sharedDataDirectoryOwned": true,
+            "processCleanup": {
+              "jobOwned": true,
+              "remainingBeforeCleanup": 0,
+              "remainingAfterCleanup": 0,
+              "observedProcessCount": 0,
+              "signaledProcessCount": 0,
+              "forcedTermination": false,
+              "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+            }
+          },
+          "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+          "result": "PASS",
+          "mode": "package",
+          "editorVersion": "1.138.0",
+          "nodeVersion": "v24.18.1",
+          "processId": 11120,
+          "steps": [
+            {
+              "name": "fresh-installed-extension-active",
+              "result": "PASS",
+              "commands": 19,
+              "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-verification-1_e7hm5p\\temporary\\iacode-native-editor-4nmb5022\\package\\extensions\\iacode.iacode-0.1.0"
+            },
+            {
+              "name": "configuration-not-inherited-from-workspace-or-environment",
+              "result": "PASS"
+            }
+          ],
+          "exitCode": 0,
+          "processCleanup": {
+            "jobOwned": true,
+            "remainingBeforeCleanup": 0,
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 0,
+            "signaledProcessCount": 0,
+            "forcedTermination": false,
+            "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+          },
+          "sharedStorageObservedOwned": true
+        },
+        {
+          "installation": {
+            "exitCode": 0,
+            "result": "PASS",
+            "freshProfile": true,
+            "sharedDataDirectoryOwned": true,
+            "processCleanup": {
+              "jobOwned": true,
+              "remainingBeforeCleanup": 0,
+              "remainingAfterCleanup": 0,
+              "observedProcessCount": 0,
+              "signaledProcessCount": 0,
+              "forcedTermination": false,
+              "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+            }
+          },
+          "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+          "result": "PASS",
+          "mode": "untrusted",
+          "editorVersion": "1.138.0",
+          "nodeVersion": "v24.18.1",
+          "processId": 39740,
+          "steps": [
+            {
+              "name": "fresh-installed-extension-active",
+              "result": "PASS",
+              "commands": 19,
+              "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-verification-1_e7hm5p\\temporary\\iacode-native-editor-4nmb5022\\untrusted\\extensions\\iacode.iacode-0.1.0"
+            },
+            {
+              "name": "actual-untrusted-workspace-refuses-every-mutation-before-connection",
+              "result": "PASS"
+            }
+          ],
+          "exitCode": 0,
+          "processCleanup": {
+            "jobOwned": true,
+            "remainingBeforeCleanup": 0,
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 0,
+            "signaledProcessCount": 0,
+            "forcedTermination": false,
+            "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+          },
+          "sharedStorageObservedOwned": true
+        }
+      ],
+      "ownedTemporaryDirectoryRemoved": true,
+      "directoryCleanupRetries": 8,
+      "directoryCleanup": {
+        "removed": true,
+        "cleanupRetries": 8,
+        "cleanupAttempts": 9,
+        "cleanupElapsedSeconds": 0.885989,
+        "firstSharingLockAfterSeconds": 0.060036,
+        "cleanupFailure": null
+      }
+    },
+    "quality-cancellation.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "cancel",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.cancelled",
+              "result": "PASS",
+              "expected": "CANCELLED",
+              "observed": "CANCELLED"
+            },
+            {
+              "step": "verdict.fail_closed",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "check.cancellation_recorded",
+              "result": "PASS",
+              "expected": "contains CANCELLED",
+              "observed": [
+                "PASSED",
+                "CANCELLED"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "CANCELLED",
+              "observed": "CANCELLED"
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=2",
+              "observed": 2
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 2
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "cancel.idempotent",
+              "result": "PASS",
+              "expected": "CANCELLED",
+              "observed": "CANCELLED"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a165b9-756c-7000-ac9b-49421fabb9a6",
+              "digest": "688b973538f953cbd82a875d27893176ead80052b54bd3c9f85cf7f9c53f3591",
+              "sizeBytes": 504
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a165b9-79b4-7000-858a-fea3bd3ab587",
+              "planId": "b70c442e53ae063fb5fadb54b64eedbcb7a851ac5c09bf5a7305495a04b8e288"
+            }
+          ],
+          "recordedAt": "2026-10-22T22:27:09Z"
+        }
+      ],
+      "recordedAt": "2026-10-22T22:27:09Z"
+    },
+    "quality-fail.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "fail",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "FAILED",
+              "observed": "FAILED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "verdict.fail",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "failed_check.preserved",
+              "result": "PASS",
+              "expected": [
+                "q002-unit"
+              ],
+              "observed": [
+                "q002-unit"
+              ]
+            },
+            {
+              "step": "finding.preserved",
+              "result": "PASS",
+              "expected": 1,
+              "observed": 1
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a165b2-c5ed-7000-9a0e-f0746c0748ef",
+              "digest": "65242d06f67c60639e31487cf625569e92e58105103b85b9d288af93ffcc872b",
+              "sizeBytes": 475
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a165b2-c97f-7000-b9e6-4ebe7d4ef9ae",
+              "planId": "6818f557aa1eb7ee2ecc3405937f7229549800bcf4df525d97a3b58f3fdd7bc3"
+            }
+          ],
+          "recordedAt": "2026-10-22T22:19:57Z"
+        }
+      ],
+      "recordedAt": "2026-10-22T22:19:57Z"
+    },
+    "quality-pass.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "pass",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "verdict.pass",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            },
+            {
+              "step": "checks.all_passed",
+              "result": "PASS",
+              "expected": [
+                "PASSED"
+              ],
+              "observed": [
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED"
+              ]
+            },
+            {
+              "step": "host.sentinel_unchanged",
+              "result": "PASS",
+              "expected": "9c185d67264d6079e3617e46637cb04e1ca8986f74760792b34ba635d9d5243b",
+              "observed": "9c185d67264d6079e3617e46637cb04e1ca8986f74760792b34ba635d9d5243b"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a165b2-1fbe-7000-adf2-c4067abd0aed",
+              "digest": "d3cd04858bbfec843970885688ee1841fdb13c1b1ba2412549ccb5c478ba3104",
+              "sizeBytes": 637
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a165b2-23b3-7000-9a88-9612a5b00439",
+              "planId": "93b0838683a168e626ecc1393c7400b00db6b96dbf515adc75f86ddcbfda5280"
+            }
+          ],
+          "recordedAt": "2026-10-22T22:19:18Z"
+        }
+      ],
+      "recordedAt": "2026-10-22T22:19:18Z"
+    },
+    "quality-recovery.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "recovery",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "worker.restart_requested",
+              "result": "PASS",
+              "expected": 0,
+              "observed": 0
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "results.exactly_once",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "identity.preserved",
+              "result": "PASS",
+              "expected": "01a165b8-9a70-7000-813b-1dac53a4fd7e",
+              "observed": "01a165b8-9a70-7000-813b-1dac53a4fd7e"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a165b8-968d-7000-aa1b-e8aa92a9e7e0",
+              "digest": "afdc86c555a8ce1393a00bb1eaf961727ef57286345ec8f39dbc206828b9fdb8",
+              "sizeBytes": 504
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a165b8-9a70-7000-813b-1dac53a4fd7e",
+              "planId": "5880ad6e3c90a90bda3bf7a3d94e4fc36a03b043bc9c924febbf23dc3163b3bb"
+            }
+          ],
+          "recordedAt": "2026-10-22T22:26:36Z"
+        }
+      ],
+      "recordedAt": "2026-10-22T22:26:36Z"
+    },
+    "quality-reproduction.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "reproduce",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "identity.distinct_run",
+              "result": "PASS",
+              "expected": "not 01a165b7-794c-7000-9ac9-f68812b62157",
+              "observed": "01a165b7-ce77-7000-8fbf-2ada793b95fd"
+            },
+            {
+              "step": "identity.equal_plan",
+              "result": "PASS",
+              "expected": "d9afba8e7a8829ac7d2eabf8bc7f675e36493cf9d9ca84370c95e6c62819095c",
+              "observed": "d9afba8e7a8829ac7d2eabf8bc7f675e36493cf9d9ca84370c95e6c62819095c"
+            },
+            {
+              "step": "lineage.recorded",
+              "result": "PASS",
+              "expected": "01a165b7-794c-7000-9ac9-f68812b62157",
+              "observed": "01a165b7-794c-7000-9ac9-f68812b62157"
+            },
+            {
+              "step": "results.equivalent",
+              "result": "PASS",
+              "expected": [
+                [
+                  "q001-build",
+                  "PASSED"
+                ],
+                [
+                  "q002-unit",
+                  "PASSED"
+                ],
+                [
+                  "q003-lint",
+                  "PASSED"
+                ],
+                [
+                  "q004-static",
+                  "PASSED"
+                ],
+                [
+                  "q005-dependency-security",
+                  "PASSED"
+                ],
+                [
+                  "q006-secret",
+                  "PASSED"
+                ],
+                [
+                  "q007-diff-integrity",
+                  "PASSED"
+                ]
+              ],
+              "observed": [
+                [
+                  "q001-build",
+                  "PASSED"
+                ],
+                [
+                  "q002-unit",
+                  "PASSED"
+                ],
+                [
+                  "q003-lint",
+                  "PASSED"
+                ],
+                [
+                  "q004-static",
+                  "PASSED"
+                ],
+                [
+                  "q005-dependency-security",
+                  "PASSED"
+                ],
+                [
+                  "q006-secret",
+                  "PASSED"
+                ],
+                [
+                  "q007-diff-integrity",
+                  "PASSED"
+                ]
+              ]
+            },
+            {
+              "step": "verdict.equivalent",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a165b7-753c-7000-b753-41e97876d5e5",
+              "digest": "58d4b02011fe33746f282c51cd45e808a8cfe3e9157ae2a9429527c174d2d3a4",
+              "sizeBytes": 476
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a165b7-794c-7000-9ac9-f68812b62157",
+              "planId": "d9afba8e7a8829ac7d2eabf8bc7f675e36493cf9d9ca84370c95e6c62819095c"
+            },
+            {
+              "kind": "quality-reproduction",
+              "runId": "01a165b7-ce77-7000-8fbf-2ada793b95fd",
+              "planId": "d9afba8e7a8829ac7d2eabf8bc7f675e36493cf9d9ca84370c95e6c62819095c"
+            }
+          ],
+          "recordedAt": "2026-10-22T22:25:29Z"
+        }
+      ],
+      "recordedAt": "2026-10-22T22:25:29Z"
+    },
+    "quality-secret-output.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "secret-output",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "control.accepted",
+              "result": "PASS",
+              "expected": "SUCCEEDED with PASS",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "FAILED",
+              "observed": "FAILED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "python-secret-output.verdict_fail",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "python-secret-output.api_output_clean",
+              "result": "PASS",
+              "expected": true,
+              "observed": true
+            },
+            {
+              "step": "python-secret-output.history_clean",
+              "result": "PASS",
+              "expected": "decoded durable payloads contain no prohibited bytes",
+              "observed": {
+                "prohibitedBytesAbsent": true,
+                "payloadsScanned": 122,
+                "workflowStatus": "COMPLETED",
+                "sandboxObjects": 0,
+                "failures": [],
+                "pendingActivityTypes": [],
+                "containmentRefusals": 2
+              }
+            },
+            {
+              "step": "python-secret-output.no_sandbox_artifact",
+              "result": "PASS",
+              "expected": 0,
+              "observed": 0
+            },
+            {
+              "step": "python-secret-output.causal_containment_refusal",
+              "result": "PASS",
+              "expected": "one or more explicit output-containment refusals",
+              "observed": 2
+            },
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "FAILED",
+              "observed": "FAILED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "python-secret-output-full.verdict_fail",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "python-secret-output-full.api_output_clean",
+              "result": "PASS",
+              "expected": true,
+              "observed": true
+            },
+            {
+              "step": "python-secret-output-full.history_clean",
+              "result": "PASS",
+              "expected": "decoded durable payloads contain no prohibited bytes",
+              "observed": {
+                "prohibitedBytesAbsent": true,
+                "payloadsScanned": 132,
+                "workflowStatus": "COMPLETED",
+                "sandboxObjects": 0,
+                "failures": [],
+                "pendingActivityTypes": [],
+                "containmentRefusals": 2
+              }
+            },
+            {
+              "step": "python-secret-output-full.no_sandbox_artifact",
+              "result": "PASS",
+              "expected": 0,
+              "observed": 0
+            },
+            {
+              "step": "python-secret-output-full.causal_containment_refusal",
+              "result": "PASS",
+              "expected": "one or more explicit output-containment refusals",
+              "observed": 2
+            },
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "control.after_refusal_pass",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a165d2-c1fe-7000-909f-fc8ee344ab1d",
+              "digest": "495ace45220529aa71fbb8c434dbb470bfa0d01339e245152094f605f1f35be5",
+              "sizeBytes": 476
+            },
+            {
+              "kind": "snapshot",
+              "artifactId": "01a165d4-2418-7000-8b89-3200c338a915",
+              "digest": "ac085097f046aa9801b061a23a1abeb076dddca2f9b0ce32115abfb4483eab79",
+              "sizeBytes": 549
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a165d4-281d-7000-9635-4d0e6bf23e56",
+              "planId": "db75c5717d8bf7228e092d9d3f3632c037f6572bc0849cf3d7c9e322d18eb2fc"
+            },
+            {
+              "kind": "snapshot",
+              "artifactId": "01a165d4-cdc3-7000-878d-b80db2352d43",
+              "digest": "59b6b526f290e9a99d8487b1f8825a40a0a30cecb22a1ed07e7bf931de42cd64",
+              "sizeBytes": 530
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a165d4-d0e5-7000-bf52-12753a519ac4",
+              "planId": "88442fcfd465f8335176a5b0e9fe7ac856fd983e79d1d0093dc50becaaf430e5"
+            },
+            {
+              "kind": "snapshot",
+              "artifactId": "01a165d5-c71b-7000-9f04-31670dc1f2e4",
+              "digest": "84ab67b433a322fc2b39f9bc7475e6895b1c79cb4fedbb7ed5a7bd2a0b520b7f",
+              "sizeBytes": 476
+            }
+          ],
+          "recordedAt": "2026-10-22T22:58:20Z"
+        }
+      ],
+      "recordedAt": "2026-10-22T22:58:20Z"
+    },
+    "quality-timeout.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "timeout",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.timed_out",
+              "result": "PASS",
+              "expected": "TIMED_OUT",
+              "observed": "TIMED_OUT"
+            },
+            {
+              "step": "check.timeout_recorded",
+              "result": "PASS",
+              "expected": "contains TIMED_OUT",
+              "observed": [
+                "PASSED",
+                "TIMED_OUT",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED"
+              ]
+            },
+            {
+              "step": "verdict.fail_closed",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "TIMED_OUT",
+              "observed": "TIMED_OUT"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a165ba-13ca-7000-99ad-910701314255",
+              "digest": "fe31eb5d76f48e331d5d04d839bc594a13cb7796444da6d125fa036a0bda49f0",
+              "sizeBytes": 504
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a165ba-1816-7000-aef8-87dd8cef1736",
+              "planId": "ac0893ca3dc4f666fe9d66806e38b76efc004d3583f38b6e0d70c457a7f4c46b"
+            }
+          ],
+          "recordedAt": "2026-10-22T22:28:02Z"
+        }
+      ],
+      "recordedAt": "2026-10-22T22:28:02Z"
+    },
+    "sandbox-cancellation.json": {
+      "scenario": "cancel",
+      "result": "PASS",
+      "steps": [
+        {
+          "step": "images.rebuilt_and_service_current",
+          "result": "PASS",
+          "detail": "worker, sandbox service and sandbox image built from the current source"
+        },
+        {
+          "step": "rehearsal.worker_polling",
+          "result": "PASS",
+          "detail": "iacode-coding-rehearsal and the sandbox service"
+        },
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "detail": "artifact 01a165c9-32c0-7000-90ce-b0aebe2b07c9"
+        },
+        {
+          "step": "cancel.command_was_running",
+          "result": "PASS",
+          "detail": "sandbox ['RUNNING']"
+        },
+        {
+          "step": "cancel.long_command_in_the_container",
+          "result": "PASS",
+          "detail": "the command is a process of the sandbox container"
+        },
+        {
+          "step": "run.terminal_state",
+          "result": "PASS",
+          "detail": "state CANCELLED (RUN_CANCELLED: the run was cancelled)"
+        },
+        {
+          "step": "sandbox.one_session_for_the_run",
+          "result": "PASS",
+          "detail": "1 session(s)"
+        },
+        {
+          "step": "sandbox.every_execution_in_that_session",
+          "result": "PASS",
+          "detail": "sessions used: ['01a165c9-46d5-7000-8785-a7c9a54e0ae0']"
+        },
+        {
+          "step": "sandbox.no_network",
+          "result": "PASS",
+          "detail": "network profile none"
+        },
+        {
+          "step": "sandbox.released_with_the_run",
+          "result": "PASS",
+          "detail": "session STOPPED, container gone"
+        },
+        {
+          "step": "history.tool_requests_answered",
+          "result": "PASS",
+          "detail": "1 requested, 1 executed"
+        },
+        {
+          "step": "cancel.execution_recorded_as_cancelled",
+          "result": "PASS",
+          "detail": "execution CANCELLED"
+        },
+        {
+          "step": "cancel.request_closed",
+          "result": "PASS",
+          "detail": "request CANCELLED"
+        },
+        {
+          "step": "cancel.is_the_last_event",
+          "result": "PASS",
+          "detail": "MODEL_CALL_COMPLETED, TOOL_REQUESTED, RUN_CANCELLED"
+        }
+      ]
+    },
+    "sandbox-coding.json": {
+      "scenario": "coding",
+      "result": "PASS",
+      "steps": [
+        {
+          "step": "images.rebuilt_and_service_current",
+          "result": "PASS",
+          "detail": "worker, sandbox service and sandbox image built from the current source"
+        },
+        {
+          "step": "rehearsal.worker_polling",
+          "result": "PASS",
+          "detail": "iacode-coding-rehearsal and the sandbox service"
+        },
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "detail": "artifact 01a165bc-27c7-7000-b98e-b971b0d65b9d"
+        },
+        {
+          "step": "run.created_over_the_snapshot",
+          "result": "PASS",
+          "detail": "run 01a165bc-3273-7000-bf6e-d6209ac26397, policies [None, 'developer', 'reviewer']"
+        },
+        {
+          "step": "run.terminal_state",
+          "result": "PASS",
+          "detail": "state SUCCEEDED (None: None)"
+        },
+        {
+          "step": "sandbox.one_session_for_the_run",
+          "result": "PASS",
+          "detail": "1 session(s)"
+        },
+        {
+          "step": "sandbox.every_execution_in_that_session",
+          "result": "PASS",
+          "detail": "sessions used: ['01a165bc-376b-7000-b1f6-39a8f4e98bc0']"
+        },
+        {
+          "step": "sandbox.no_network",
+          "result": "PASS",
+          "detail": "network profile none"
+        },
+        {
+          "step": "sandbox.released_with_the_run",
+          "result": "PASS",
+          "detail": "session STOPPED, container gone"
+        },
+        {
+          "step": "history.tool_requests_answered",
+          "result": "PASS",
+          "detail": "9 requested, 9 executed"
+        },
+        {
+          "step": "team.planner_developer_reviewer",
+          "result": "PASS",
+          "detail": "[('plan', 'planner', 'SUCCEEDED'), ('develop', 'developer', 'SUCCEEDED'), ('review', 'code-reviewer', 'SUCCEEDED')]"
+        },
+        {
+          "step": "planner.executed_nothing",
+          "result": "PASS",
+          "detail": "no tool requested"
+        },
+        {
+          "step": "developer.tool_sequence",
+          "result": "PASS",
+          "detail": "filesystem.read, shell.exec, filesystem.apply_patch, shell.exec, shell.exec, git.diff, git.add, git.commit"
+        },
+        {
+          "step": "read.returned_the_defect",
+          "result": "PASS",
+          "detail": "SUCCEEDED"
+        },
+        {
+          "step": "tests.red_before_the_fix",
+          "result": "PASS",
+          "detail": "exit 1"
+        },
+        {
+          "step": "patch.applied",
+          "result": "PASS",
+          "detail": "{'files': [{'path': 'calc.py', 'change': 'modified'}], 'exitCode': None, 'timedOut': False, 'truncated': False, 'durationMs': 423}"
+        },
+        {
+          "step": "tests.green_after_the_fix",
+          "result": "PASS",
+          "detail": "exit 0"
+        },
+        {
+          "step": "shell.ran_unprivileged_in_the_sandbox",
+          "result": "PASS",
+          "detail": "UID=10001 PID1=python3 -I /opt/iacode/sandbox_helper.py --init"
+        },
+        {
+          "step": "shell.saw_no_engine_socket",
+          "result": "PASS",
+          "detail": "no docker.sock"
+        },
+        {
+          "step": "shell.host_drive_not_mounted",
+          "result": "PASS",
+          "detail": "WRITE-0=SANDBOX-ONLY WRITE-1=REFUSED WRITE-2=REFUSED WRITE-3=REFUSED"
+        },
+        {
+          "step": "host.sentinel_unchanged",
+          "result": "PASS",
+          "detail": "the host file has the digest it had before the run"
+        },
+        {
+          "step": "host.no_file_appeared",
+          "result": "PASS",
+          "detail": "the host directory holds only the sentinel"
+        },
+        {
+          "step": "diff.shows_the_fix",
+          "result": "PASS",
+          "detail": "179 characters of diff"
+        },
+        {
+          "step": "git.committed_locally",
+          "result": "PASS",
+          "detail": "commit exit 0"
+        },
+        {
+          "step": "reviewer.read_only_inspection",
+          "result": "PASS",
+          "detail": "['git.show']"
+        },
+        {
+          "step": "commit.carries_the_sandbox_identity",
+          "result": "PASS",
+          "detail": "the commit's author is the sandbox's identity, not a person"
+        },
+        {
+          "step": "review.approved_what_it_saw",
+          "result": "PASS",
+          "detail": "result APPROVED"
+        }
+      ]
+    },
+    "sandbox-recovery.json": {
+      "scenario": "recovery",
+      "result": "PASS",
+      "steps": [
+        {
+          "step": "images.rebuilt_and_service_current",
+          "result": "PASS",
+          "detail": "worker, sandbox service and sandbox image built from the current source"
+        },
+        {
+          "step": "rehearsal.worker_polling",
+          "result": "PASS",
+          "detail": "iacode-coding-rehearsal and the sandbox service"
+        },
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "detail": "artifact 01a165cc-7f37-7000-aab8-bbbf13a94f71"
+        },
+        {
+          "step": "recovery.first_tool_executed",
+          "result": "PASS",
+          "detail": "['filesystem.write']"
+        },
+        {
+          "step": "recovery.sandbox_service_restarted",
+          "result": "PASS",
+          "detail": "iacode-verify-a7c2d86ad60d-sandbox"
+        },
+        {
+          "step": "recovery.session_container_survived",
+          "result": "PASS",
+          "detail": "the run's container outlived the service that manages it"
+        },
+        {
+          "step": "run.terminal_state",
+          "result": "PASS",
+          "detail": "state SUCCEEDED (None: None)"
+        },
+        {
+          "step": "sandbox.one_session_for_the_run",
+          "result": "PASS",
+          "detail": "1 session(s)"
+        },
+        {
+          "step": "sandbox.every_execution_in_that_session",
+          "result": "PASS",
+          "detail": "sessions used: ['01a165cc-8e50-7000-8154-db91c56623bc']"
+        },
+        {
+          "step": "sandbox.no_network",
+          "result": "PASS",
+          "detail": "network profile none"
+        },
+        {
+          "step": "sandbox.released_with_the_run",
+          "result": "PASS",
+          "detail": "session STOPPED, container gone"
+        },
+        {
+          "step": "history.tool_requests_answered",
+          "result": "PASS",
+          "detail": "3 requested, 3 executed"
+        },
+        {
+          "step": "recovery.same_session_after_the_restart",
+          "result": "PASS",
+          "detail": "the restarted service kept the session"
+        },
+        {
+          "step": "recovery.workspace_kept",
+          "result": "PASS",
+          "detail": "the second tool read what the first wrote"
+        },
+        {
+          "step": "recovery.agent_saw_its_workspace",
+          "result": "PASS",
+          "detail": "developer said WORKSPACE-KEPT"
+        }
+      ]
+    },
+    "sandbox-timeout.json": {
+      "scenario": "timeout",
+      "result": "PASS",
+      "steps": [
+        {
+          "step": "images.rebuilt_and_service_current",
+          "result": "PASS",
+          "detail": "worker, sandbox service and sandbox image built from the current source"
+        },
+        {
+          "step": "rehearsal.worker_polling",
+          "result": "PASS",
+          "detail": "iacode-coding-rehearsal and the sandbox service"
+        },
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "detail": "artifact 01a165c0-2f5c-7000-a77e-c21c7043968c"
+        },
+        {
+          "step": "run.terminal_state",
+          "result": "PASS",
+          "detail": "state SUCCEEDED (None: None)"
+        },
+        {
+          "step": "sandbox.one_session_for_the_run",
+          "result": "PASS",
+          "detail": "1 session(s)"
+        },
+        {
+          "step": "sandbox.every_execution_in_that_session",
+          "result": "PASS",
+          "detail": "sessions used: ['01a165c0-4794-7000-92e6-8a077cc3147d']"
+        },
+        {
+          "step": "sandbox.no_network",
+          "result": "PASS",
+          "detail": "network profile none"
+        },
+        {
+          "step": "sandbox.released_with_the_run",
+          "result": "PASS",
+          "detail": "session STOPPED, container gone"
+        },
+        {
+          "step": "history.tool_requests_answered",
+          "result": "PASS",
+          "detail": "2 requested, 2 executed"
+        },
+        {
+          "step": "timeout.execution_timed_out",
+          "result": "PASS",
+          "detail": "TIMED_OUT after 3001 ms"
+        },
+        {
+          "step": "timeout.stopped_at_its_bound",
+          "result": "PASS",
+          "detail": "3001 ms against a 3 s timeout and a 60 s command"
+        },
+        {
+          "step": "timeout.agent_received_a_normalised_failure",
+          "result": "PASS",
+          "detail": "result TIMED_OUT"
+        },
+        {
+          "step": "timeout.run_carried_on",
+          "result": "PASS",
+          "detail": "developer said TIMEOUT-SEEN"
+        }
+      ]
+    },
+    "sandbox-tool-result-origin.json": {
+      "scenario": "forged-result",
+      "result": "PASS",
+      "steps": [
+        {
+          "step": "images.rebuilt_and_service_current",
+          "result": "PASS",
+          "detail": "worker, sandbox service and sandbox image built from the current source"
+        },
+        {
+          "step": "rehearsal.worker_polling",
+          "result": "PASS",
+          "detail": "iacode-coding-rehearsal and the sandbox service"
+        },
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "detail": "artifact 01a165d0-e1c1-7000-8d46-5e0b8649e10a"
+        },
+        {
+          "step": "control.agent_saw_the_sandbox_timeout",
+          "result": "PASS",
+          "detail": "developer said TIMEOUT-SEEN, stored TIMED_OUT"
+        },
+        {
+          "step": "forgery.refused_while_the_sandbox_executes",
+          "result": "PASS",
+          "detail": "HTTP 403 TOOL_RESULT_ORIGIN_REFUSED {'toolRequestId': '748a5e25-e1d2-4666-b198-5fef69bd57a9', 'executor': 'SANDBOX'}"
+        },
+        {
+          "step": "run.terminal_state",
+          "result": "PASS",
+          "detail": "state SUCCEEDED (None: None)"
+        },
+        {
+          "step": "sandbox.one_session_for_the_run",
+          "result": "PASS",
+          "detail": "1 session(s)"
+        },
+        {
+          "step": "sandbox.every_execution_in_that_session",
+          "result": "PASS",
+          "detail": "sessions used: ['01a165d1-791b-7000-b54d-be0681367084']"
+        },
+        {
+          "step": "sandbox.no_network",
+          "result": "PASS",
+          "detail": "network profile none"
+        },
+        {
+          "step": "sandbox.released_with_the_run",
+          "result": "PASS",
+          "detail": "session STOPPED, container gone"
+        },
+        {
+          "step": "history.tool_requests_answered",
+          "result": "PASS",
+          "detail": "2 requested, 2 executed"
+        },
+        {
+          "step": "forgery.stored_result_is_the_sandbox_result",
+          "result": "PASS",
+          "detail": "stored TIMED_OUT, executed TIMED_OUT"
+        },
+        {
+          "step": "forgery.agent_saw_the_sandbox_timeout",
+          "result": "PASS",
+          "detail": "developer said TIMEOUT-SEEN"
+        },
+        {
+          "step": "forgery.refused_after_the_run_ended",
+          "result": "PASS",
+          "detail": "HTTP 403 TOOL_RESULT_ORIGIN_REFUSED"
+        },
+        {
+          "step": "forgery.nothing_changed_after_the_refusals",
+          "result": "PASS",
+          "detail": "the stored result is still the sandbox's"
+        }
+      ]
+    }
+  }
+}

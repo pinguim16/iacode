@@ -241,6 +241,55 @@
         "declaration-diagnostics/run-0005/RECEIPT.json",
         "declaration-diagnostics/run-0005/stdout.log"
       ]
+    },
+    {
+      "id": "HISTORY-TRANSPORT-002",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "GUARDRAIL_FAILURE LSN-0151",
+      "observed": "GUARDRAIL_FAILURE: HISTORY-TRANSPORT-002: unchanged host Red Team T uses a separate raw Git clone; the actual nested clone exits128 with Filename too long before either producer. The original current-reader/historical-producer guards do not cover this caller.",
+      "evidence": "FULL-VERIFICATION-FAILURE-0001.json",
+      "requiredCorrection": "Repair the proven cause, retain original red/null/green evidence, and repeat the unchanged complete current assurance before sealing.",
+      "currentProof": [
+        "causal-attempts/all-m2/run-0011.json"
+      ]
+    },
+    {
+      "id": "SELF-SNAPSHOT-GROWTH-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "NEW_CONFIRMED_FAILURE_CLASS LSN-0154",
+      "observed": "The live self-qualification command archives the entire Git tree, including accumulated checkpoint outputs, rather than distinguishing the product-input boundary from separately validated ledger evidence.",
+      "evidence": "FULL-VERIFICATION-FAILURE-0001.json",
+      "requiredCorrection": "Repair the proven cause, retain original red/null/green evidence, and repeat the unchanged complete current assurance before sealing.",
+      "currentProof": [
+        "causal-attempts/all-m2/run-0011.json"
+      ]
+    },
+    {
+      "id": "DEPENDENCY-ADVISORY-001",
+      "status": "OPEN",
+      "classification": "ACTIVE_SECURITY_CONTROL_DETECTED_VULNERABLE_PINS",
+      "observed": "Live scan blocks certifi and vite; LSN-0057 control fired rather than allowing false security acceptance.",
+      "evidence": "FULL-VERIFICATION-FAILURE-0001.json",
+      "requiredCorrection": "Repair the proven cause, retain original red/null/green evidence, and repeat the unchanged complete current assurance before sealing."
+    },
+    {
+      "id": "FULL-LIVE-OBSERVATIONS-001",
+      "status": "OPEN",
+      "classification": "OPEN_DIAGNOSIS_NOT_YET_CONFIRMED_CAUSE",
+      "observed": "Desktop export cancellation, experience catalog-prefix failure and all-container comparison require actual bounded diagnosis, not guessed fixes or waived checks.",
+      "evidence": "FULL-VERIFICATION-FAILURE-0001.json",
+      "requiredCorrection": "Repair the proven cause, retain original red/null/green evidence, and repeat the unchanged complete current assurance before sealing."
+    },
+    {
+      "id": "CONTINUATION-002",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "GUARDRAIL_FAILURE LSN-0140 AUTHORING_ORDER_CONTROL_FIRED",
+      "observed": "GUARDRAIL_FAILURE: CONTINUATION-002: actual all-M2 run0010 rejects the newly registered LSN-0154 missing from the current retrospective. The unchanged automatic guard fired before publication; preserve this repeated authoring-order failure, not an implementation guard escape or a failed independent audit.",
+      "evidence": "causal-attempts/all-m2/run-0010.json",
+      "requiredCorrection": "Keep the canonical template and every actual lesson/guard identity; repeat unchanged current controls and whole assurance.",
+      "currentProof": [
+        "causal-attempts/all-m2/run-0011.json"
+      ]
     }
   ]
 }

@@ -1,0 +1,145 @@
+"""Immutable IACode product-input view; accumulated checkpoint outputs remain separately audited."""
+
+from __future__ import annotations
+
+import hashlib
+import io
+import json
+import re
+import subprocess
+import sys
+from pathlib import Path, PurePosixPath
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "development-ledger"))
+
+from ledger_common import assurance_root_files_from_document, in_assurance_scope
+
+CHECKPOINT_OUTPUTS = "docs/checkpoints/"
+SIDECAR = ".iacode/SELF-QUALIFICATION-SOURCE.json"
+
+
+def git_bytes(root: Path, *arguments: str, input_data: bytes | None = None) -> bytes:
+    result = subprocess.run(
+        ["git", "-c", "core.longpaths=true", *arguments],
+        cwd=root,
+        input=input_data,
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode:
+        raise ValueError("IMMUTABLE_SELF_QUALIFICATION_GIT_READ_FAILED")
+    return result.stdout
+
+
+def canonical_bytes(value) -> bytes:
+    return (
+        json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n"
+    ).encode("utf-8")
+
+
+def materialize_committed_source(root: Path, destination: Path) -> dict:
+    """Keep every committed non-checkpoint path, with no caller-selectable narrowing."""
+    root, destination = Path(root), Path(destination)
+    if destination.exists() or any(
+        path.is_symlink() or path.is_junction() for path in (destination, *destination.parents)
+    ):
+        raise ValueError("FRESH_UNREDIRECTED_SELF_QUALIFICATION_DESTINATION_REQUIRED")
+    if in_assurance_scope(CHECKPOINT_OUTPUTS + "policy-probe"):
+        raise ValueError("CANONICAL_SCOPE_REQUIRES_CHECKPOINT_INPUTS")
+    commit = git_bytes(root, "rev-parse", "--verify", "HEAD^{commit}").decode("ascii").strip()
+    tree = git_bytes(root, "rev-parse", commit + "^{tree}").decode("ascii").strip()
+    if any(re.fullmatch("[a-f0-9]{40}", value) is None for value in (commit, tree)):
+        raise ValueError("EXACT_IMMUTABLE_GIT_IDENTITY_REQUIRED")
+    inventory = {}
+    for row in git_bytes(root, "ls-tree", "-r", "-l", "-z", "--full-tree", commit).split(b"\0"):
+        if not row:
+            continue
+        header, raw_name = row.split(b"\t", 1)
+        mode, kind, object_id, size = header.decode("ascii").split()
+        name = raw_name.decode("utf-8", errors="strict")
+        path = PurePosixPath(name)
+        if (
+            mode not in {"100644", "100755"}
+            or kind != "blob"
+            or path.is_absolute()
+            or ".." in path.parts
+            or "\\" in name
+            or ":" in name
+            or name in inventory
+            or path.as_posix() != name
+            or not size.isdecimal()
+            or re.fullmatch("[a-f0-9]{40}", object_id) is None
+        ):
+            raise ValueError("NONREGULAR_OR_AMBIGUOUS_COMMITTED_INPUT_REFUSED")
+        inventory[name] = {"mode": mode, "object": object_id, "bytes": int(size)}
+    if not inventory or SIDECAR in inventory:
+        raise ValueError("NONEMPTY_UNAMBIGUOUS_COMMITTED_INPUTS_REQUIRED")
+    selected = {
+        name: fact for name, fact in inventory.items() if not name.startswith(CHECKPOINT_OUTPUTS)
+    }
+    excluded = {
+        name: fact for name, fact in inventory.items() if name.startswith(CHECKPOINT_OUTPUTS)
+    }
+    if ".iacode/policies/assurance-scope.json" not in selected:
+        raise ValueError("COMMITTED_CANONICAL_ASSURANCE_POLICY_REQUIRED")
+    sizes = {}
+    for fact in selected.values():
+        previous = sizes.setdefault(fact["object"], fact["bytes"])
+        if previous != fact["bytes"]:
+            raise ValueError("GIT_OBJECT_SIZE_DISAGREEMENT")
+    identifiers = sorted(sizes)
+    batch = git_bytes(
+        root, "cat-file", "--batch", input_data=("\n".join(identifiers) + "\n").encode("ascii")
+    )
+    objects = {}
+    stream = io.BytesIO(batch)
+    for identifier in identifiers:
+        header = stream.readline(256)
+        expected = f"{identifier} blob {sizes[identifier]}\n".encode("ascii")
+        if header != expected:
+            raise ValueError("GIT_BATCH_HEADER_DISAGREES_WITH_IMMUTABLE_TREE")
+        raw = stream.read(sizes[identifier])
+        # Match Git's existing object identity, not a security/authentication digest.
+        object_digest = hashlib.sha1(
+            b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw, usedforsecurity=False
+        ).hexdigest()
+        if len(raw) != sizes[identifier] or stream.read(1) != b"\n" or object_digest != identifier:
+            raise ValueError("GIT_BATCH_PAYLOAD_DISAGREES_WITH_IMMUTABLE_OBJECT")
+        objects[identifier] = raw
+    if stream.read(1):
+        raise ValueError("UNEXPECTED_EXTRA_GIT_BATCH_PAYLOAD")
+    contents = {name: objects[fact["object"]] for name, fact in selected.items()}
+    if set(contents) != set(selected):
+        raise ValueError("A_REQUIRED_COMMITTED_PRODUCT_INPUT_IS_MISSING")
+    additional_roots = assurance_root_files_from_document(
+        json.loads(contents[".iacode/policies/assurance-scope.json"])
+    )
+    if any(
+        in_assurance_scope(name, additional_roots) and name not in selected for name in inventory
+    ):
+        raise ValueError("A_CANONICAL_ASSURANCE_INPUT_WAS_OMITTED")
+    manifest = {
+        "schemaVersion": "1.0.0",
+        "subjectCommit": commit,
+        "subjectTree": tree,
+        "boundary": "CANONICAL_PRODUCT_INPUTS_WITH_SEPARATE_COMPLETE_CHECKPOINT_VALIDATION",
+        "selectedFiles": len(selected),
+        "selectedBytes": sum(row["bytes"] for row in selected.values()),
+        "excludedCheckpointFiles": len(excluded),
+        "excludedCheckpointBytes": sum(row["bytes"] for row in excluded.values()),
+        "selectedInventorySha256": hashlib.sha256(canonical_bytes(selected)).hexdigest(),
+        "excludedInventorySha256": hashlib.sha256(canonical_bytes(excluded)).hexdigest(),
+        "allCommittedNonCheckpointPathsPreserved": True,
+        "generalSnapshotLimitsChanged": False,
+    }
+    destination.mkdir(parents=True, exist_ok=False)
+    for name, raw in contents.items():
+        target = destination.joinpath(*PurePosixPath(name).parts)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with target.open("xb") as stream:
+            stream.write(raw)
+    sidecar = destination / SIDECAR
+    sidecar.parent.mkdir(parents=True, exist_ok=True)
+    with sidecar.open("xb") as stream:
+        stream.write(canonical_bytes(manifest))
+    return manifest

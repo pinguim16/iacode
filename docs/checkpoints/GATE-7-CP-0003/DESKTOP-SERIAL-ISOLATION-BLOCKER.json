@@ -1,0 +1,50 @@
+{
+  "kind": "ACTUAL_SERIAL_EXTERNAL_CONTAINER_IDENTITY_DIVERGENCE_NOT_GATE_ACCEPTANCE",
+  "result": "BLOCKED",
+  "sourceFingerprint": "626a776755079703882560163ac6ee4695abbc1a1eb093ed21502c1c20768873",
+  "originalProducer": "causal-attempts/live-stages/desktop/run-0003/ORIGINAL-PRODUCER.json",
+  "originalProducerSha256": "22f2cdb81b66821f7ce2656dee0a4c6f9d302da43a957413050bbb33d55e6594",
+  "identityJournal": "causal-attempts/live-stages/desktop/run-0003/CONTAINER-IDENTITY-OBSERVATIONS.json",
+  "identityJournalSha256": "558c3cc7776106dc2f3290a74e6d34f12c3c99d63103b280ebf115de7c67b919",
+  "nativeHandleJournal": "causal-attempts/live-stages/desktop/run-0003/NATIVE-HANDLE-OBSERVATIONS.json",
+  "nativeHandleJournalSha256": "131c4e72ea5903b3513e99b4bd97d9e231c5195d871e6418d18425a110114148",
+  "observedBefore": "2026-10-23T01:48:50Z",
+  "observedAfter": "2026-10-23T01:55:39Z",
+  "beforeContainerCount": 39,
+  "afterContainerCount": 40,
+  "missingBeforeContainerIds": [
+    "1296826d851762676d1afd755dd7592066af5a2682f48204afdc182cd81eb1ad"
+  ],
+  "knownTaskInitialContainerIds": [
+    "e3ca87ef0b46a799664212f1708e60fb8e91fd6b7979fab7b8eb3042c472559d"
+  ],
+  "missingKnownTaskInitialContainerIds": [],
+  "earlierIndependentSnapshot": "cleanup-previews/private-history/run-0008-removal.json",
+  "missingContainerObservedAt": "2026-10-23T01:45:02Z",
+  "missingContainerStartedAt": "2026-10-23T01:30:26.140409737Z",
+  "missingContainerWasRunning": true,
+  "missingContainerNameAndProjectInIacodeNamespace": false,
+  "missingContainerImageClaimedByTask": false,
+  "missingContainerImageTaggedInIacodeNamespace": false,
+  "unrelatedApplicationNameOrActorAttributionRecorded": false,
+  "otherTaskDockerTestsOrCleanupOverlapped": false,
+  "actualPassedFunctionalControls": 29,
+  "actualNativeStart": "PASS",
+  "actualNativeResume": "PASS",
+  "nativeOwnedJobDrain": "PASS_ALL_OBSERVED_JOBS_EMPTY_WITHOUT_FORCED_TERMINATION",
+  "ownedTemporaryDirectoryRemoved": true,
+  "ownedStackCleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0
+  },
+  "ownedSandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  },
+  "originalPreservationAssertion": "FAIL_NOT_WAIVED_OR_NARROWED",
+  "requiredNextCondition": "A validation interval with stable preexisting Docker identities; running other applications need not be stopped. Do not change unrelated resources or weaken the assertion.",
+  "gate8Authorized": false,
+  "checkpointSealed": false,
+  "independentM2VerdictGranted": false
+}

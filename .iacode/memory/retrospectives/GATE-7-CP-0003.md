@@ -71,6 +71,34 @@ records this new class without resetting LSN-0151 or misclassifying the control 
 ADR-0064 restores caller import bindings around real discovery; identical eight-case causal controls
 have an original red and a local green. Unpreloaded historical and whole current proofs remain due.
 
+The completed runtime-v5 full verifier is FAIL43/49, despite its16 passing quality gates. All raw
+producer reports and five derived projections are retained byte-exact. HISTORY-TRANSPORT-002
+reopens LSN-0151: a separate host Red Team clone fails at nested Windows depth before either
+producer. The corrected scoped caller actually reconstructs two identical1906-entry archives and
+refuses stale declarations; the diagnostic's source changed during unrelated work, so it is not
+whole-current acceptance. Three real caller/null/refusal controls pass locally.
+
+The unchanged security scanner rejects vulnerable certifi/Vite pins; regenerated complete locks
+pass a fresh scan with zero Python/npm advisories, without scanner exemptions or host installation.
+Desktop OCI-export cancellation and the original experience catalog-prefix failure have no proven
+root cause. An unchanged actual experience retry passes72 controls, discovers the exact authorized
+model among135 entries, removes every owned container/volume/network and preserves measured inputs.
+The prior knowledge/all-container comparison remains FAIL; no unrelated actor or cause is inferred.
+Thirty-five proved unused private images were removed with zero remaining candidates and unchanged
+container observations. The private builder/cache remains necessary only for pending validation;
+exact final disposal and preservation proof are still mandatory.
+
+CONTINUATION-002 is the same guarded authoring-order class: all-M2 run0010 executes107 controls and
+fails exactly two unchanged retrospective assertions because new LSN-0154 was not yet documented.
+The automated guard fired before publication; its original retrospective and output are preserved.
+LSN-0140 recurrence5 is escalated rather than hidden. Completing this canonical document and
+repeating the current controls is required before local restoration or any immutable handoff.
+
+The identical current suite subsequently executes107 controls with zero failures. Actual positive,
+null and adverse cases restore local GRD-0142/GRD-0154/GRD-0157 prevention without erasing any
+original refusal or recurrence. The changed memory/documentation creates a new source epoch;
+fresh whole-source validation, all16 public quality gates and all49 functional stages remain due.
+
 ## What repeated
 
 LSN-0010 and LSN-0135 recurred despite GUARDED status. Their recurrence counters increased,
@@ -115,6 +143,17 @@ LSN-0153 has measured local prevention under GRD-0156: real discovery controls a
 unchanged unpreloaded historical validators pass, including original byte-identical declarations.
 This local guard does not grant whole immutable assurance or independent milestone approval.
 
+LSN-0154 records actual full-verifier rejection of the accumulated whole-tree snapshot under the
+unchanged64MiB ceiling. ADR-0065 separates immutable product inputs from separately validated
+checkpoint outputs; no original evidence is removed. Eight real Git controls preserve every
+non-checkpoint blob, future projects, dirty-state refusal, canonical policy, regular objects and
+export-filter independence. GRD-0157 now has actual complete current positive/null/adverse controls; local
+GUARDED status does not grant whole immutable or independent acceptance. The actual evaluator compares75 identical ordered checks across17 workspace roots,
+with matching profiles/policy and every retained byte unchanged. Its full input is68,687,207 bytes;
+the view including its manifest is7,951,998 bytes. The original bind-directory diagnostic timed out;
+the same proof succeeds using packed byte-identical inputs under the same300-second budget.
+These observations are targeted local evidence, not current whole-verifier acceptance.
+
 ## Updated lessons
 
 | Lesson | Change | Reason |
@@ -127,9 +166,11 @@ This local guard does not grant whole immutable assurance or independent milesto
 | LSN-0125 / GRD-0127 | Recurrence4, local GUARDED | Exact owned native bootstrap/descendant controls |
 | LSN-0131 / GRD-0133 | Recurrence3, local GUARDED | Original bytes across both Git checkout modes |
 | LSN-0135 / GRD-0137 | Recurrence3, local GUARDED | Safe primary and independent cleanup observations |
-| LSN-0140 / GRD-0142 | Recurrence4, local GUARDED | Corrective document scope and unchanged canonical sections |
-| LSN-0151 / GRD-0154 | Recurrence1, local GUARDED | Actual long transport materialization and immutable legacy producer scope |
+| LSN-0140 / GRD-0142 | Recurrence5, local GUARDED | New-lesson documentation refusal and identical complete current controls |
+| LSN-0151 / GRD-0154 | Recurrence2, local GUARDED | Separate host Red Team caller repaired with actual long-path/null/refusal controls |
 | LSN-0152 / GRD-0155 | New, local GUARDED | Physical private source/report confinement |
+| LSN-0153 / GRD-0156 | New, local GUARDED | Actual discovery restores caller imports and historical declarations |
+| LSN-0154 / GRD-0157 | New, local GUARDED | Complete immutable bounded product inputs with eight actual Git controls |
 
 ## Retired lessons
 

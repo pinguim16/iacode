@@ -10,6 +10,14 @@ from copy import deepcopy
 from acceptance_evidence import BASELINE, CHECKPOINT, ROOT, current_execution, current_greenkeeper
 
 DIRECT = {
+    "LSN-0154": (
+        [
+            "scripts/iacode/self_qualification_source.py",
+            "scripts/iacode/scenarios/quality_engine_e2e.py",
+        ],
+        ["tests/test_m2_self_snapshot.py"],
+        ["FULL-VERIFICATION-FAILURE-0001.json", "FULL-REWORK-REGISTRATION-0001.json"],
+    ),
     "LSN-0153": (
         ["scripts/development-ledger/derive_counts.py"],
         ["tests/test_m2_discovery_isolation.py"],
@@ -76,15 +84,22 @@ DIRECT = {
     "LSN-0151": (
         [
             "scripts/development-ledger/review_bundle.py",
+            "scripts/development-ledger/gate4_red_team.py",
             "audit-harness/post_quality_diagnostics.py",
         ],
-        ["tests/test_m2_history_transport.py", "tests/test_gate7_git_transport.py"],
+        [
+            "tests/test_m2_history_transport.py",
+            "tests/test_gate7_git_transport.py",
+            "tests/test_m2_host_transport.py",
+        ],
         [
             "causal-attempts/history-transport/run-0006.json",
             "history-diagnostics/run-0006/RECEIPT.json",
             "history-diagnostics/run-0007/RECEIPT.json",
             "history-diagnostics/run-0008/RECEIPT.json",
             "causal-attempts/review-reconstruction/run-0001.json",
+            "causal-attempts/full-host-transport/run-0001/RECEIPT.json",
+            "causal-attempts/full-host-transport/run-0002/RECEIPT.json",
         ],
     ),
     "LSN-0152": (
@@ -103,6 +118,10 @@ CURRENT_CANONICAL = {
         (
             "file:docs/adr/ADR-0063-historical-review-producers-inherit-only-"
             "process-scoped-git-path-handling.md"
+        ),
+        (
+            "file:docs/adr/ADR-0065-self-qualification-uses-immutable-product-inputs-"
+            "not-checkpoint-outputs.md"
         ),
     ],
     "7.3": [
@@ -223,6 +242,7 @@ def main():
     additions = {
         "lesson:LSN-0152",
         "lesson:LSN-0153",
+        "lesson:LSN-0154",
         "finding:M2-F-001",
         "finding:M2-F-002",
         "attack:M2-RT-01",

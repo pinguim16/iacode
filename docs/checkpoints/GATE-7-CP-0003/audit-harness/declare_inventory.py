@@ -14,6 +14,41 @@ CHECKPOINT = Path(__file__).resolve().parents[1]
 ROOT = CHECKPOINT.parents[2]
 
 AUTHORED = {
+    "scripts/development-ledger/gate4_red_team.py": (
+        "HISTORY-TRANSPORT-002 repairs the separately observed host Red Team clone/checkout "
+        "and subject-producer child Git scope without global or historical changes."
+    ),
+    "scripts/development-ledger/ledger_common.py": (
+        "Expose the same closed canonical assurance-policy document parser for immutable "
+        "self-qualification input validation; no scope policy or denominator change."
+    ),
+    "scripts/iacode/self_qualification_source.py": (
+        "LSN-0154 preserves every immutable non-checkpoint Git blob under unchanged capacity; "
+        "all excluded accumulated checkpoint evidence remains separately fully validated."
+    ),
+    "scripts/iacode/scenarios/quality_engine_e2e.py": (
+        "Use the policy-bound immutable product-input view in actual self-qualification; "
+        "retain every canonical project/check assertion, deadline and capacity limit."
+    ),
+    "tests/test_m2_host_transport.py": (
+        "Real host caller short/null, long binary transport, unchanged configuration and "
+        "genuine refusal controls; no successful producer is simulated."
+    ),
+    "tests/test_m2_self_snapshot.py": (
+        "Real Git complete selection, dirty-state, future project, object identity, policy, "
+        "nonregular-input and export-filter controls with unchanged snapshot limits."
+    ),
+    (
+        "docs/adr/ADR-0065-self-qualification-uses-immutable-product-inputs-"
+        "not-checkpoint-outputs.md"
+    ): ("Record the bounded immutable product-input and separate complete evidence boundary."),
+    "apps/api/requirements.txt": "Pin the actual advisory-corrected certificate bundle.",
+    "apps/api/requirements.lock.txt": "Regenerate the complete canonical backend lock in Docker.",
+    "apps/web/package.json": (
+        "Fix actual Vite and Vitest advisories without scanner exceptions or policy changes."
+    ),
+    "apps/web/package-lock.json": "Regenerate the complete frontend dependency graph canonically.",
+    "docs/VERSIONS.md": "Record actual resolved compatibility and security versions with sources.",
     "scripts/development-ledger/derive_counts.py": (
         "IMPORT-ISOLATION-001 restores caller import bindings around real complete unittest "
         "discovery; no approximate count, historical rewrite or consumer-specific preload."

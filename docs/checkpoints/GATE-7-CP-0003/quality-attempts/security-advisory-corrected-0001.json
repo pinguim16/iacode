@@ -1,0 +1,51 @@
+{
+  "result": "PASS",
+  "blockingSeverities": [
+    "critical",
+    "high"
+  ],
+  "scans": [
+    {
+      "ecosystem": "pypi",
+      "status": "SCANNED",
+      "counts": {
+        "total": 0
+      },
+      "blocking": [],
+      "findings": []
+    },
+    {
+      "ecosystem": "npm",
+      "status": "SCANNED",
+      "counts": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0
+      },
+      "blocking": [],
+      "findings": []
+    },
+    {
+      "ecosystem": "npm-cli",
+      "status": "EMPTY_GRAPH_VALIDATED",
+      "counts": {
+        "thirdPartyDependencies": 0
+      },
+      "blocking": [],
+      "findings": [],
+      "detail": "No third-party advisory lookup applies to an empty graph; Node/VS Code runtime compatibility is tested separately."
+    },
+    {
+      "ecosystem": "npm-vscode-extension",
+      "status": "EMPTY_GRAPH_VALIDATED",
+      "counts": {
+        "thirdPartyDependencies": 0
+      },
+      "blocking": [],
+      "findings": [],
+      "detail": "No third-party advisory lookup applies to an empty graph; Node/VS Code runtime compatibility is tested separately."
+    }
+  ]
+}

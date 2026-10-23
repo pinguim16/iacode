@@ -1,0 +1,51 @@
+{
+  "result": "PASS",
+  "container": "iacode-durability-rehearsal",
+  "steps": [
+    {
+      "step": "rehearsal.worker_started",
+      "result": "PASS",
+      "detail": "iacode-durability-rehearsal is polling"
+    },
+    {
+      "step": "run.created",
+      "result": "PASS",
+      "detail": "run 01a165af-11ee-7000-a1c6-15b0aee5284c"
+    },
+    {
+      "step": "run.waiting_for_tool",
+      "result": "PASS",
+      "detail": "pending tool rehearsal.read"
+    },
+    {
+      "step": "cancel.reached_the_workflow",
+      "result": "PASS",
+      "detail": "state CANCELLED"
+    },
+    {
+      "step": "cancel.is_terminal",
+      "result": "PASS",
+      "detail": "the run stayed cancelled"
+    },
+    {
+      "step": "cancel.closed_the_pending_request",
+      "result": "PASS",
+      "detail": "no request is left waiting for an answer nobody will give"
+    },
+    {
+      "step": "late_result.refused",
+      "result": "PASS",
+      "detail": "run 01a165af-11ee-7000-a1c6-15b0aee5284c is already CANCELLED; a tool result cannot be accepted"
+    },
+    {
+      "step": "history.records_the_cancellation",
+      "result": "PASS",
+      "detail": "RUN_STARTED, AGENT_STARTED, MODEL_CALL_STARTED, MODEL_CALL_COMPLETED, TOOL_REQUESTED, RUN_CANCELLED"
+    },
+    {
+      "step": "history.has_no_work_after_the_cancellation",
+      "result": "PASS",
+      "detail": "the cancellation is the last thing that happened"
+    }
+  ]
+}

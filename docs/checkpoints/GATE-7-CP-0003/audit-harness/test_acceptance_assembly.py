@@ -91,6 +91,7 @@ class AcceptanceAssemblyControls(unittest.TestCase):
             | {
                 "lesson:LSN-0152",
                 "lesson:LSN-0153",
+                "lesson:LSN-0154",
                 "finding:M2-F-001",
                 "finding:M2-F-002",
                 "attack:M2-RT-01",

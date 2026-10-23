@@ -587,6 +587,24 @@ def _compose(root: Path, *arguments: str) -> subprocess.CompletedProcess[str]:
     )
 
 
+def _review_transport_setup(root: Path, clone: Path):
+    """Materialize a real transport clone with Git settings confined to its children."""
+    from review_bundle import _transport_producer_environment
+
+    environment = _transport_producer_environment()
+    cloned = subprocess.run(
+        ["git", "-c", "core.longpaths=true", "clone", "--quiet", "--no-local", str(root), str(clone)],
+        env=environment, text=True, encoding="utf-8", errors="replace",
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False,
+    )
+    detached = subprocess.run(
+        ["git", "-c", "core.longpaths=true", "checkout", "--quiet", "--detach", "HEAD"],
+        cwd=clone, env=environment, text=True, encoding="utf-8", errors="replace",
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False,
+    ) if cloned.returncode == 0 else cloned
+    return cloned, detached, environment
+
+
 def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
     """Exercise the audit's host-side bundle and live-lifecycle attacks.
 
@@ -770,25 +788,7 @@ def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
 
     with tempfile.TemporaryDirectory(prefix="gate4-red-team-transport-") as temporary:
         clone = Path(temporary) / "repository"
-        cloned = subprocess.run(
-            ["git", "clone", "--quiet", "--no-local", str(root), str(clone)],
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            check=False,
-        )
-        detached = subprocess.run(
-            ["git", "checkout", "--quiet", "--detach", "HEAD"],
-            cwd=clone,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            check=False,
-        ) if cloned.returncode == 0 else cloned
+        cloned, detached, producer_environment = _review_transport_setup(root, clone)
         status = subprocess.run(
             ["git", "status", "--porcelain=v1", "--untracked-files=all"],
             cwd=root,
@@ -834,6 +834,7 @@ def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
                     "HEAD",
                 ],
                 cwd=clone,
+                env=producer_environment,
                 text=True,
                 encoding="utf-8",
                 errors="replace",

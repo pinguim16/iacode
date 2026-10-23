@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "desktop-e2e",
+  "result": "FAIL",
+  "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "sourceDirty": true,
+  "sourceFingerprint": "626a776755079703882560163ac6ee4695abbc1a1eb093ed21502c1c20768873",
+  "steps": [
+    {
+      "name": "fresh-owned-authenticated-stack-healthy",
+      "result": "PASS",
+      "authorizedModel": "openai:gpt-4o-mini"
+    },
+    {
+      "name": "fresh-offline-cli-install-and-authenticated-contract",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-provider-catalog-synced-and-exact-authorized-model-present",
+      "result": "PASS",
+      "authorizedModel": "openai:gpt-4o-mini",
+      "provider": "openai",
+      "catalogModels": 135,
+      "discovered": 135
+    },
+    {
+      "name": "unauthenticated-domain-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-tool-result",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-quality-verdict",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-shell.exec",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-adverse-premise",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-upload-refused-before-sql-or-object-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "replay-clean-control",
+      "result": "PASS"
+    },
+    {
+      "name": "redis-replay-refusal-survives-api-restart",
+      "result": "PASS"
+    },
+    {
+      "name": "cli-preview-is-bounded-and-excludes-private-path",
+      "result": "PASS"
+    },
+    {
+      "name": "cli-changed-or-wrong-consent-refused-locally",
+      "result": "PASS"
+    },
+    {
+      "name": "real-snapshot-persistence-stable-retry-and-rights",
+      "result": "PASS"
+    },
+    {
+      "name": "read-only-snapshot-reconciliation",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-native-snapshot-and-uncertain-accepted-create",
+      "result": "FAIL"
+    }
+  ],
+  "composeProject": "iacode-desktop-7533fed5d789",
+  "packages": {
+    "kind": "CLIENT_BUILD_NOT_FUNCTIONAL_ACCEPTANCE",
+    "result": "PASS",
+    "protocolDigest": "07afdf6772f9d54cf5ee2d84d2fb3222220c1b454a0ae08e5d8c30eeea1ceab9",
+    "sourceHashes": {
+      "apps/cli/README.md": "d3a4cb495abe5cea7beb01fe4b01ab07a58f825a1f4747f11ea00cb2392d1647",
+      "apps/cli/bin/iacode.cjs": "9105ef8f928015eaa5803f4358e3cf553d4d55fbd670dc08ec0d77c5a4b5c5f5",
+      "apps/cli/package.json": "9b3291b1ac527c4f90d3a14174ee30108f186de34e2dcf5b9c1fe6158317e1dd",
+      "apps/cli/src/client.cjs": "50782a810b2df89641a4eb51b56c1b05f5c5fd5050ac2087009f7b2a45bc670e",
+      "apps/cli/src/snapshot.cjs": "aa853912c12ee1069b2eb59c91f9a688e46946cffc7091db9540886670152be5",
+      "apps/vscode-extension/README.md": "d161ae51e43a323897668724e23e79eddc41872e22d72dbfb49ef9cbb23a8ebd",
+      "apps/vscode-extension/package.json": "a891592b6e0165feb0d47f4763eb38c4e8005da19b7150640083ab90e2a3e27a",
+      "apps/vscode-extension/src/extension.cjs": "f1351d4d736c3dd50bc8733e6711463c80d0b0d161a09053ef6aa40dcfda596e",
+      "packages/contracts/src/iacode_contracts/desktop_protocol.json": "07afdf6772f9d54cf5ee2d84d2fb3222220c1b454a0ae08e5d8c30eeea1ceab9"
+    },
+    "artifacts": {
+      "iacode-cli-0.1.0.tgz": {
+        "sha256": "9ef4c965d84116e78bc268c2f2405db27ac956078490f00fb938175c1557e0e4",
+        "sizeBytes": 14706
+      },
+      "iacode-0.1.0.vsix": {
+        "sha256": "65678fe36c93971044fb7a6a8e469f4a02664f8ca5e4c60843c5863219b8b30a",
+        "sizeBytes": 21112
+      }
+    }
+  },
+  "cliCommands": [
+    {
+      "command": "doctor",
+      "exitCode": 0
+    },
+    {
+      "command": "preview",
+      "exitCode": 0
+    },
+    {
+      "command": "snapshot",
+      "exitCode": 2
+    },
+    {
+      "command": "snapshot",
+      "exitCode": 0
+    },
+    {
+      "command": "snapshot",
+      "exitCode": 0
+    },
+    {
+      "command": "snapshot-lookup",
+      "exitCode": 0
+    }
+  ],
+  "cliRuntime": "v24.19.0",
+  "nativeStart": {
+    "result": "FAIL",
+    "mode": "start",
+    "failure": "native owned process cleanup failed",
+    "exitCode": 0,
+    "processCleanup": {
+      "result": "FAIL",
+      "phase": "FORCED_DRAIN",
+      "totalDeadlineSeconds": 10,
+      "naturalExitBudgetSeconds": 1,
+      "forcedTermination": true,
+      "remainingBeforeCleanup": 2,
+      "remainingJobActive": 0,
+      "observedProcessCount": 2,
+      "signaledProcessCount": 0,
+      "pendingProcessCount": 2,
+      "lastObservedElapsedSeconds": 10.027133
+    },
+    "execution": {
+      "schemaVersion": "1.0.0",
+      "result": "FAIL",
+      "producer": {
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "arguments": [
+          "C:\\Users\\cesar\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+          "--user-data-dir",
+          "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-dzvpr8ha\\editor\\profile",
+          "--shared-data-dir",
+          "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-dzvpr8ha\\editor\\shared",
+          "--extensions-dir",
+          "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-dzvpr8ha\\editor\\extensions",
+          "--new-window",
+          "--skip-welcome",
+          "--skip-release-notes",
+          "--disable-gpu",
+          "--disable-crash-reporter",
+          "--disable-telemetry",
+          "--extensionDevelopmentPath=C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-dzvpr8ha\\editor\\driver",
+          "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-dzvpr8ha\\workspace",
+          "--disable-workspace-trust"
+        ],
+        "stdout": "\r\n[main 2026-10-23T01:33:17.071Z] StorageMainService: creating application shared storage\n[main 2026-10-23T01:33:17.393Z] [shared storage] Creating shared storage database at 'c:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-dzvpr8ha\\editor\\shared\\sharedStorage\\state.vscdb' (wasCreated: true)\n[main 2026-10-23T01:33:17.393Z] [shared storage] Initializing fallback application storage (path: c:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-dzvpr8ha\\editor\\profile\\User\\globalStorage\\state.vscdb)\n[main 2026-10-23T01:33:17.399Z] [shared storage] Fallback application storage initialized with 3 items\n[main 2026-10-23T01:33:21.609Z] update#disable - updates are disabled by user preference\n[main 2026-10-23T01:33:21.610Z] update#setState disabled\n[main 2026-10-23T01:33:21.739Z] AgentHostProcessManager: agent host started\n[main 2026-10-23T01:33:31.188Z] [AgentHost:stderr] (node:38348) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `Code --trace-deprecation ...` to show where the warning was created)\n\nUnknown channel: agentHostClientByokLm\nUnknown channel: agentHostClientProxy\nUnknown channel: agentHostClientProxy\n[main 2026-10-23T01:33:37.000Z] Extension host with pid 44520 exited with code: 0, signal: unknown.\n",
+        "stdoutSha256": "cf8f82d5d5a9850969a06caa102045ffa9973f3a2ea04bfa955973c9d9fde0db",
+        "stdoutBytes": 1400,
+        "stdoutRefusal": null,
+        "stderr": "",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 0,
+        "stderrRefusal": null,
+        "mergedStreams": true,
+        "capturedBeforeCleanup": true
+      },
+      "cleanup": {
+        "result": "FAIL",
+        "observation": {
+          "result": "FAIL",
+          "phase": "FORCED_DRAIN",
+          "totalDeadlineSeconds": 10,
+          "naturalExitBudgetSeconds": 1,
+          "forcedTermination": true,
+          "remainingBeforeCleanup": 2,
+          "remainingJobActive": 0,
+          "observedProcessCount": 2,
+          "signaledProcessCount": 0,
+          "pendingProcessCount": 2,
+          "lastObservedElapsedSeconds": 10.027133
+        }
+      },
+      "outputRelease": {
+        "result": "PASS"
+      }
+    }
+  },
+  "sandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  },
+  "cleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0
+  },
+  "failure": {
+    "type": "StackError",
+    "message": "live desktop control failed: actual-native-snapshot-and-uncertain-accepted-create"
+  },
+  "failureCleanupExitCode": 0,
+  "failureSandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  }
+}

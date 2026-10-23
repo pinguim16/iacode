@@ -93,6 +93,7 @@ package, in `apps/api/requirements.lock.txt`. The images install the lock.
 | temporalio | 1.33.0 | the workflow SDK, in the API and in the worker |
 | prometheus-client | 0.26.0 | the metrics instruments |
 | httpx | 0.28.1 | the HTTP client the Model Gateway calls providers with, and the test client's transport |
+| certifi | 2026.10.19 | explicit CA-bundle security pin after PYSEC-2026-4320 |
 | pytest | 9.1.1 | the backend test runner |
 | pytest-asyncio | 1.4.0 | asynchronous test support |
 | ruff | 0.16.8 | lint and static analysis |
@@ -119,16 +120,27 @@ Direct choices in `apps/web/package.json`, all exact; the resolved set in
 
 | Library | Version |
 |---|---|
-| Angular (`common`, `compiler`, `core`, `forms`, `platform-browser`, `router`) | 22.1.7 |
-| Angular build and CLI | 22.1.8 |
+| Angular (`common`, `compiler`, `core`, `forms`, `platform-browser`, `router`) | 22.2.1 |
+| Angular build and CLI | 22.2.2 |
 | TypeScript | 6.0.3 |
-| Vitest | 4.1.11 |
+| Vitest | 5.0.5 |
+| Vite (explicit npm override) | 8.3.3 |
 | jsdom | 28.1.0 |
 | RxJS | 7.8.2 |
 | Prettier | 3.9.8 |
 
 TypeScript is 6.0.3, not the newest release: Angular 22 constrains the compiler version it supports,
 and taking a newer one would mean running the framework outside the range it is tested against.
+
+The Gate7 corrective security baseline records a live certifi advisory and the Vite embedded
+launch-editor advisories. The patched certifi pin is documented by its
+[upstream advisory](https://github.com/certifi/python-certifi/security/advisories/GHSA-6q48-6c7w-9gw2)
+and [published release](https://pypi.org/project/certifi/2026.10.19/). The
+[launch-editor advisory](https://github.com/vitejs/launch-editor/security/advisories/GHSA-587h-7wmj-h5pm)
+requires Vite8.3.3. Angular build22.2.2 pins8.3.0, so the exact patch override is explicit rather
+than a scanner exception or a forced audit rewrite. Angular build accepts Vitest5 through its peer
+contract. The generated locks, actual build/tests and unchanged live advisory scan still decide
+acceptance; these choices alone do not establish a security PASS.
 
 ## What the developer's machine needs
 

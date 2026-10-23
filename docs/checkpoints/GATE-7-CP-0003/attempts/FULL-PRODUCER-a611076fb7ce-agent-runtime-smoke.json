@@ -1,0 +1,138 @@
+{
+  "result": "PASS",
+  "provider": "openai",
+  "smokeModel": "openai:gpt-4o-mini",
+  "maxOutputTokens": 400,
+  "singleAgentRunId": "01a165ad-83be-7000-835e-ccc5d1ebc649",
+  "teamRunId": "01a165ad-93e3-7000-97b2-bd1fb9fcc4bf",
+  "singleAgentTask": "Reply with exactly: IACODE_AGENT_OK",
+  "teamTask": "Plan, in at most two steps, how to rename one function in one file. Keep every line under twenty words.",
+  "checks": [
+    {
+      "name": "single.succeeded",
+      "result": "PASS",
+      "detail": "state SUCCEEDED",
+      "data": {
+        "runId": "01a165ad-83be-7000-835e-ccc5d1ebc649"
+      }
+    },
+    {
+      "name": "single.answered",
+      "result": "PASS",
+      "detail": "contains IACODE_AGENT_OK"
+    },
+    {
+      "name": "single.one_agent_run",
+      "result": "PASS",
+      "detail": "1 agent run(s)"
+    },
+    {
+      "name": "single.workflow_executed",
+      "result": "PASS",
+      "detail": "workflow iacode-agent-run-01a165ad-83be-7000-835e-ccc5d1ebc649"
+    },
+    {
+      "name": "single.events_persisted",
+      "result": "PASS",
+      "detail": "7 event(s): RUN_CREATED, RUN_STARTED, AGENT_STARTED, MODEL_CALL_STARTED, MODEL_CALL_COMPLETED, AGENT_COMPLETED, RUN_COMPLETED"
+    },
+    {
+      "name": "single.sequence_is_monotonic",
+      "result": "PASS",
+      "detail": "the recorded order is the sequence order"
+    },
+    {
+      "name": "single.model_provenance",
+      "result": "PASS",
+      "detail": "openai:gpt-4o-mini call 01a165ad-8f88-7000-a084-fd7832e572c7"
+    },
+    {
+      "name": "single.gateway_only",
+      "result": "PASS",
+      "detail": "the call went to the model the run asked the gateway for"
+    },
+    {
+      "name": "single.no_content_in_events",
+      "result": "PASS",
+      "detail": "no event carries the model's output except the bounded summary"
+    },
+    {
+      "name": "single.no_tool_executed",
+      "result": "PASS",
+      "detail": "no tool was requested and none was executed"
+    },
+    {
+      "name": "single.training_denied",
+      "result": "PASS",
+      "detail": "the run is not training-eligible"
+    },
+    {
+      "name": "single.budget_recorded",
+      "result": "PASS",
+      "detail": "1 turn(s), 1 model call(s)"
+    },
+    {
+      "name": "team.succeeded",
+      "result": "PASS",
+      "detail": "state SUCCEEDED",
+      "data": {
+        "runId": "01a165ad-93e3-7000-97b2-bd1fb9fcc4bf"
+      }
+    },
+    {
+      "name": "team.two_agent_runs",
+      "result": "PASS",
+      "detail": "2 agent run(s)"
+    },
+    {
+      "name": "team.order",
+      "result": "PASS",
+      "detail": "plan then review"
+    },
+    {
+      "name": "team.agents",
+      "result": "PASS",
+      "detail": "planner then reviewer"
+    },
+    {
+      "name": "team.started_in_order",
+      "result": "PASS",
+      "detail": "the events record the same order the stages ran in"
+    },
+    {
+      "name": "team.outputs_are_separate",
+      "result": "PASS",
+      "detail": "each stage recorded its own output summary"
+    },
+    {
+      "name": "team.provenance_per_stage",
+      "result": "PASS",
+      "detail": "each stage recorded the profile and prompt that produced it"
+    },
+    {
+      "name": "team.result_is_the_last_stage",
+      "result": "PASS",
+      "detail": "the run's result is the reviewer's answer"
+    },
+    {
+      "name": "team.calls_were_bounded",
+      "result": "PASS",
+      "detail": "2 model call(s)"
+    },
+    {
+      "name": "team.no_tool_executed",
+      "result": "PASS",
+      "detail": "no tool was requested and none was executed"
+    },
+    {
+      "name": "team.reviewer_reads_the_plan",
+      "result": "PASS",
+      "detail": "the review stage declares inputs ['task', 'plan']"
+    },
+    {
+      "name": "team.reviewer_ran_second",
+      "result": "PASS",
+      "detail": "the reviewer executed after the planner and completed"
+    }
+  ]
+}

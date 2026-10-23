@@ -4,9 +4,9 @@
 - Scope: `Knowledge-Engine-M2-corrective-checkpoint-command-replay-client-producer-evidence-Docker-isolated-validation`
 - Technologies: `Python`, `PostgreSQL`, `Docker`, `Windows`
 - Modules: `services/knowledge`, `apps/api`, `packages/contracts`, `packages/persistence`, `scripts/iacode`, `scripts/development-ledger`
-- Generated: `2026-10-22T13:38:37Z`
-- Lessons considered: 153
-- Lessons applicable: 152
+- Generated: `2026-10-23T01:10:50Z`
+- Lessons considered: 154
+- Lessons applicable: 153
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -166,6 +166,7 @@ delivery when one is absent.
 | `LSN-0151` Immutable Git object reads must handle Windows long paths only in the owning child | `GUARDED` | CRITICAL | `LESSON-REQ-0150` | Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics. |
 | `LSN-0152` Private runner inputs require physical containment, not lexical ancestry | `GUARDED` | MEDIUM | `LESSON-REQ-0151` | Reject physical escapes, parent aliases, redirected ancestors and hardlinks before reading a frozen input or publishing a report; retain an actual valid inside-file control. |
 | `LSN-0153` Test discovery must not replace the auditing consumer's import environment | `GUARDED` | HIGH | `LESSON-REQ-0152` | Preserve exact real unittest discovery counts while restoring caller import state on success and failure, including colliding test modules and repeated inspected roots. |
+| `LSN-0154` Self-qualification must separate bounded product inputs from accumulated audit evidence | `GUARDED` | HIGH | `LESSON-REQ-0153` | Bound self-qualification to canonical immutable product inputs without dropping any required project, runner, test or check; separately retain and validate all ledger evidence and preserve snapshot security ceilings. |
 
 ## Why each lesson applies
 
@@ -1232,3 +1233,10 @@ delivery when one is absent.
 - Required check: Preserve exact real unittest discovery counts while restoring caller import state on success and failure, including colliding test modules and repeated inspected roots.
 - Required evidence: Real adverse and valid null discovery controls, unchanged cold-tag canonical validation and complete current quality.
 - Derived requirement: `LESSON-REQ-0152`
+
+### LSN-0154 — Self-qualification must separate bounded product inputs from accumulated audit evidence
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Bound self-qualification to canonical immutable product inputs without dropping any required project, runner, test or check; separately retain and validate all ledger evidence and preserve snapshot security ceilings.
+- Required evidence: Actual oversized whole-tree rejection, valid immutable input-view controls, exact project/check equivalence, unchanged capacity refusal and whole current verifier/assurance.
+- Derived requirement: `LESSON-REQ-0153`

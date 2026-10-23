@@ -1,0 +1,43 @@
+{
+  "producer": {
+    "status": "COMPLETED",
+    "exitCode": 1,
+    "arguments": [
+      "C:\\Program Files\\Python313\\python.exe",
+      "scripts/iacode/verify.py",
+      "--keep-going",
+      "--quiet",
+      "--node",
+      "C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+      "--report",
+      "artifacts/review/INTERNAL-FULL-VERIFY.json"
+    ],
+    "stdout": {
+      "bytes": 22622,
+      "sha256": "5220baa4bec78509c407a00f266f09b31552dd13de58a8e079032ce5e76bc024",
+      "refusal": null
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "refusal": null
+    }
+  },
+  "cleanup": {
+    "result": "PASS",
+    "observation": {
+      "jobOwned": true,
+      "remainingBeforeCleanup": 0,
+      "remainingAfterCleanup": 0,
+      "observedProcessCount": 0,
+      "signaledProcessCount": 0,
+      "forcedTermination": false,
+      "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+    }
+  },
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "subjectTag": "iacode-subjects/GATE-7-CP-0003-runtime-v5",
+  "sourceFingerprint": "813a2857d944d8197921aea0032b336fdd55356ff1757ead671b74ae1ee78dbd",
+  "composeProject": "iacode-verify-a7c2d86ad60d",
+  "sourceUnchanged": true
+}

@@ -1,0 +1,75 @@
+{
+  "Name": "iacode/apps/web",
+  "Ref": "rbc5846upw5nrx3w2dlpb61hk",
+  "Context": ".",
+  "Dockerfile": "apps\\web\\Dockerfile",
+  "VCSRepository": "https://github.com/pinguim16/iacode.git",
+  "VCSRevision": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "StartedAt": "2026-10-22T22:30:39.962662861-03:00",
+  "CompletedAt": "2026-10-22T22:30:50.446051745-03:00",
+  "Duration": 10483388884,
+  "Status": "completed",
+  "NumCompletedSteps": 18,
+  "NumTotalSteps": 18,
+  "NumCachedSteps": 10,
+  "BuildArgs": [
+    {
+      "Name": "IACODE_BUILD_TIMESTAMP",
+      "Value": "unknown"
+    },
+    {
+      "Name": "IACODE_COMMIT",
+      "Value": "unknown"
+    },
+    {
+      "Name": "IACODE_VERSION",
+      "Value": "0.1.0"
+    }
+  ],
+  "Labels": [
+    {
+      "Name": "com.docker.compose.project",
+      "Value": "iacode-desktop-7533fed5d789"
+    },
+    {
+      "Name": "com.docker.compose.service",
+      "Value": "web"
+    },
+    {
+      "Name": "com.docker.compose.version",
+      "Value": "5.5.1"
+    }
+  ],
+  "Config": {
+    "RestRaw": [
+      {
+        "Name": "local-sessionid:context",
+        "Value": "zj9u49glgmb37igkty7vx6zlv"
+      }
+    ]
+  },
+  "Materials": [
+    {
+      "URI": "pkg:docker/nginx@1.30.5-alpine-slim?platform=linux%2Famd64",
+      "Digests": [
+        "sha256:32463212baf0e7d91aded2e9b843a4f2b9e017804b8c9d5bae7b51dcef64389c"
+      ]
+    },
+    {
+      "URI": "pkg:docker/node@22.23.2-bookworm-slim?platform=linux%2Famd64",
+      "Digests": [
+        "sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9"
+      ]
+    }
+  ],
+  "Attachments": [
+    {
+      "Digest": "sha256:c6d64d2984c8a95f9c42f316ac662e1859c0867945d296c2635710cc06c66fed",
+      "Type": "application/vnd.oci.image.manifest.v1+json"
+    },
+    {
+      "Digest": "sha256:4f5c8449ad6419f924143805afb8cff52288129bc34eec5c7f8210c2e7a760ca",
+      "Type": "https://slsa.dev/provenance/v1"
+    }
+  ]
+}

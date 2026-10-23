@@ -1,0 +1,69 @@
+{
+  "Name": "repository/services/sandbox",
+  "Ref": "j3vg4fpxwbofxjarkqwzhxal9",
+  "Context": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-verification-1_e7hm5p\\repository",
+  "Dockerfile": "services\\sandbox\\Dockerfile",
+  "VCSRepository": "https://github.com/pinguim16/iacode.git",
+  "VCSRevision": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "StartedAt": "2026-10-22T20:17:34.350182381-03:00",
+  "CompletedAt": "2026-10-22T20:19:33.249210445-03:00",
+  "Duration": 118899028064,
+  "Status": "completed",
+  "NumCompletedSteps": 30,
+  "NumTotalSteps": 30,
+  "NumCachedSteps": 24,
+  "BuildArgs": [
+    {
+      "Name": "IACODE_BUILD_TIMESTAMP",
+      "Value": "unknown"
+    },
+    {
+      "Name": "IACODE_COMMIT",
+      "Value": "unknown"
+    },
+    {
+      "Name": "IACODE_VERSION",
+      "Value": "0.1.0"
+    }
+  ],
+  "Labels": [
+    {
+      "Name": "com.docker.compose.project",
+      "Value": "iacode-knowledge-d0c234dde6dc"
+    },
+    {
+      "Name": "com.docker.compose.service",
+      "Value": "sandbox"
+    },
+    {
+      "Name": "com.docker.compose.version",
+      "Value": "5.5.1"
+    }
+  ],
+  "Config": {
+    "RestRaw": [
+      {
+        "Name": "local-sessionid:context",
+        "Value": "yhd4otzcxne8u1mf0shnbhtsg"
+      }
+    ]
+  },
+  "Materials": [
+    {
+      "URI": "pkg:docker/python@3.13.15-slim-bookworm?digest=sha256:2325bb286ec344af3e5898cc224b5844e2707ac6e26b1632516fd3edc84a5e26\u0026platform=linux%2Famd64",
+      "Digests": [
+        "sha256:2325bb286ec344af3e5898cc224b5844e2707ac6e26b1632516fd3edc84a5e26"
+      ]
+    }
+  ],
+  "Attachments": [
+    {
+      "Digest": "sha256:ae9cc9f0bcd69f6c88584ea98d46c2fca281896cce1a9b92bebb7cdb1d37db2f",
+      "Type": "application/vnd.oci.image.manifest.v1+json"
+    },
+    {
+      "Digest": "sha256:7462a22d6bef401c8d8b3975bd5ad548f0eaf86f351ec09e4625eaa676a9f387",
+      "Type": "https://slsa.dev/provenance/v1"
+    }
+  ]
+}

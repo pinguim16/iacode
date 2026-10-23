@@ -1,0 +1,44 @@
+❯ Building...
+✔ Building...
+Initial chunk files | Names         |  Raw size | Estimated transfer size
+main-CUZJ4YMJ.js    | main          | 250.08 kB |                67.88 kB
+styles-TIGDBMKT.css | styles        |   1.78 kB |               595 bytes
+
+                    | Initial total | 251.86 kB |                68.47 kB
+
+Lazy chunk files    | Names         |  Raw size | Estimated transfer size
+chunk-CrtnwEI0.js   | -             |  34.17 kB |                 7.87 kB
+chunk-BNSIksI3.js   | agent-runtime |  13.85 kB |                 4.38 kB
+chunk-Cyoa2MEQ.js   | gateway       |  11.51 kB |                 3.61 kB
+chunk-D2YxBAXU.js   | foundation    |   5.20 kB |                 1.87 kB
+
+Application bundle generation complete. [4.692 seconds] - 2026-10-23T01:05:50.238Z
+
+Output location: /build/dist/web
+
+[iacode] WEB_BUILD=PASS
+❯ Building...
+✔ Building...
+Application bundle generation complete. [4.121 seconds] - 2026-10-23T01:05:56.742Z
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.5 [39m[90m/build[39m
+
+ [32m✓[39m [30m[46m web [49m[39m src/app/foundation/foundation-status.service.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 130[2mms[22m[39m
+ [32m✓[39m [30m[46m web [49m[39m src/app/gateway/gateway.service.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 134[2mms[22m[39m
+ [32m✓[39m [30m[46m web [49m[39m src/app/agent-runtime/agent-runtime.service.spec.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 194[2mms[22m[39m
+ [32m✓[39m [30m[46m web [49m[39m src/app/foundation/foundation.spec.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 386[2mms[22m[39m
+ [32m✓[39m [30m[46m web [49m[39m src/app/api-config.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m [30m[46m web [49m[39m src/app/app.spec.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 785[2mms[22m[39m
+   [32m✓[39m App shell [2m(4)[22m
+     [33m[2m✓[22m[39m identifies the product and offers every page it has[33m 408[2mms[22m[39m
+ [32m✓[39m [30m[46m web [49m[39m src/app/gateway/gateway.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 616[2mms[22m[39m
+ [32m✓[39m [30m[46m web [49m[39m src/app/agent-runtime/agent-runtime.spec.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 893[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m8 passed[39m[22m[90m (8)[39m
+[2m      Tests [22m [1m[32m49 passed[39m[22m[90m (49)[39m
+[2m   Start at [22m 01:05:57
+[2m   Duration [22m 4.31s[2m (environment 53%, setup 27%, tests 12%, transform 5%, import 3%, worker 1%)[22m
+
+[iacode] WEB_TESTS=PASS
+[iacode] WEB_TESTS=PASS

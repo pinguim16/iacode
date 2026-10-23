@@ -1,0 +1,45 @@
+{
+  "observedAt": "2026-10-23T01:55:41Z",
+  "kind": "TARGETED_UNCHANGED_ACTUAL_LIVE_DIAGNOSTIC_NOT_WHOLE_ACCEPTANCE",
+  "scenario": "desktop",
+  "sourceFingerprint": "626a776755079703882560163ac6ee4695abbc1a1eb093ed21502c1c20768873",
+  "sourceUnchanged": true,
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 1,
+      "arguments": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "E:\\iacode\\docs\\checkpoints\\GATE-7-CP-0003\\audit-harness\\diagnose_live_stages.py",
+        "desktop",
+        "--inner",
+        "E:\\iacode\\docs\\checkpoints\\GATE-7-CP-0003\\causal-attempts\\live-stages\\desktop\\run-0003"
+      ],
+      "stdout": {
+        "bytes": 22768,
+        "sha256": "7e89f0268ddf80a8932a0eff1e2c117524c9f1aaa6c3f6224b6cb032038a70bc",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "originalReportSha256": "22f2cdb81b66821f7ce2656dee0a4c6f9d302da43a957413050bbb33d55e6594",
+  "rawCredentialsOrProviderBodiesRecorded": false,
+  "assertionsDeadlinesAndModelUnchanged": true
+}

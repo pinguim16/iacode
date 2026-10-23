@@ -14,6 +14,24 @@ CHECKPOINT = Path(__file__).resolve().parents[1]
 ROOT = CHECKPOINT.parents[2]
 
 ASSETS = (
+    "scripts/development-ledger/gate4_red_team.py",
+    "scripts/development-ledger/ledger_common.py",
+    "scripts/iacode/self_qualification_source.py",
+    "scripts/iacode/scenarios/quality_engine_e2e.py",
+    "tests/test_m2_host_transport.py",
+    "tests/test_m2_self_snapshot.py",
+    (
+        "docs/adr/ADR-0065-self-qualification-uses-immutable-product-inputs-"
+        "not-checkpoint-outputs.md"
+    ),
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_full_rework.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/register_full_verifier_rework.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_full_transport.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_live_stages.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_self_project.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/claim_private_build_outputs.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/archive_full_views.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/full_rework_memory.py",
     "docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_publication_launchers.py",
     "scripts/development-ledger/derive_counts.py",
     "tests/test_m2_discovery_isolation.py",

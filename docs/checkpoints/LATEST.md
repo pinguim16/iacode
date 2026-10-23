@@ -2,6 +2,50 @@
 
 Checkpoint: `docs/checkpoints/GATE-7-CP-0003`
 
+CURRENT STATUS: BLOCKED by actual serial Docker identity divergence, not implementation approval.
+Source626a7767 has107 passing M2 controls and current full lint/static analysis. Desktop run0003
+passes29 functional controls and both real native hosts but fails the unchanged preservation
+assertion after a non-IACode preexisting container disappears. Exact original/hash evidence is in
+DESKTOP-SERIAL-ISOLATION-BLOCKER.json. A stable validation interval is required; other running
+applications need not be stopped and no external actor is inferred. The exact task builder is
+removed with all known disposable task images, private cache/config and84 owned bytecode files;
+TASK-RESOURCE-DISPOSAL-PROOF.json records actual zero remaining task resources and preservation
+during cleanup. No producer or auditor remains active. CP0001 remains the last canonical immutable
+seal. CP0003 is not sealed, no independent M2 verdict exists and Gate8 is not authorized.
+
+Following stage descriptions are historical only.
+
+CURRENT STAGE: CP0003 remains unsealed IN_PROGRESS after actual runtime-v5 FAIL43/49. Originals
+and five derived views are archived byte-exact. Targeted corrections now include107 passing M2
+controls,72 passing Experience controls with complete owned disposal, zero-advisory dependency
+scan and unchanged75-check/17-root evaluator equivalence for the bounded immutable input view.
+Memory/guard updates require fresh current-source proof. Desktop diagnostic session66365 and
+remaining local QA are active; all16 public quality gates, all49 functional stages, ordered internal
+closure, exact final phase0002 disposal and canonical READY_FOR_REVIEW sealing remain due.
+CP0001 remains the last immutable canonical seal. No independent M2 verdict or Gate8 authorization.
+Only actual completed receipts grant acceptance; following stage descriptions are historical.
+
+Historical stage at2026-10-22T23:57:56Z: full49 runtime-v5 verifier COMPLETED FAIL43/49, actual
+cmd0546. Originals and exact capture are preserved; native execution ended, owned stack and private
+clone were removed. Six actual failures require diagnosis/rework and fresh complete assurance;
+see FULL-VERIFICATION-FAILURE-0001.json. Private builder stopped by exact pinned identity in
+cmd0549; cache remains necessary for corrective builds and final disposal is still mandatory.
+No application restart/global change, seal, independent verdict or Gate8. Statements below are
+historical chronology, not current process state.
+
+CURRENT LIVE STAGE at2026-10-22T18:14:13Z: complete public16-gate quality is PASS on immutable runtime-v5
+3cafb3cf77c09fc7c651df0fc82b0fca12c880b3. Actual cycle3 has16 successful mandatory commands;
+outercmd0545, native cleanup, exact canonical import and private-owner removal passed. Original
+failures remain immutable. One full49-stage non-fast verifier is RUNNING in native session79899,
+fresh project iacode-verify-a7c2d86ad60d, same exact public subject. Keep source813a2857/public main
+frozen and parent command recording serialized until its original capture/cleanup/removal finish.
+Current functional/requirement closure, ordered DCV/internal Red Team/full mirror, exact phase0002
+disposal and READY_FOR_REVIEW seal remain due before the fresh isolated independent M2 auditor.
+CP0001 remains the last immutable canonical seal; no independent M2 verdict or Gate8 authorisation
+exists. See ACTIVE-VALIDATION.json and NEXT.md. All following stage statements are historical only.
+
+## Historical stage observations — never replay old process instructions
+
 Publication transport update: no new commit was created. Only two exact stalled task shell sessions
 were interrupted; native follow-up confirms their four shell/console entries absent. Original
 failures remain in PUBLICATION-LAUNCHER-RECOVERY-0001.json. Current authored quality now passes104

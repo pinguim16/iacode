@@ -25,6 +25,8 @@ prometheus-client==0.26.0
 # calls providers with it. Listing it here is the difference between a dependency we chose and one
 # we inherited.
 httpx==0.28.1
+# Explicit security floor after PYSEC-2026-4320; the complete lock is regenerated in its image.
+certifi==2026.10.19
 
 # Test and lint toolchain. It ships in the image because the API test suite runs inside a
 # container against the real Compose services, which is the only place those tests are honest.

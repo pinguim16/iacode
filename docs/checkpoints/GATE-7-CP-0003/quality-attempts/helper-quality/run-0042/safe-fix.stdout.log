@@ -1,0 +1,15 @@
+F811 Redefinition of unused `temporary` from line 156
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_self_project.py:157:75
+    |
+154 |     output.mkdir()
+155 |     fingerprint = scope_fingerprint(ROOT)
+156 |     temporary = None
+    |     --------- previous definition of `temporary` here
+157 |     with tempfile.TemporaryDirectory(prefix="iacode-m2-self-project-") as temporary:
+    |                                                                           ^^^^^^^^^ `temporary` redefined here
+158 |         base = Path(temporary)
+159 |         subject = materialize_full(ROOT, base / "full")
+    |
+help: Remove definition: `temporary`
+
+Found 2 errors (1 fixed, 1 remaining).

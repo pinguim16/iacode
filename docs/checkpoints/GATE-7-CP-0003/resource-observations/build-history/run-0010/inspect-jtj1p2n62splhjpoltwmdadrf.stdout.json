@@ -1,0 +1,40 @@
+{
+  "Name": "iacode/services/sandbox/images/quality-node",
+  "Ref": "jtj1p2n62splhjpoltwmdadrf",
+  "Context": ".",
+  "Dockerfile": "services\\sandbox\\images\\quality-node\\Dockerfile",
+  "VCSRepository": "https://github.com/pinguim16/iacode.git",
+  "VCSRevision": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "StartedAt": "2026-10-22T21:53:34.931139011-03:00",
+  "CompletedAt": "2026-10-22T21:55:03.831284715-03:00",
+  "Duration": 88900145704,
+  "Status": "completed",
+  "NumCompletedSteps": 18,
+  "NumTotalSteps": 18,
+  "NumCachedSteps": 1,
+  "Labels": [
+    {
+      "Name": "org.iacode.sandbox.fingerprint",
+      "Value": "8bce0975d27c24dd50d429fddd1014913bc32185aa9a0ecbd3b50eb997400033"
+    }
+  ],
+  "Config": {},
+  "Materials": [
+    {
+      "URI": "pkg:docker/node@22.23.2-bookworm-slim?digest=sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9\u0026platform=linux%2Famd64",
+      "Digests": [
+        "sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9"
+      ]
+    }
+  ],
+  "Attachments": [
+    {
+      "Digest": "sha256:22397815a40f5d3eb10913e2d71d85ccd66b0df0ad2b8adb0216ccf2b124177f",
+      "Type": "application/vnd.oci.image.manifest.v1+json"
+    },
+    {
+      "Digest": "sha256:58ff97e80fc34e0594cc5ee8d4a8a0238b90439d18c6be5e2c5cfe46ff3bcb22",
+      "Type": "https://slsa.dev/provenance/v1"
+    }
+  ]
+}

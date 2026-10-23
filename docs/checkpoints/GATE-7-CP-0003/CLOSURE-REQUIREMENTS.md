@@ -217,8 +217,9 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0148` | LESSON | `lesson:LSN-0149` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a shell exit zero is not a produced digest or verified original evidence |
 | `LESSON-REQ-0149` | LESSON | `lesson:LSN-0150` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify build and verification root inputs need subject-versioned assurance binding |
 | `LESSON-REQ-0150` | LESSON | `lesson:LSN-0151` | yes | `PARTIAL` | `PARTIAL` | Verify immutable Git object reads must handle Windows long paths only in the owning child |
-| `LESSON-REQ-0151` | LESSON | `lesson:LSN-0152` | yes | `COMPLETE` | `PARTIAL` | Verify private runner inputs require physical containment, not lexical ancestry |
+| `LESSON-REQ-0151` | LESSON | `lesson:LSN-0152` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify private runner inputs require physical containment, not lexical ancestry |
 | `LESSON-REQ-0152` | LESSON | `lesson:LSN-0153` | yes | `PARTIAL` | `PARTIAL` | Verify test discovery must not replace the auditing consumer's import environment |
+| `LESSON-REQ-0153` | LESSON | `lesson:LSN-0154` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify self-qualification must separate bounded product inputs from accumulated audit evidence |
 
 ## Evidence
 
@@ -2455,13 +2456,12 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0151
 - Description: Verify private runner inputs require physical containment, not lexical ancestry
-- Implementation: `file:scripts/development-ledger/new_checkpoint.py`, `file:scripts/development-ledger/m0_red_team.py`, `file:scripts/iacode/client_checks.py`, `file:scripts/iacode/native_execution.py`, `file:scripts/development-ledger/audit_runner_bridge.py`, `file:.gitattributes`, `file:tests/test_m2_observation_transport.py`
-- Test: `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json`, `file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json`
-- Negative test: `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json`
-- Documentation: `file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md`, `file:docs/adr/ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md`, `checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md`
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
 - Validation: _none_
 - Guardrail: _none_
-- Justification: Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.
 
 ### LESSON-REQ-0152 - lesson:LSN-0153
 
@@ -2474,3 +2474,14 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Validation: `checkpoint:causal-attempts/discovery-isolation/run-0003.json`, `checkpoint:declaration-diagnostics/run-0003/RECEIPT.json`, `checkpoint:declaration-diagnostics/run-0003/stdout.log`, `checkpoint:declaration-diagnostics/run-0004/RECEIPT.json`, `checkpoint:declaration-diagnostics/run-0004/stdout.log`, `checkpoint:declaration-diagnostics/run-0005/RECEIPT.json`, `checkpoint:declaration-diagnostics/run-0005/stdout.log`
 - Guardrail: `test:M2DiscoveryIsolationTests.test_actual_valid_null_counts_inherited_and_skipped_cases_without_running_them`, `test:M2DiscoveryIsolationTests.test_actual_inspected_import_cannot_replace_the_late_current_consumer`, `test:M2DiscoveryIsolationTests.test_same_named_preloaded_test_is_restored_but_never_counted_for_another_root`, `test:M2DiscoveryIsolationTests.test_repeated_real_roots_keep_their_own_exact_discovery_counts`, `test:M2DiscoveryIsolationTests.test_a_real_load_tests_error_is_refused_instead_of_counted_as_one_case`, `test:M2DiscoveryIsolationTests.test_an_actual_uncaught_import_failure_also_restores_caller_state`, `test:M2DiscoveryIsolationTests.test_the_shared_default_loader_is_not_mutated_by_counting`, `test:M2DiscoveryIsolationTests.test_missing_suite_remains_zero_without_changing_import_state`
 - Justification: Measured local import-state prevention; whole current immutable assurance pending.
+
+### LESSON-REQ-0153 - lesson:LSN-0154
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0153
+- Description: Verify self-qualification must separate bounded product inputs from accumulated audit evidence
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_

@@ -2,6 +2,76 @@
 
 ## Required next action
 
+BLOCKED: qualify a stable interval for the exact unchanged Docker identity-preservation control.
+Serial desktop run0003 passes29 functional controls and both native hosts but records one missing
+preexisting non-IACode container. Read DESKTOP-SERIAL-ISOLATION-BLOCKER.json and its exact original
+journals. The task did not overlap other Docker tests/cleanup in that interval. Do not infer an
+external actor, waive the assertion, stop applications, edit globals or start Gate8. Exact owned
+disposal is complete in TASK-RESOURCE-DISPOSAL-PROOF.json; preserve all original failures. A later
+resume must verify current ownership/disposal state before creating any fresh resources.
+CP0003 is not sealed or ready.
+
+The continuation descriptions below are historical observations, not current readiness.
+
+Current continuation: retain runtime-v5 FAIL43/49 and its exact archived projections. Current
+rework adds actual host-transport controls and the bounded immutable self-input view under ADR-0065;
+the complete204-requirement set remains mandatory. Identical current M2 controls passed107 cases,
+and the local memory/guard update creates the next source epoch requiring fresh current proof.
+The actual Experience scenario passed72 controls with complete owned stack/sandbox removal.
+Actual evaluator profiles and all75 ordered checks across17 workspace roots are preserved by
+the view; every retained byte is equal. Fresh Python/npm advisory scan and web tests passed.
+Desktop diagnostic session66365 is active. Read actual receipts, never infer completion from a
+session number. No new publication, whole-current acceptance or seal exists. Freeze runtime sources,
+finish current local QA and read-only authored quality, validate the fully declared IN_PROGRESS
+draft and publish a new immutable subject. Then all16 quality gates, all49 functional stages,
+requirements/findings, ordered DCV/internal Red Team/full mirror LAST, exact phase0002 cleanup
+and canonical READY_FOR_REVIEW seal remain required. No Gate8 or other-application/global changes.
+
+Historical failure observation at2026-10-22T23:57:56Z: the full49-stage runtime-v5 verifier finished FAIL43/49,
+cmd0546. Preserve all originals and failed isolation comparison in FULL-VERIFICATION-FAILURE-0001.json.
+No native validator/test from sessions79899/31819 remains active. Whole16 quality is green at
+the old source epoch, not a replacement for full functional acceptance. Diagnose all six failed
+stages, escalate any proven guarded recurrence before correction, derive any added requirements,
+retain causal red/null/green evidence, and require a fresh immutable complete cycle after changes.
+The exact private builder is now stopped (cmd0549); retained cache is still needed for rework
+builds. Remove every proved disposable image/container/cache/config as soon as no longer needed,
+prove scoped cleanup and preservation, then ordered DCV/internal Red Team/full mirror and canonical
+READY_FOR_REVIEW sealing. Independent M2 remains later. No Gate8/global/other-application changes.
+All former live-stage paragraphs below are historical only and must not be replayed.
+
+CURRENT LIVE STAGE at2026-10-22T18:14:13Z: runtime-v5's complete public Green Keeper finished PASS.
+All16 mandatory gates are GREEN in actual cycle3/cmd0529-0544; outercmd0545 exited0. Original
+stdout1141bytes and imported-ledger hashes were independently queried and match the actual receipt.
+Native cleanup passed and the exact private public-quality owner was removed. Prior failures stay
+immutable. The console does not report Root case cardinality; do not describe an expected count as
+an observed output. Canonical current physical counts must be derived during completed assurance.
+
+One whole49-stage non-fast verifier is now RUNNING in native session79899, from the exact same
+3cafb3cf77c09fc7c651df0fc82b0fca12c880b3/tag runtime-v5. Its fresh owner is
+C:/Users/cesar/AppData/Local/Temp/iacode-gate7-full-verification-1_e7hm5p, with registered project
+iacode-verify-a7c2d86ad60d. Actual private HEAD/tag/origin-main agree; Node24.19.0 is explicitly used.
+Keep source813a2857, public main and parent command serialization unchanged until original producer,
+capture, native/project cleanup and owner removal finish. Do not run the public Green Keeper wrapper
+again against the extended parent ledger. Then complete the current restricted capability proof,
+functional/requirements/finding closure, audit-only DCV, fresh internal Red Team and full mirror LAST,
+exact phase0002 disposal, full declaration/synchronization and READY_FOR_REVIEW seal. Only then start
+the separately authorized fresh history-free isolated M2 auditor. No Gate8, restarts of existing
+applications, global/other-chat changes, global prune, or deletion of shared/ambiguous resources.
+
+All earlier in-flight notes below are historical chronology, not current process instructions.
+
+CURRENT LIVE STAGE at14:16:55Z: immutable runtime-v5 is published at
+3cafb3cf77c09fc7c651df0fc82b0fca12c880b3. Local/public main and tag agree, all publication stages
+exited0, and the clean committed draft actually validates. The complete unchanged public16-gate
+cycle is RUNNING in native session46429; its exact temporary owner and expected run0005 receipt are
+in ACTIVE-VALIDATION.json. Do not append parent COMMANDS/REWORK or alter assurance sources while
+this cycle owns canonical import. Wait for actual complete producer/cleanup/import/removal before
+interpreting results. Preserve source813a2857 and public main through the subsequent whole49-stage
+non-fast verifier. Then actual functional/requirement closure, DCV, fresh internal Red Team/mirror,
+restricted bridge recheck, exact phase0002 disposal and seal precede the fresh independent M2 audit.
+No current whole PASS, seal, independent verdict or Gate8 authorization exists. Earlier stages below
+are historical chronology; never replay a historical PID action or one-shot registration.
+
 Latest publication transport note: the multiword CMD message was refused by argparse before any
 publication effect. Two stalled shell sessions never started Python; after exact read-only native
 identity/tree checks, only those owning sessions were interrupted. Both session exits and absence

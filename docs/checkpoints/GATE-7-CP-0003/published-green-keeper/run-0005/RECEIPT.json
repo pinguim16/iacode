@@ -1,0 +1,57 @@
+{
+  "observedAt": "2026-10-22T14:16:45Z",
+  "kind": "COMPLETE_CANONICAL_GREEN_KEEPER_PUBLIC_TRANSPORT",
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "subjectTag": "iacode-subjects/GATE-7-CP-0003-runtime-v5",
+  "sourceFingerprint": "813a2857d944d8197921aea0032b336fdd55356ff1757ead671b74ae1ee78dbd",
+  "result": "PASS",
+  "allMandatoryGatesRequested": true,
+  "gateSelectionOverride": false,
+  "localPrivateRefsFilteredOrChanged": false,
+  "sourceEdited": false,
+  "cloneCredentialHelperDisabled": true,
+  "cloneInteractivePromptsDisabled": true,
+  "canonicalEvidenceImported": true,
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "arguments": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/green_keeper.py",
+        "--trigger",
+        "Current complete corrective assurance from an exact public transported subject",
+        "--root-cause",
+        "M2 literal invocation/cleanup evidence and measured adapter/UTF-8 guard corrections"
+      ],
+      "stdout": {
+        "bytes": 1141,
+        "sha256": "8ad5f1b0fd44bbc7a3c50244bb6c5e47300f4c624bc5b03600145ca68b001371",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 1,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 1,
+        "signaledProcessCount": 1,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "cloneSourceUnchanged": true,
+  "workingSourceUnchanged": true,
+  "importedCommandsSha256": "3cdbc60b9a896df78ea63e6f6ff363121fbd1d8eae5ce872428e092ee9620867",
+  "temporaryClone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2cp3-public-quality-47lg2_jc\\repository",
+  "temporaryCloneRemoved": true,
+  "finishedAt": "2026-10-22T18:08:58Z"
+}

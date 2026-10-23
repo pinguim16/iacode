@@ -1,0 +1,22 @@
+E501 Line too long (102 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_live_stages.py:34:101
+   |
+32 |     "live response authentication failed": "RESPONSE_AUTHENTICATION",
+33 |     "live response reflected protected authentication material": "REFLECTED_AUTHENTICATION",
+34 |     "actual authorized provider catalog synchronization failed; no model substituted": "SYNC_REFUSED",
+   |                                                                                                     ^^
+35 |     "the exact authorized model is absent from the fresh catalog; no model substituted": "MODEL_ABSENT",
+36 | }
+   |
+
+E501 Line too long (104 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_live_stages.py:35:101
+   |
+33 |     "live response reflected protected authentication material": "REFLECTED_AUTHENTICATION",
+34 |     "actual authorized provider catalog synchronization failed; no model substituted": "SYNC_REFUSED",
+35 |     "the exact authorized model is absent from the fresh catalog; no model substituted": "MODEL_ABSENT",
+   |                                                                                                     ^^^^
+36 | }
+   |
+
+Found 2 errors.

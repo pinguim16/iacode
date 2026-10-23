@@ -1,0 +1,72 @@
+{
+  "observedAt": "2026-10-23T01:04:44Z",
+  "result": "PASS",
+  "kind": "ACTUAL_COMMITTED_INPUT_PROJECT_CHECK_PROOF_NOT_WHOLE_ACCEPTANCE",
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "sourceFingerprint": "df66429a276588a1e9901915dbcc78523ef0d40ce83552e97214a6a7d7c598fd",
+  "sourceUnchanged": true,
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "arguments": [
+        "docker",
+        "run",
+        "--rm",
+        "--name",
+        "iacode-m2cp3-self-plan-1fef58ac45284f0797d0de3d65238497",
+        "--label",
+        "com.docker.compose.project=iacode-m2cp3-91500867ff844a7ca13dfbe301838869",
+        "--network",
+        "none",
+        "--read-only",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges:true",
+        "--env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "--volume",
+        "E:\\iacode:/repo:ro",
+        "--volume",
+        "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-self-project-9kulet79:/inputs:ro",
+        "--workdir",
+        "/repo",
+        "iacode-m2cp3-91500867ff844a7ca13dfbe301838869/api:0.1.0",
+        "python",
+        "/repo/docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_self_project.py",
+        "--inner",
+        "/inputs"
+      ],
+      "stdout": {
+        "bytes": 70971,
+        "sha256": "6d379fc58ca211a27a399dfd3e2837a05620af407ee7d5255163be625c6b9b43",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "temporaryOwnerRemoved": true,
+  "hostPackagesInstalled": false,
+  "ownedContainerCleanup": {
+    "result": "PASS",
+    "remainingContainers": 0,
+    "recovery": []
+  }
+}

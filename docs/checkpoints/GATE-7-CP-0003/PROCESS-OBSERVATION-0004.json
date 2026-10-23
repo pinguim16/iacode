@@ -1,0 +1,68 @@
+{
+  "kind": "READ_ONLY_FULL_VERIFIER_ACTIVITY_NOT_JOB_MEMBERSHIP_OR_TEST_ACCEPTANCE",
+  "nativeToolSession": 79899,
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "subjectTag": "iacode-subjects/GATE-7-CP-0003-runtime-v5",
+  "sourceFingerprintAtVerifiedLaunch": "813a2857d944d8197921aea0032b336fdd55356ff1757ead671b74ae1ee78dbd",
+  "temporaryOwner": "C:/Users/cesar/AppData/Local/Temp/iacode-gate7-full-verification-1_e7hm5p",
+  "composeProject": "iacode-verify-a7c2d86ad60d",
+  "observedAt": "2026-10-22T19:35:36.902319+00:00",
+  "rootMatches": [38832, 2848],
+  "relatedProcesses": [
+    {"pid": 38832, "parentPid": 37656, "name": "python.exe", "creationFileTime": 134371662145121728, "cpuSeconds": 0.109375, "exitCodeAtObservation": 259, "commandSha256": "066a5c70fadcae68247d3f1eb5706e8fd5bb83a24d6903cc3a088006a9b4447e", "role": "full-verifier-wrapper"},
+    {"pid": 2848, "parentPid": 38832, "name": "python.exe", "creationFileTime": 134371662149143187, "cpuSeconds": 1.34375, "exitCodeAtObservation": 259, "commandSha256": "91d300febfe50fcd7b679339f1e1801fb26bf2677977512c0ac0d5fc42957eea", "role": "full-verifier-wrapper"},
+    {"pid": 31340, "parentPid": 2848, "name": "python.exe", "creationFileTime": 134371662330841320, "cpuSeconds": 1.046875, "exitCodeAtObservation": 259, "commandSha256": "465b376965947a4a7ae9fab136da7152ab8092ae362b5233f7ee9d4b3bc80684", "role": "canonical-full-verifier"},
+    {"pid": 19552, "parentPid": 31340, "name": "conhost.exe", "creationFileTime": 134371662333107435, "cpuSeconds": 20.40625, "exitCodeAtObservation": 259, "commandSha256": "417222c4a0ecb4d60a457ebe8e26fddf3d5406bffb16a5c59af8eeb241beca51", "role": "owned-console-descendant"},
+    {"pid": 46260, "parentPid": 31340, "name": "python.exe", "creationFileTime": 134371662456615630, "cpuSeconds": 704.953125, "exitCodeAtObservation": 259, "commandSha256": "49e25a27c55b0196e0473398a09530087b119d52b685c69275391b557fd6f025", "role": "unittest-process"}
+  ],
+  "comparison": {
+    "observedAt": "2026-10-22T19:37:06.718892+00:00",
+    "sameRootMatches": [38832, 2848],
+    "sameUnittestNativeIdentity": {"pid": 46260, "creationFileTime": 134371662456615630, "commandSha256": "49e25a27c55b0196e0473398a09530087b119d52b685c69275391b557fd6f025"},
+    "unittestCpuSeconds": 731.390625,
+    "unittestCpuIncreaseSeconds": 26.4375,
+    "unittestExitCodeAtObservation": 259,
+    "interpretation": "The same live first-stage unittest process accumulated additional CPU time between native limited-query observations. No case result or completed stage is inferred."
+  },
+  "historicalClonePositionObservations": {
+    "source": "Read-only literal git describe --tags --exact-match HEAD in the current task's temporary iacode-sealed-gaber2ad/clone",
+    "observations": [
+      {"observedAt": "2026-10-22T20:47:16Z", "exitCode": 0, "tag": "iacode-checkpoints/GATE-5-CP-0001"},
+      {"observedAt": "2026-10-22T21:07:40Z", "exitCode": 0, "tag": "iacode-checkpoints/SETUP-00-CP-0011"}
+    ],
+    "interpretation": "The historical compatibility loop advanced between different actual immutable tags. A position observation is not a successful validation, a completed unittest or whole-verifier acceptance. Main HEAD remains the frozen runtime-v5 subject."
+  },
+  "laterTemporaryLifecycleObservation": {
+    "observedAt": "2026-10-22T21:29:09Z",
+    "historicalCloneDirectoryAbsent": "temporary/iacode-sealed-gaber2ad/clone",
+    "readOnlyHistoricalTagQueryExitCode": 128,
+    "readOnlyQueryOutcome": "Directory no longer exists; no test result is inferred from this diagnostic query",
+    "ordinaryTemporaryChildrenObserved": ["iacode-preserved-38r5wxr4", "iacode-review-rebuild-u7_5q_cr"],
+    "cloneVarChildrenObserved": ["tmpahbeopi4"],
+    "operatorDeletionPerformed": false,
+    "mainGitChangesRemainExpectedCheckpointOnlyMetadata": true,
+    "interpretation": "The live runner moved beyond the previously observed historical clone and created further temporary reconstruction data. This is lifecycle telemetry only, not a completed unittest, historical validation verdict, whole-verifier result or final cleanup."
+  },
+  "subsequentTemporaryLifecycleObservation": {
+    "observedAt": "2026-10-22T21:50:51Z",
+    "ordinaryTemporaryChildrenAtObservation": [],
+    "cloneVarChildrenAtObservation": [],
+    "previousRebuildDirectoryAbsent": "temporary/iacode-review-rebuild-u7_5q_cr",
+    "operatorDeletionPerformed": false,
+    "mainHeadQueriedUnchanged": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+    "interpretation": "Previously observed transient producer trees are absent under the same still-live full-verifier owner. This is lifecycle telemetry only, not a completed case, stage, full verification, final resource disposal or independent verdict."
+  },
+  "observer": {
+    "kind": "Temporary standard-library native read-only utility using the existing frozen identity structures",
+    "path": "C:/Users/cesar/AppData/Local/Temp/iacode-gate7-full-verification-1_e7hm5p/operator-full-activity-bb905c9a.py",
+    "temporaryUtilityRemovedAndLiteralAbsenceQueryConfirmed": true,
+    "rawConsoleBytesArchived": false,
+    "observationBasis": "Actual tool output copied as neutral operational facts, not manufactured raw streams or a canonical execution"
+  },
+  "processesSignaled": 0,
+  "dockerMutationsPerformed": false,
+  "privateCommandBodiesPublished": false,
+  "sourceOrParentCanonicalLedgersModifiedByObserver": false,
+  "gateVerdictGranted": false,
+  "warning": "Activity facts are not Windows Job membership, producer success, cleanup evidence or permission to act on these historical PIDs. Wait for actual full producer/capture/cleanup/removal and its canonical command. Independent M2 remains pending."
+}

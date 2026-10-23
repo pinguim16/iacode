@@ -16,11 +16,11 @@
     "scripts/iacode",
     "scripts/development-ledger"
   ],
-  "generatedAt": "2026-10-22T13:38:37Z",
+  "generatedAt": "2026-10-23T01:10:50Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "fbd7261481e65fd372df837df47c9f00e8e5fd4da58b4bc83f0e92a0fb7b1307",
-  "lessonsConsidered": 153,
-  "lessonsApplicable": 152,
+  "inputsFingerprint": "d0a184cf6f77bb47b73222916ab70a2f9ef58a5d3f092ea8f45e3c186f65ff9a",
+  "lessonsConsidered": 154,
+  "lessonsApplicable": 153,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -1541,6 +1541,16 @@
       "requiredCheck": "Preserve exact real unittest discovery counts while restoring caller import state on success and failure, including colliding test modules and repeated inspected roots.",
       "requiredEvidence": "Real adverse and valid null discovery controls, unchanged cold-tag canonical validation and complete current quality.",
       "derivedRequirementId": "LESSON-REQ-0152"
+    },
+    {
+      "lessonId": "LSN-0154",
+      "title": "Self-qualification must separate bounded product inputs from accumulated audit evidence",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Bound self-qualification to canonical immutable product inputs without dropping any required project, runner, test or check; separately retain and validate all ledger evidence and preserve snapshot security ceilings.",
+      "requiredEvidence": "Actual oversized whole-tree rejection, valid immutable input-view controls, exact project/check equivalence, unchanged capacity refusal and whole current verifier/assurance.",
+      "derivedRequirementId": "LESSON-REQ-0153"
     }
   ],
   "derivedRequirements": [
@@ -2607,6 +2617,13 @@
       "description": "Verify test discovery must not replace the auditing consumer's import environment",
       "mandatory": true,
       "requiredEvidence": "Real adverse and valid null discovery controls, unchanged cold-tag canonical validation and complete current quality."
+    },
+    {
+      "id": "LESSON-REQ-0153",
+      "lessonId": "LSN-0154",
+      "description": "Verify self-qualification must separate bounded product inputs from accumulated audit evidence",
+      "mandatory": true,
+      "requiredEvidence": "Actual oversized whole-tree rejection, valid immutable input-view controls, exact project/check equivalence, unchanged capacity refusal and whole current verifier/assurance."
     }
   ]
 }

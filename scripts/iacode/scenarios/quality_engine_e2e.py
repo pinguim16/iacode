@@ -15,13 +15,11 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import io
 import json
 import secrets
 import shutil
 import subprocess
 import sys
-import tarfile
 import tempfile
 import time
 import urllib.error
@@ -43,6 +41,7 @@ from compose import (
     wait_for_health,
 )
 from sandbox_snapshot import create as create_snapshot
+from self_qualification_source import materialize_committed_source
 
 FIXTURES = REPOSITORY_ROOT / "services" / "evaluator" / "tests" / "fixtures"
 TERMINAL = {"SUCCEEDED", "FAILED", "CANCELLED", "TIMED_OUT", "INVALID"}
@@ -689,19 +688,28 @@ def quality_timeout_observation(run_id: str) -> dict[str, Any]:
 
 def scenario_iacode() -> dict[str, Any]:
     steps = Steps("iacode")
-    archived = subprocess.run(
-        ["git", "archive", "--format=tar", "HEAD"],
-        cwd=REPOSITORY_ROOT,
-        capture_output=True,
-        check=False,
-    )
-    if archived.returncode != 0:
-        raise StackError("the committed IACode tree could not be archived")
     with tempfile.TemporaryDirectory(prefix="iacode-quality-self-") as directory:
         source = Path(directory) / "iacode"
-        source.mkdir()
-        with tarfile.open(fileobj=io.BytesIO(archived.stdout), mode="r:") as archive:
-            archive.extractall(source, filter="data")
+        selection = materialize_committed_source(REPOSITORY_ROOT, source)
+        steps.record(
+            "snapshot.immutable_product_inputs_complete",
+            selection["allCommittedNonCheckpointPathsPreserved"]
+            and not selection["generalSnapshotLimitsChanged"],
+            {
+                key: selection[key]
+                for key in (
+                    "subjectCommit",
+                    "subjectTree",
+                    "selectedFiles",
+                    "selectedBytes",
+                    "excludedCheckpointFiles",
+                    "excludedCheckpointBytes",
+                )
+            },
+            "all immutable non-checkpoint inputs; checkpoint outputs separately validated; "
+            "unchanged capacity",
+        )
+        steps.artifacts.append({"kind": "self-qualification-source", **selection})
         stored = snapshot(source, "iacode", steps)
         created = start(stored, "iacode")
         try:

@@ -1,9 +1,33 @@
 # Handoff
 
 Current Gate: GATE-7
-Current Status: IN_PROGRESS
+Current Status: BLOCKED
 
-Current continuation: runtime-v4 complete cycle2 ended FAIL with15 passing gates and three
+Current blocker: serial desktop run0003 passes29 functional controls and both real native hosts,
+then fails the unchanged preexisting-container identity assertion. One observed running container
+outside IACode disappears between01:48:50Z and01:55:39Z, without other task Docker producers or
+cleanup in parallel. Exact journals, byte hashes and absence of attribution are recorded in
+DESKTOP-SERIAL-ISOLATION-BLOCKER.json. No assertion is waived. The owner was asked for a stable
+validation interval without stopping applications. Exact owned phase0002 disposal is complete:
+zero containers/images across all9 actual task namespaces, no private cache volume or Buildx config,
+and unchanged unrelated applications during disposal. TASK-RESOURCE-DISPOSAL-PROOF.json binds the
+actual receipt and post-disposal snapshot. Also removed84 regenerable bytecode files belonging to
+declared new task source, preserving unclaimed caches. Disposed scopes are one-shot; never replay
+their old PID or cleanup controllers. Current source626a7767 passes107 M2 controls, complete lint/static analysis and authored
+read-only quality. There is no current whole acceptance, seal, independent verdict or Gate8.
+
+Historical continuation: actual runtime-v5 full verification remains FAIL43/49, with originals
+archived byte-exact and no seal. Corrective source and local guards now cover the separately
+observed host transport caller and immutable bounded self-input view; all204 requirements remain.
+Actual targeted Experience72 controls, evaluator75-check/17-root equivalence, dependency scan and
+web tests pass. Current M2 suite107 cases passed before the local guard/memory epoch transition;
+fresh current controls and whole assurance remain required. Desktop diagnostic session66365 is
+active. Freeze measured source, finish local QA and fully declared draft validation, publish a new
+immutable subject, execute all16 quality gates and all49 non-fast functional stages, close actual
+requirements/findings and ordered DCV/internal Red Team/full mirror, prove exact owned disposal,
+then seal READY_FOR_REVIEW. Independent M2 remains separate. No Gate8/global/other-app changes.
+
+Historical continuation: runtime-v4 complete cycle2 ended FAIL with15 passing gates and three
 historical-checkpoint subtest failures in one Root case. Original streams, exact canonical import,
 native cleanup and public-clone removal are preserved. IMPORT-ISOLATION-001 / LSN-0153 records the
 distinct inspected-test import-state leak before repair. Real discovery retains its denominator

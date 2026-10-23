@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "desktop-e2e",
+  "result": "FAIL",
+  "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+  "subjectCommit": "3cafb3cf77c09fc7c651df0fc82b0fca12c880b3",
+  "sourceDirty": false,
+  "sourceFingerprint": "813a2857d944d8197921aea0032b336fdd55356ff1757ead671b74ae1ee78dbd",
+  "steps": [],
+  "composeProject": "iacode-desktop-09a34021b98b",
+  "failure": {
+    "type": "StackError",
+    "message": "owned desktop stack startup failed: mat\n#115 exporting layers 0.1s done\n#115 exporting manifest sha256:5dd9207af7844fbe41f0ec9603503fa623fdf76cb91324124f5119a7985f99ad 0.0s done\n#115 exporting config sha256:d3703b951f1999b17f170cf68455779e4a6fd5f14df984e91db8adc96a5e2b73 0.0s done\n#115 ...\n\n#116 [api] exporting to oci image format\n#116 exporting layers done\n#116 exporting manifest sha256:06b9a3455b51333a54767275fe8636b7721a7532bca29316411e308acc596b65 0.0s done\n#116 exporting config sha256:43059c1a23f1e23ac16c142c5ad37657a42003a723616c3c685bef2f1243035b 0.0s done\n#116 ...\n\n#117 importing to docker\n#117 DONE 0.0s\n\n#115 [web] exporting to oci image format\n#115 sending tarball 15.7s done\n#115 DONE 15.8s\n\n#114 [evaluator] exporting to oci image format\n#114 ...\n\n#118 [web] resolving provenance for metadata file\n#118 DONE 1.0s\n\n#62 [worker] exporting to oci image format\n#62 ...\n\n#116 [api] exporting to oci image format\n#116 sending tarball 108.7s done\n#116 CANCELED\n\n#114 [evaluator] exporting to oci image format\n#114 sending tarball 109.3s done\n#114 CANCELED\n\n#62 [worker] exporting to oci image format\n#62 sending tarball 109.7s done\n#62 CANCELED\n\n#113 [migrate] exporting to oci image format\n#113 sending tarball 108.7s done\n#113 CANCELED\n\n#86 [sandbox] exporting to oci image format\n#86 sending tarball 108.8s done\n#86 CANCELED\ntarget evaluator: failed to solve: Canceled: failed to copy to tar: rpc error: code = Canceled desc = context canceled\n\n\n\nView build details: docker-desktop://dashboard/build/iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c/iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c0/fslqi3n8qfuq4ghut9ocjbgma\n\n"
+  },
+  "failureCleanupExitCode": 0,
+  "failureSandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  }
+}
